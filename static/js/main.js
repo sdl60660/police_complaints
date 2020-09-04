@@ -96,7 +96,7 @@ function determinePhoneBrowsing() {
 // Highlighted annotation text is explicitly set here
 // This dictionary is used for any of the highlighted text annotations to determine what to display in the tooltip
 const textAnnotations = {
-    'analysis': 'A Random Forest classifier was used to look at both investigative and disciplinary outcomes. Features included ' +
+    'analysis': 'Random Forest classifiers were used to look at both investigative and disciplinary outcomes. Features included ' +
     'complainant and officer demographic information, police district demographics, prior known complaints against an officer (using assigned IDs),' +
     'time of year, and complaint type.',
     'sustained': 'An Internal Affairs investigation determined that one or more of the allegations filed in the complaint were ' +
