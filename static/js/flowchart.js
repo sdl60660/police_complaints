@@ -577,7 +577,7 @@ FlowChart.prototype.setToolTips = function() {
                 yOffset -= vis.blockSize;
             }
             else {
-                var xOffset = vis.blockSize + 4;
+                var xOffset = vis.blockSize + 6;
             }
 
             // If browser isn't Chrome, don't worry about the yOffset issue, it doesn't seem to try to render the tooltip in the original
