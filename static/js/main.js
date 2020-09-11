@@ -1016,9 +1016,13 @@ function setActivateFunctions() {
 // Actual visualization tiles are set with position: sticky, so the height of the surrounding wrapper div will determine when they stop moving with the scroll
 function setTileWrapperHeights() {
 
+    const sampleComplaintHeight = scrollerDivObjects[2].getBoundingClientRect().bottom - scrollerDivObjects[1].getBoundingClientRect().top - 500;
+    $("#sample-complaint-wrapper")
+        .css("height", sampleComplaintHeight);
+
     // Sunburst annotations run from the second annotation div (first visible) to the ninth (top of ten)
     // There's a little extra finagling at the end to get the margin between the two viz wrappers correct
-    const sunburstWrapperHeight = scrollerDivObjects[12].getBoundingClientRect().bottom - scrollerDivObjects[1].getBoundingClientRect().top + 50 - 450;
+    const sunburstWrapperHeight = scrollerDivObjects[12].getBoundingClientRect().bottom - scrollerDivObjects[2].getBoundingClientRect().top + 50 - 450;
     $("#sunburst-wrapper")
         .css("height", sunburstWrapperHeight);
 
