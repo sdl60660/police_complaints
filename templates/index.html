@@ -75,17 +75,21 @@
             <div class="title"></div>
             <div class="body" style="height: 350px;"></div>
         </section>
-        <div class="mobile-spacer"></div>
+        <div class="mobile-spacer" id="first-spacer"></div>
         <section class="step" id="first-annotation">
             <div class="title">Philly Police Complaint Data</div>
             <div class="body">
-                In 2017, Philadelphia began publishing police complaint data (dating back until 2013) online. While complaint data is redacted to hide involved officers’ identities, the records do provide information on the demographics of the officer and complainant, the context of the complaint, and the status of the case. (<span class='annotated-text' id="sample-investigation" style="padding: 1px; background-color:rgba(245, 229, 27, 0.5)">Here's a sample complaint investigation.</span>)
+                In 2017, Philadelphia began publishing police complaint data (dating back until 2013) online. While
+                complaint data is redacted to hide involved officers’ identities, the records do provide information on
+                the demographics of the officer and complainant, the context of the complaint, and the status of the case.
                 <br><br>
-                Over the course of more than seven years represented in the published data, just 16% of investigations have resulted in a sustained finding of any kind and just 2% have resulted in an eventual guilty finding.
+                <span class='annotated-text' id="sample-investigation" style="padding: 1px; background-color:rgba(245, 229, 27, 0.5)">
+                    Here is a sample complaint investigation.
+                </span>
             </div>
         </section>
         <div class="mobile-spacer"></div>
-        <section class="step" id="first-annotation">
+        <section class="step">
             <div class="title">Investigative Outcomes</div>
             <div class="body">
                 Complaint investigation data from the Philadelphia Police Department classifies
@@ -94,14 +98,40 @@
                 <span class="annotated-text" style="padding: 1px; background-color: rgba(141,198,101,0.6)">Investigation Pending</span>.
             </div>
         </section>
-        <div class="mobile-spacer" id="first-spacer"></div>
+        <div class="mobile-spacer"></div>
+        <section class="step">
+            <div class="title">Discarded Complaints</div>
+            <div class="body">
+                After conducting an investigation, the police department’s Internal Affairs division determines whether
+                they believe there is sufficient evidence to back up a complaint. In the vast majority of cases, they
+                determine that there is not, and classify these complaints as “not sustained”. These cases are dropped
+                and the details of the investigation and decision-making are rarely made available to anyone outside of
+                the department [needs citation].
+            </div>
+        </section>
+        <div class="mobile-spacer"></div>
+        <section class="step">
+            <div class="title">Sustained Complaints</div>
+            <div class="body">
+                If the Internal Affairs investigation concludes that there is enough evidence to support a complaint,
+                it’s classified as “sustained” and passed on to an officer’s commander. In the seven years of available
+                data, just 16% of investigations in Philadelphia have resulted in sustained findings. Across other cities,
+                the rate can range from <a href="http://data.huffingtonpost.com/2015/12/chicago-officer-misconduct-allegations">around 6% to 20%</a>.
+                Some <a href="https://static1.squarespace.com/static/55ad38b1e4b0185f0285195f/t/5b7ecbda1ae6cf17cbe248a8/1535036379266/TerrillIngramPQ+Civilian+Oversight+Study.pdf">evidence</a>
+                exists that investigations involving a civilian oversight board [highlight note: talk about PAC in Philly]
+                are more likely to result in sustained findings, while the demographics of the complainant and officer likely affect finding rates as well.
+            </div>
+        </section>
+        <div class="mobile-spacer"></div>
         <section class="step">
             <div class="title">Disciplinary Outcomes</div>
             <div class="body">
-                Among cases where the department's investigation yields a
-                <span class="annotated-text" style="padding: 1px; background-color: rgba(101,141,198,0.6)">Sustained Finding</span>, the
-                complainant(s) must appear at a Police Board of Inquiry hearing, which makes a
-                guilty/not guilty recommendation. Their recommendation/report is then sent to the Police Commissioner (or a delegate),
+                Among cases where the department's Internal Affairs investigation yields a
+                <span class="annotated-text" style="padding: 1px; background-color: rgba(101,141,198,0.6)">Sustained Finding</span>, the complaint is passed to an officer’s
+                commander, who may determine that the complaint only merits minor punishment or may pass the complaint to
+                the Police Board of Inquiry (PBI) for a disciplinary hearing. If the complaint is sent to PBI, the
+                complainant(s) must appear at a hearing, conducted by three members of the police department who will
+                make a disciplinary recommendation. Their recommendation/report is then sent to the Police Commissioner,
                 who is responsible for making a final decision on disciplinary action.
                 <br><br>
                 The department data classifies these disciplinary outcomes into four groups:
@@ -116,20 +146,20 @@
             <div class="title">Guilty Findings</div>
             <div class="body">
                 <span class="annotated-text" style="padding: 1px; background-color: rgba(115,152,203,0.6)">Guilty Findings</span>
-                include all sustained investigations resulting in an officer being reprimanded, terminated, suspended, or facing criminal charges.
-                The data provided by the police department makes no distinction between these outcomes. There is no way to know for certain
-                how many cases result in more serious action, except that it is at most equal to the number of guilty findings,
-                which account for just 2% of investigation outcomes.
-                <br><br>
-                Guilty rates also change significantly depending on who is making the complaint. Even when accounting for
-                the type of complaint made, the race of the complainant and the officer have a significant impact on the rate of guilty outcomes.
+                include all sustained investigations resulting in an officer being reprimanded, terminated, suspended, or
+                facing criminal charges. The data provided by the police department makes no distinction between these
+                outcomes. There is no way to know for certain how many cases result in more serious action, except that
+                it is at most equal to the number of guilty findings, which account for just 2% of investigation outcomes.
             </div>
         </section>
         <div class="mobile-spacer"></div>
         <section class="step">
             <div class="title">White Complainants</div>
             <div class="body">
-                Complaints filed by <span class="annotated-text category-text white">white</span> complainants result in a guilty finding in 3.0% of investigations.
+                Even when accounting for the type of complaint made, the race of the complainant and the officer have a
+                significant impact on the rate of guilty outcomes. Complaints filed by
+                <span class="annotated-text category-text white">white</span> complainants, for example, result in a guilty
+                finding in 3.0% of investigations.
             </div>
         </section>
         <div class="mobile-spacer"></div>
@@ -138,15 +168,20 @@
             <div class="body">
                 Meanwhile, for <span class="annotated-text category-text black">Black</span> complainants, just 1.3% of investigations
                 result in a guilty finding (43% the rate of their <span class="annotated-text category-text white">white</span> counterparts).
+                <br><br>
+                In line with <a href="https://sci-hub.tw/https://onlinelibrary.wiley.com/doi/abs/10.1111/cico.12388">prior research</a>
+                on complaint data outcomes, an<span style="background-color: rgba(245, 229, 27, 0.5)" class="annotated-text">analysis</span>
+                performed on Philadelphia’s data found that whether or not a complainant was Black was one of the two most important
+                features in determining if an investigation would result in a guilty finding, along with whether or not
+                the accused officer was white.
             </div>
         </section>
         <div class="mobile-spacer"></div>
         <section class="step">
             <div class="title">Black Complainant/White Officer</div>
             <div class="body">
-                This number shrinks even further for complaints filed specifically against <span class="annotated-text category-text white">white</span> officers.
-                <br><br>
-                In line with <a href="https://sci-hub.tw/https://onlinelibrary.wiley.com/doi/abs/10.1111/cico.12388" target="_blank">prior research</a> on complaint data outcomes, an <span class="annotated-text" style="background-color:rgba(245, 229, 27, 0.5)">analysis</span> performed on Philadelphia’s data found that whether or not the accused officer was white and whether or not the complainant was Black were the two most important features in determining if an investigation would result in a guilty finding.
+                Accordingly, his number shrinks even further for complaints filed specifically against
+                <span class="annotated-text category-text white">white</span> officers.
                 <br><br>
                 Just 0.6% of investigations against <span class="annotated-text category-text white">white</span> officers filed by
                 <span class="annotated-text category-text black">Black</span> complainants result in a guilty finding.
@@ -265,23 +300,28 @@
                 <br><br>
                 <div id="intro-text-block">
                     <p>
-                        Protests across the country have led to increased demand for police accountability and institutional changes, with a renewed focus on transparency in the civilian complaint process. In New York City, for example, the repeal of Civil Rights Law § 50a has led to <a href="https://www.propublica.org/datastore/dataset/civilian-complaints-against-new-york-city-police-officers" target="_blank">the release</a> of publicly-available (though incomplete) complaint outcome data. This police complaint data gives insight into a key mechanism of accountability, but remains unavailable in all but a handful of American cities.
+                        Protests across the country have led to increased demand for police accountability and institutional
+                        changes, including a renewed focus on transparency in the civilian complaint process. In New York
+                        City, for example, the repeal of Civil Rights Law § 50a has led to the
+                        <a href="https://www.propublica.org/datastore/dataset/civilian-complaints-against-new-york-city-police-officers">release</a>
+                        of publicly-available (though incomplete) complaint outcome data.
                     </p>
                     <br>
                     <p>
-                        While there is no uniform standard for collecting police complaints, the complaint process often follows a similar procedure across cities. Following an incident, a civilian files a complaint, either directly with the department or with a civilian oversight agency. After an investigation, a complaint is determined to either be “sustained”, meaning the investigator believes there is sufficient evidence to back up the complaint, or “not sustained” meaning that the investigator does not believe there is sufficient evidence and the investigation is dropped. In the case of sustained complaints, an oversight agency&mdash;whether made up of civilians or within the police department&mdash;will make a disciplinary decision, ranging from exonerating the officer of wrongdoing, to a suspension, to termination or criminal charges.
+                        While there is no uniform standard for collecting police complaints, the complaint process often
+                        follows a similar procedure across cities. Following an incident, a civilian files a complaint,
+                        either directly with the department or with a civilian oversight agency. An investigation takes
+                        place and sometimes, though not often, an officer faces disciplinary consequences. Investigative
+                        and disciplinary decisions in response to complaints are often made behind closed doors and the
+                        process is not always clear.
                     </p>
                     <br>
                     <p>
-                        Investigative and disciplinary decisions in response to complaints are often made behind closed doors and the process is not always clear. The rates of sustained findings can range across cities <a href="http://data.huffingtonpost.com/2015/12/chicago-officer-misconduct-allegations" target="_blank">from around 6% to 20%</a>. Some <a href="https://static1.squarespace.com/static/55ad38b1e4b0185f0285195f/t/5b7ecbda1ae6cf17cbe248a8/1535036379266/TerrillIngramPQ+Civilian+Oversight+Study.pdf" target="_blank">evidence</a> exists that investigations involving a civilian board are more likely to result in sustained findings, while the demographics of the complainant and officer likely affect finding rates as well.
-                    </p>
-                    <br>
-                    <p>
-                        Patterns in complaint investigation outcomes are examined below using data from the Philadelphia Police Department&mdash;one of just a few cities with publicly-available complaint-level in any form. The numbers are specific to Philadelphia, but the process, patterns, and stories resemble those found in departments across the country.
-                    </p>
-                    <br><br>
-                    <p>
-                        Throughout the story, hover over/tap any <span class="annotated-text" style="background-color:rgba(245, 229, 27, 0.5)">highlighted term</span> for an explanation.
+                        Police complaint data gives insight into a key mechanism of accountability, but remains unavailable
+                        in all but a handful of American cities. Patterns in complaint investigation outcomes are examined
+                        below using data from the Philadelphia Police Department—one of just a few cities with publicly-available
+                        complaint-level in any form. The numbers are specific to Philadelphia, but the process, patterns,
+                        and stories resemble those found in departments across the country.
                     </p>
                 </div>
             </div>
@@ -323,7 +363,7 @@
                         <option value="all">all</option>
                         <option value="white">White</option>
                         <option value="black">Black</option>
-                        <option value="latino">Latinx</option>
+                        <option value="latino">Latino</option>
                         <option value="other">other</option>
                     </select>
                     complainants, about incidents in

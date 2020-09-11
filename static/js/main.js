@@ -581,6 +581,34 @@ function showInvestigationGroups() {
 }
 
 
+// Activate function: triggers on annotation "Discarded Complaints"
+function highlightNotSustained() {
+
+    // Hide all outcome groups
+    $("#sunburst-area path")
+        .css("fill-opacity", 0.3);
+
+    // Highlight only the "not sustained" section
+    $("#sunburst-area path.No-Sustained-Findings")
+        .css("fill-opacity", 0.8);
+
+}
+
+
+// Activate function: triggers on annotation "Sustained Complaints"
+function highlightSustained() {
+
+    // Hide all outcome groups
+    $("#sunburst-area path")
+        .css("fill-opacity", 0.3);
+
+    // Highlight only the "not sustained" section
+    $("#sunburst-area path.Sustained-Finding")
+        .css("fill-opacity", 0.8);
+
+}
+
+
 // Activate function: triggers on annotation "Disciplinary Outcomes"
 function showDisciplinaryGroups() {
     // Make sure the select options are set to all, in case this has been changed (scroll from below or user has enabled controls)
@@ -902,25 +930,25 @@ function setScrollDispatcher() {
         // console.log(index, progress);
 
         // On the final index, as the end text comes into view and the flowchart starts to scroll out, fade the flowchart
-        if (index === 15 && progress >= 1.5) {
+        if (index === 17 && progress >= 1.5) {
             $("#flowchart-tile")
                 .css("opacity", 0.2);
         }
         // Return opacity to the flowchart if the user scrolls back up
-        else if (index === 15 && progress < 1.5) {
+        else if (index === 17 && progress < 1.5) {
             $("#flowchart-tile")
                 .css("opacity", 1.0);
         }
 
         // On mobile, hide the annotation at the top once the user hits the end text (otherwise this will cover the top of the screen)
-        if (index >= 15 && progress > 2.0 && $("section.step").eq(14).css("opacity") !== "0" && phoneBrowsing === true) {
+        if (index >= 17 && progress > 2.0 && $("section.step").eq(16).css("opacity") !== "0" && phoneBrowsing === true) {
             hideFinalAnnotationSlide();
             $(".step")
                 .css("position", "absolute");
         }
         // Return the annotation if they scroll back up
-        else if (index >= 15 && progress < 2.0 && $("section.step").eq(14).css("opacity") === "0" && phoneBrowsing === true) {
-            $("section.step").eq(14)
+        else if (index >= 17 && progress < 2.0 && $("section.step").eq(16).css("opacity") === "0" && phoneBrowsing === true) {
+            $("section.step").eq(16)
                 .css("opacity", 1.0);
             $(".step")
                 .css("position", "fixed");
@@ -962,23 +990,25 @@ function setActivateFunctions() {
     // Sunburst tile functions
     activateFunctions[1] = showSunburst;
     activateFunctions[2] = showInvestigationGroups;
-    activateFunctions[3] = showDisciplinaryGroups;
-    activateFunctions[4] = highlightGuilty;
-    activateFunctions[5] = guiltyWhiteComplainant;
-    activateFunctions[6] = guiltyBlackComplainant;
-    activateFunctions[7] = guiltyBlackComplainantWhiteOfficer;
-    activateFunctions[8] = guiltyWhiteComplainantBlackOfficer;
-    activateFunctions[9] = enableUserExamine;
+    activateFunctions[3] = highlightNotSustained;
+    activateFunctions[4] = highlightSustained;
+    activateFunctions[5] = showDisciplinaryGroups;
+    activateFunctions[6] = highlightGuilty;
+    activateFunctions[7] = guiltyWhiteComplainant;
+    activateFunctions[8] = guiltyBlackComplainant;
+    activateFunctions[9] = guiltyBlackComplainantWhiteOfficer;
+    activateFunctions[10] = guiltyWhiteComplainantBlackOfficer;
+    activateFunctions[11] = enableUserExamine;
 
     // Flowchart tile functions
-    activateFunctions[10] = flowchartEntrance;
-    activateFunctions[11] = highlightTile;
-    activateFunctions[12] = showFlowchartByRace;
-    activateFunctions[13] = highlightOverduePending;
-    activateFunctions[14] = showComplaintTypes;
+    activateFunctions[12] = flowchartEntrance;
+    activateFunctions[13] = highlightTile;
+    activateFunctions[14] = showFlowchartByRace;
+    activateFunctions[15] = highlightOverduePending;
+    activateFunctions[16] = showComplaintTypes;
 
     // End text functions
-    activateFunctions[15] = hideFinalAnnotationSlide();
+    activateFunctions[17] = hideFinalAnnotationSlide();
 }
 
 
@@ -988,12 +1018,12 @@ function setTileWrapperHeights() {
 
     // Sunburst annotations run from the second annotation div (first visible) to the ninth (top of ten)
     // There's a little extra finagling at the end to get the margin between the two viz wrappers correct
-    const sunburstWrapperHeight = scrollerDivObjects[10].getBoundingClientRect().bottom - scrollerDivObjects[1].getBoundingClientRect().top + 50 - 450;
+    const sunburstWrapperHeight = scrollerDivObjects[12].getBoundingClientRect().bottom - scrollerDivObjects[1].getBoundingClientRect().top + 50 - 450;
     $("#sunburst-wrapper")
         .css("height", sunburstWrapperHeight);
 
     // Flowchart annotation divs run from the tenth annotation div to the fourteenth
-    const flowChartWrapperHeight = scrollerDivObjects[scrollerDivObjects.length - 1].getBoundingClientRect().top - scrollerDivObjects[10].getBoundingClientRect().top + 700;
+    const flowChartWrapperHeight = scrollerDivObjects[scrollerDivObjects.length - 1].getBoundingClientRect().top - scrollerDivObjects[12].getBoundingClientRect().top + 700;
     $("#flowchart-wrapper")
         .css("height", flowChartWrapperHeight);
 }

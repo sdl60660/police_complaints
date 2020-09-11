@@ -212,7 +212,7 @@ Sunburst.prototype.addSunburstSlices = function() {
                 return "sunburst-segment child";
             }
             else {
-                return "sunburst-segment parent " + d.data.name.replace(" ", "-");
+                return "sunburst-segment parent " + d.data.name.replace(/ /g, "-");
             }
         })
         .attr("id", function(d) {
