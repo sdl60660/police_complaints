@@ -1016,7 +1016,7 @@ function setActivateFunctions() {
 // Actual visualization tiles are set with position: sticky, so the height of the surrounding wrapper div will determine when they stop moving with the scroll
 function setTileWrapperHeights() {
 
-    const sampleComplaintHeight = scrollerDivObjects[2].getBoundingClientRect().bottom - scrollerDivObjects[1].getBoundingClientRect().top - 500;
+    const sampleComplaintHeight = scrollerDivObjects[2].getBoundingClientRect().bottom - scrollerDivObjects[1].getBoundingClientRect().top - 950;
     $("#sample-complaint-wrapper")
         .css("height", sampleComplaintHeight);
 

@@ -51,7 +51,7 @@ strong {
 
 #sample-complaint-tile {
     top: 100px !important;
-    margin-top: 120px !important;
+    margin-top: 550px !important;
 }
 
 #intro-tile {
@@ -165,7 +165,6 @@ strong {
 /*}*/
 
 #first-spacer, #first-annotation {
-    margin-top: 200px;
     margin-bottom: 1000px;
 }
 
