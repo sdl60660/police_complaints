@@ -216,7 +216,7 @@ Sunburst.prototype.addSunburstSlices = function() {
             }
         })
         .attr("id", function(d) {
-            return d.data.name.replace(" ", "-");
+            return d.data.name.replace(/ /g, "-");
         })
         .attr("fill", function(d) {
             return outcomeColors(d.data.name);

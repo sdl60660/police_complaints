@@ -478,7 +478,7 @@ function artificialHover(outcomeName) {
     $("#sunburst-area path").removeAttr('style');
 
     // Find the element corresponding with the outcomeName parameter
-    const guiltyFindingElement = $(`path#${outcomeName.replace(" ", "-")}`)[0];
+    const guiltyFindingElement = $(`path#${outcomeName.replace(/ /g, "-")}`)[0];
     // Find the number of investigations that resulted in this outcome
     const guiltyValue = guiltyFindingElement.getAttribute("value");
     // Pass these values through to the sunburst's mouseover function, which can use them to simulate a mouseover
@@ -589,6 +589,9 @@ function showInvestigationGroups() {
 // Activate function: triggers on annotation "Discarded Complaints"
 function highlightNotSustained() {
 
+    // Simulate a hover over the 'sustained finding' section
+    artificialHover("No Sustained Findings");
+
     // Hide all outcome groups
     $("#sunburst-area path")
         .css("fill-opacity", 0.3);
@@ -602,6 +605,9 @@ function highlightNotSustained() {
 
 // Activate function: triggers on annotation "Sustained Complaints"
 function highlightSustained() {
+
+    // Simulate a hover over the 'sustained finding' section
+    artificialHover("Sustained Finding");
 
     // Hide all outcome groups
     $("#sunburst-area path")
