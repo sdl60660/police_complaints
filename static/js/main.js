@@ -1037,7 +1037,7 @@ function setTileWrapperHeights() {
 
     // Sunburst annotations run from the second annotation div (first visible) to the ninth (top of ten)
     // There's a little extra finagling at the end to get the margin between the two viz wrappers correct
-    const sunburstWrapperHeight = scrollerDivObjects[12].getBoundingClientRect().bottom - scrollerDivObjects[2].getBoundingClientRect().top + 50 - 450;
+    const sunburstWrapperHeight = scrollerDivObjects[12].getBoundingClientRect().bottom - scrollerDivObjects[2].getBoundingClientRect().top + 50 - 415;
     $("#sunburst-wrapper")
         .css("height", sunburstWrapperHeight);
 
