@@ -550,12 +550,12 @@ function displayIntroText() {
 
 // Activate function: triggers on annotation "Philadelphia Police Complaint Data"
 function showSunburst() {
-    // Fade the intro tile and show the sunburst tile
-    $("#intro-tile")
-        .css("opacity", 0.2)
+    $("#sample-complaint-tile")
+        .css("opacity", 1.0);
 
     $("#sunburst-tile")
-        .css("opacity", 1.0);
+        .css("opacity", 0.2);
+
 
     // If on mobile, the sunburst entrance happens here
     if (phoneBrowsing === true && sunburstEntered === false) {
@@ -565,15 +565,26 @@ function showSunburst() {
         disableSunburstUserControl();
     }
 
-    // Reset fill opacity on all paths to default (0.8)
+    // Reset fill opacity on all paths to default (0.6)
     $("#sunburst-area path")
-        .css("fill-opacity", 0.8);
+        .css("fill-opacity", 0.6);
 
 }
 
 
 // Activate function: triggers on annotation "Investigative Outcomes"
 function showInvestigationGroups() {
+
+    // Clears any artificial or real hover (if active)
+    sunburst.mouseout();
+
+    // Fade the sample complaint tile and show the sunburst tile
+    $("#sample-complaint-tile")
+        .css("opacity", 0.2);
+
+    $("#sunburst-tile")
+        .css("opacity", 1.0);
+
 
     // Hide all child (disciplinary outcome) sections
     $("#sunburst-area path.child")
@@ -1031,7 +1042,7 @@ function setActivateFunctions() {
 // Actual visualization tiles are set with position: sticky, so the height of the surrounding wrapper div will determine when they stop moving with the scroll
 function setTileWrapperHeights() {
 
-    const sampleComplaintHeight = scrollerDivObjects[2].getBoundingClientRect().bottom - scrollerDivObjects[1].getBoundingClientRect().top - 950;
+    const sampleComplaintHeight = scrollerDivObjects[2].getBoundingClientRect().bottom - scrollerDivObjects[1].getBoundingClientRect().top - 940;
     $("#sample-complaint-wrapper")
         .css("height", sampleComplaintHeight);
 
