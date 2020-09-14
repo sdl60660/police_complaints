@@ -141,7 +141,12 @@ const textAnnotations = {
     'last public update': "The city only publishes data for complaints filed within the past five years. For cases more than " +
     "five years old, no further updates are publicly available through the data portal. This means that technically, in 2020, " +
     "we don't necessarily know the latest details of a pending investigation from 2014, but we do know that it remained pending " +
-    "for at least five years."
+    "for at least five years.",
+
+    "civilian oversight board": "While Philadelphia technically has a civilian police oversight board, the Police Advisory Commission, " +
+    "it is underpowered and underfunded. While they may provide assistance to complainants thoughtout the process, they hold " +
+    "no decision-making power in the investigation or discipline of officers. A ballot measure to establish a new Citizen Police " +
+    "Oversight Commission is on the ballot in November."
 };
 
 // jQuery to move div and create pop-up tooltip with annotation
