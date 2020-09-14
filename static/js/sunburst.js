@@ -11,10 +11,12 @@ Sunburst.prototype.initVis = function() {
     // Dimensions of sunburst. Max width of 850, then scale down based on available window width.
     const dimensions = Math.min(850, $("#sunburst-area").width());
 
-    vis.margin = {'top': 15, 'bottom': 10, 'left': 10, 'right': 10}
+    vis.margin = {'top': 15, 'bottom': 10, 'left': 10, 'right': 10};
     vis.width = dimensions - vis.margin.left - vis.margin.right;
     vis.height = dimensions - vis.margin.top - vis.margin.bottom;
     vis.radius = Math.min(vis.width, vis.height) / 2;
+
+    vis.displaySecondLevel = false;
 
     // Arc layout for sunburst
     vis.arc = d3.arc()
@@ -29,14 +31,15 @@ Sunburst.prototype.initVis = function() {
         .padAngle(d => Math.min((d.x1 - d.x0) / 2, 0.005))
         .padRadius(vis.radius / 2)
         .innerRadius(d => d.y0)
-        .outerRadius(d => d.y1 - 1)
+        // .outerRadius(d => vis.displaySecondLevel === true || d.depth === 1 ? d.y1 - 1 : d.y0);
+        .outerRadius(d => d.y1 - 1);
 
 
     // Create hierarchical data
     vis.partition = data => d3.partition()
         .size([2 * Math.PI, vis.radius])
             (d3.hierarchy(vis.data)
-        .sum(d => d.value))
+        .sum(d => d.value));
         // .sort((a, b) => b.value - a.value))
 
     vis.svg = d3.select(vis.parentElement)
@@ -50,12 +53,12 @@ Sunburst.prototype.initVis = function() {
     vis.labelGroup = vis.g.append("g")
         .attr("pointer-events", "none")
         .attr("text-anchor", "middle")
-        .attr("font-size", 11)
+        .attr("font-size", 11);
 
     // We'll use this later in the attrTween function for animating transitions on the sunburst
     vis.previousAngles = {};
 
-    vis.format = d3.format(",d")
+    vis.format = d3.format(",d");
 
     // Label in center of sunburst with the percentage value of the hovered section
     vis.selectedValPct = vis.g.append("text")
@@ -64,7 +67,7 @@ Sunburst.prototype.initVis = function() {
         .attr("text-anchor", "middle")
         // .style("font-size", "20pt")
         .style("fill-opacity", 0.6)
-        .text("")
+        .text("");
 
     // Lebel in the center of the sunburst with count value of the hovered section
     vis.selectedValTotals = vis.g.append("text")
@@ -161,6 +164,10 @@ Sunburst.prototype.wrangleData = function() {
     vis.data = { 'name': 'investigative_results', 'children': investigative_result_counts };
     // Put data into proper d3 layout, initialized above in initVis()
     vis.root = vis.partition(vis.data);
+    console.log(vis.root);
+    vis.root.children
+        .find(d => d.children.length > 0).children
+        .forEach(child => vis.displaySecondLevel === false ? child.y1 = child.y0 : child.y1 = child.y1);
 
     vis.updateVis();
 
@@ -272,6 +279,8 @@ Sunburst.prototype.addSunburstSlices = function() {
             let b = oi(t);
             a.x0s = b.x0;
             a.x1s = b.x1;
+            a.y0s = b.y0;
+            a.y1s = b.y1;
             return vis.arc(b);
         }
 
@@ -308,7 +317,7 @@ Sunburst.prototype.addSunburstLabels = function() {
         .data(vis.root.descendants().filter(d => d.depth && (d.y0 + d.y1) / 2 * (d.x1 - d.x0) > 10)
             , function(d) {
                 return d.data.name;
-            })
+            });
 
     // Remove anylabels that are not present in current filtering
     // (e.g. if there are no 'guilty findings' with a particular filter set, remove the 'guilty finding' label)
@@ -321,6 +330,7 @@ Sunburst.prototype.addSunburstLabels = function() {
         .enter()
         .append("text")
         .attr("class", "sunburst-chart-labels")
+        .attr("opacity", d => vis.displaySecondLevel === false && d.depth > 1 ? 0.0 : 1.0)
         // The entrance of a 'new' label will be different if it is genuinely new vs. if it just didn't appear in the last filtering
         // A truly new label (on sunburst entrance) will 'spawn' from the center of the sunburst, one that is making a 're-entrance'
         // will initially re-appear where it was last located before making its way to its new position
@@ -352,6 +362,7 @@ Sunburst.prototype.addSunburstLabels = function() {
         .delay(0)
         .duration(1000)
         .ease(d3.easePoly)
+        .attr("opacity", d => vis.displaySecondLevel === false && d.depth > 1 ? 0.0 : 1.0)
         .attr("transform", function(d) {
             const x = (d.x0 + d.x1) / 2 * 180 / Math.PI;
             const y = (d.y0 + d.y1) / 2;

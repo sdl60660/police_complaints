@@ -605,6 +605,8 @@ function highlightNotSustained() {
 
 // Activate function: triggers on annotation "Sustained Complaints"
 function highlightSustained() {
+    sunburst.displaySecondLevel = false;
+    sunburst.wrangleData();
 
     // Simulate a hover over the 'sustained finding' section
     artificialHover("Sustained Finding");
@@ -622,6 +624,8 @@ function highlightSustained() {
 
 // Activate function: triggers on annotation "Disciplinary Outcomes"
 function showDisciplinaryGroups() {
+    sunburst.displaySecondLevel = true;
+
     // Make sure the select options are set to all, in case this has been changed (scroll from below or user has enabled controls)
     setSelectOptions([["sunburst-complainant-race", "all"], ["sunburst-po-race", "all"]]);
 
