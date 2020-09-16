@@ -87,8 +87,9 @@ function determinePhoneBrowsing() {
 
     // If mobile, and annotations are up top, adjust top-padding on viz-tiles to make room for fixed-position annotation
     if (phoneBrowsing === true) {
-        setDynamicPadding('#sunburst-tile', 1, 7);
-        setDynamicPadding('#flowchart-tile', 8, 13);
+        setDynamicPadding('#sample-complaint-tile', 1, 2);
+        setDynamicPadding('#sunburst-tile', 2, 9);
+        setDynamicPadding('#flowchart-tile', 9, 15);
     }
 }
 
@@ -203,7 +204,7 @@ function setAnnotationTooltips() {
     }
     else {
         $(window).on("scroll", function () {
-           $("#annotation-tooltip, #sample-tooltip")
+           $("#annotation-tooltip")
                 .css("opacity", 0.0)
                 .css("z-index", -1);
         });
@@ -330,7 +331,7 @@ function setScrollArrow() {
 
             // If first scroll from intro block
             if ($(window).scrollTop() < window.innerHeight) {
-                $('html, body').animate({scrollTop: $('#sunburst-wrapper').offset().top }, 'slow');
+                $('html, body').animate({scrollTop: $('#sample-complaint-wrapper').offset().top }, 'slow');
             }
             // If at joint between sunburst/flowchart, be specific
             else if ($("#last-sunburst-annotation").css("opacity") === "1") {
@@ -543,37 +544,62 @@ function displayIntroText() {
     if (phoneBrowsing === false && sunburstEntered === false) {
         sunburst = new Sunburst("#sunburst-area");
         sunburstEntered = true;
-        disableSunburstUserControl();
+        // disableSunburstUserControl();
     }
 }
 
 
 // Activate function: triggers on annotation "Philadelphia Police Complaint Data"
-function showSunburst() {
+function showComplaint() {
+
+    // Reset highlighting on complaint
+    // $("#sample-tooltip .detail-title:not(.persistent)")
+    //     .css("background-color", "rgba(28, 148, 196, 0.25)");
+
+    $("#sample-tooltip .detail-title")
+        .css("background", "none");
+
+}
+
+
+// Activate function: triggers on annotation "Philadelphia Police Complaint Data"
+function highlightComplaint() {
     $("#sample-complaint-tile")
         .css("opacity", 1.0);
 
     $("#sunburst-tile")
         .css("opacity", 0.2);
 
-
-    // If on mobile, the sunburst entrance happens here
-    if (phoneBrowsing === true && sunburstEntered === false) {
-        sunburst = new Sunburst("#sunburst-area");
-        sunburstEntered = true;
-        // Disable user controls over the dropdown selects until the end of the sunburst section
-        disableSunburstUserControl();
-    }
+    $("#sample-tooltip .detail-title")
+    // $("#sample-tooltip .detail-title:not(.persistent)")
+        .css("background-color", "rgba(28, 148, 196, 0)");
 
     // Reset fill opacity on all paths to default (0.6)
     $("#sunburst-area path")
         .css("fill-opacity", 0.6);
 
+    $("#sample-tooltip .persistent").markerAnimation({
+            "color":'#fe9',
+            'padding_bottom':'.1em',
+            "thickness":'1.1em',
+            "duration":'1s',
+            "function":'ease',
+            "repeat": false
+        })
+
 }
+
 
 
 // Activate function: triggers on annotation "Investigative Outcomes"
 function showInvestigationGroups() {
+    // If on mobile, the sunburst entrance happens here
+    if (phoneBrowsing === true && sunburstEntered === false) {
+        sunburst = new Sunburst("#sunburst-area");
+        sunburstEntered = true;
+        // Disable user controls over the dropdown selects until the end of the sunburst section
+        // disableSunburstUserControl();
+    }
 
     // Clears any artificial or real hover (if active)
     sunburst.mouseout();
@@ -660,6 +686,13 @@ function showDisciplinaryGroups() {
 
 // Activate function: triggers on annotation "Guilty Findings"
 function highlightGuilty() {
+    $("#sunburst-select-text")
+        .css("visibility", "hidden");
+
+    $("#sunburst-static-text")
+        .css("visibility", "visible");
+
+
     // Make sure the select options are set to all, in case this has been changed (scroll from below or user has enabled controls)
     setSelectOptions([["sunburst-complainant-race", "all"], ["sunburst-po-race", "all"]]);
     // Simulate a hover over the 'guilty finding' section
@@ -669,6 +702,12 @@ function highlightGuilty() {
 
 // Activate function: triggers on annotation "White Complainants"
 function guiltyWhiteComplainant() {
+    $("#sunburst-static-text")
+        .css("visibility", "hidden");
+
+    $("#sunburst-select-text")
+        .css("visibility", "visible");
+
     // Set complainant race select to 'White'
     setSelectOptions([["sunburst-complainant-race", "white"], ["sunburst-po-race", "all"]]);
     artificialHover("Guilty Finding");
@@ -956,24 +995,24 @@ function setScrollDispatcher() {
         // console.log(index, progress);
 
         // On the final index, as the end text comes into view and the flowchart starts to scroll out, fade the flowchart
-        if (index === 17 && progress >= 1.5) {
+        if (index === 18 && progress >= 1.5) {
             $("#flowchart-tile")
                 .css("opacity", 0.2);
         }
         // Return opacity to the flowchart if the user scrolls back up
-        else if (index === 17 && progress < 1.5) {
+        else if (index === 18 && progress < 1.5) {
             $("#flowchart-tile")
                 .css("opacity", 1.0);
         }
 
         // On mobile, hide the annotation at the top once the user hits the end text (otherwise this will cover the top of the screen)
-        if (index >= 17 && progress > 2.0 && $("section.step").eq(16).css("opacity") !== "0" && phoneBrowsing === true) {
+        if (index >= 18 && progress > 2.0 && $("section.step").eq(17).css("opacity") !== "0" && phoneBrowsing === true) {
             hideFinalAnnotationSlide();
             $(".step")
                 .css("position", "absolute");
         }
         // Return the annotation if they scroll back up
-        else if (index >= 17 && progress < 2.0 && $("section.step").eq(16).css("opacity") === "0" && phoneBrowsing === true) {
+        else if (index >= 18 && progress < 2.0 && $("section.step").eq(17).css("opacity") === "0" && phoneBrowsing === true) {
             $("section.step").eq(16)
                 .css("opacity", 1.0);
             $(".step")
@@ -1013,28 +1052,31 @@ function setActivateFunctions() {
     // Intro tile functions
     activateFunctions[0] = displayIntroText;
 
+    // Sample complaint tile functions
+    activateFunctions[1] = showComplaint;
+    activateFunctions[2] = highlightComplaint;
+
     // Sunburst tile functions
-    activateFunctions[1] = showSunburst;
-    activateFunctions[2] = showInvestigationGroups;
-    activateFunctions[3] = highlightNotSustained;
-    activateFunctions[4] = highlightSustained;
-    activateFunctions[5] = showDisciplinaryGroups;
-    activateFunctions[6] = highlightGuilty;
-    activateFunctions[7] = guiltyWhiteComplainant;
-    activateFunctions[8] = guiltyBlackComplainant;
-    activateFunctions[9] = guiltyBlackComplainantWhiteOfficer;
-    activateFunctions[10] = guiltyWhiteComplainantBlackOfficer;
-    activateFunctions[11] = enableUserExamine;
+    activateFunctions[3] = showInvestigationGroups;
+    activateFunctions[4] = highlightNotSustained;
+    activateFunctions[5] = highlightSustained;
+    activateFunctions[6] = showDisciplinaryGroups;
+    activateFunctions[7] = highlightGuilty;
+    activateFunctions[8] = guiltyWhiteComplainant;
+    activateFunctions[9] = guiltyBlackComplainant;
+    activateFunctions[10] = guiltyBlackComplainantWhiteOfficer;
+    activateFunctions[11] = guiltyWhiteComplainantBlackOfficer;
+    activateFunctions[12] = enableUserExamine;
 
     // Flowchart tile functions
-    activateFunctions[12] = flowchartEntrance;
-    activateFunctions[13] = highlightTile;
-    activateFunctions[14] = showFlowchartByRace;
-    activateFunctions[15] = highlightOverduePending;
-    activateFunctions[16] = showComplaintTypes;
+    activateFunctions[13] = flowchartEntrance;
+    activateFunctions[14] = highlightTile;
+    activateFunctions[15] = showFlowchartByRace;
+    activateFunctions[16] = highlightOverduePending;
+    activateFunctions[17] = showComplaintTypes;
 
     // End text functions
-    activateFunctions[17] = hideFinalAnnotationSlide();
+    activateFunctions[18] = hideFinalAnnotationSlide();
 }
 
 
@@ -1042,18 +1084,18 @@ function setActivateFunctions() {
 // Actual visualization tiles are set with position: sticky, so the height of the surrounding wrapper div will determine when they stop moving with the scroll
 function setTileWrapperHeights() {
 
-    const sampleComplaintHeight = scrollerDivObjects[2].getBoundingClientRect().bottom - scrollerDivObjects[1].getBoundingClientRect().top - 940;
+    const sampleComplaintHeight = scrollerDivObjects[3].getBoundingClientRect().bottom - scrollerDivObjects[1].getBoundingClientRect().top - 960;
     $("#sample-complaint-wrapper")
         .css("height", sampleComplaintHeight);
 
     // Sunburst annotations run from the second annotation div (first visible) to the ninth (top of ten)
     // There's a little extra finagling at the end to get the margin between the two viz wrappers correct
-    const sunburstWrapperHeight = scrollerDivObjects[12].getBoundingClientRect().bottom - scrollerDivObjects[2].getBoundingClientRect().top + 50 - 415;
+    const sunburstWrapperHeight = scrollerDivObjects[13].getBoundingClientRect().bottom - scrollerDivObjects[3].getBoundingClientRect().top + 50 - 415;
     $("#sunburst-wrapper")
         .css("height", sunburstWrapperHeight);
 
     // Flowchart annotation divs run from the tenth annotation div to the fourteenth
-    const flowChartWrapperHeight = scrollerDivObjects[scrollerDivObjects.length - 1].getBoundingClientRect().top - scrollerDivObjects[12].getBoundingClientRect().top + 700;
+    const flowChartWrapperHeight = scrollerDivObjects[scrollerDivObjects.length - 1].getBoundingClientRect().top - scrollerDivObjects[13].getBoundingClientRect().top + 700;
     $("#flowchart-wrapper")
         .css("height", flowChartWrapperHeight);
 }

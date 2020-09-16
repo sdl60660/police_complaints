@@ -51,7 +51,7 @@ strong {
 
 #sample-complaint-tile {
     top: 100px !important;
-    margin-top: 550px !important;
+    margin-top: 50px !important;
 }
 
 #intro-tile {
@@ -164,7 +164,7 @@ strong {
     /*margin-right: 100px;*/
 /*}*/
 
-#first-spacer, #first-annotation {
+#gap-annotation {
     margin-bottom: 1000px;
 }
 
@@ -278,7 +278,7 @@ strong {
         padding-right: 25px !important;
     }
 
-    #flowchart-wrapper, #sunburst-wrapper {
+    #sample-complaint-wrapper, #flowchart-wrapper, #sunburst-wrapper {
         padding-left: unset;
         width: unset;
     }
@@ -450,7 +450,7 @@ select.other, span.other {
 }
 
 .detail-title {
-	background-color: rgba(28, 148, 196, 0.25);
+	background-color: rgba(28, 148, 196, 0);
 	border-radius: 3px;
 	/*margin-bottom: 5px;*/
 	/*padding: 1px;*/

@@ -35,6 +35,7 @@
     <link rel="stylesheet" href="/static/css/d3-tip.css">
     <link rel="stylesheet" href="/static/css/source-code-pro.css">
     <link rel="stylesheet" href="/static/bower_components/chosen/chosen.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/jquery.marker-animation/build/index.min.js"></script>
     <!-- Custom CSS -->
     <link rel="stylesheet" type="text/css" href="static/css/style.css">
 
@@ -79,25 +80,37 @@
         <div class="mobile-spacer"></div>
         <section class="step phantom">
             <div class="title"></div>
-            <div class="body" style="height: 350px;"></div>
+            <div class="body"></div>
         </section>
         <div class="mobile-spacer" id="first-spacer"></div>
         <section class="step" id="first-annotation">
-            <div class="title">Philly Police Complaint Data</div>
+            <div class="title">Police Complaints</div>
             <div class="body">
-                In 2017, Philadelphia began publishing police complaint data (dating back until 2013) online. While
-                complaint data is redacted to hide involved officers’ identities, the records do provide information on
-                the demographics of the officer and complainant, the context of the complaint, and the status of the case.
+                In 2017, Philadelphia began publishing police complaint data online, dating back until 2013. This is a
+                real complaint from that dataset, filed against the Philadelphia Police Department in 2014.
                 <br><br>
-{#                <span class='annotated-text' id="sample-investigation" style="padding: 1px; background-color:rgba(245, 229, 27, 0.5)">#}
-                    Here is a sample complaint investigation.
-{#                </span>#}
+                Following an incident, a civilian files a complaint, such as this one, either directly with the
+                department or with a civilian oversight agency.
+            </div>
+        </section>
+        <div class="mobile-spacer" id="gap-spacer"></div>
+        <section class="step" id="gap-annotation">
+            <div class="title">Philadelphia Complaint Data</div>
+            <div class="body">
+                While public complaint data is redacted to hide the identities of those involved, the records do provide
+                information on the demographics of the officer and complainant, the context of the complaint, and the
+                status of the case.
             </div>
         </section>
         <div class="mobile-spacer"></div>
         <section class="step">
-            <div class="title">Investigative Outcomes</div>
+            <div class="title">Complaint Investigations</div>
             <div class="body">
+                After a complaint is filed, an investigation is opened. In some cities, these investigations are
+                conducted by civilian oversight boards. In many others, including Philadelphia, complaint investigations
+                are handled by the department’s own Internal Affairs division. Investigation decisions are made behind
+                closed doors and the decision making process is not always clear.
+                <br><br>
                 Complaint investigation data from the Philadelphia Police Department classifies
                 investigations into three groups: <span class="annotated-text" style="padding: 1px; background-color: rgba(101,141,198,0.6)">Sustained Finding</span>,
                 <span class="annotated-text" style="padding: 1px; background-color: rgba(242,142,44,0.6)">No Sustained Findings</span>, and
@@ -108,13 +121,12 @@
         <section class="step">
             <div class="title">Discarded Complaints</div>
             <div class="body">
-                After conducting an investigation, the police department’s Internal Affairs division determines whether
-                they believe there is sufficient evidence to back up a complaint. In the vast majority of cases, they
-                determine that there is not, and classify these complaints as “not sustained”. These cases are dropped
-                and the details of the investigation and decision-making are rarely made available to anyone outside of
-                the department [needs citation].
-                <br><br>
-                The sample complaint from the top was one of these discarded complaints.
+                After conducting an investigation, Internal Affairs determines whether they believe there is sufficient
+                evidence to back up a complaint. In the vast majority of cases, they determine that there is not, and
+                classify these complaints as having
+                <span class="annotated-text" style="padding: 1px; background-color: rgba(242,142,44,0.6)">No Sustained Findings</span>.
+                These cases are dropped and the details of the investigation and decision-making are rarely made
+                available to anyone outside of the department [needs citation].
             </div>
         </section>
         <div class="mobile-spacer"></div>
@@ -128,7 +140,7 @@
                 the rate can range from <a href="http://data.huffingtonpost.com/2015/12/chicago-officer-misconduct-allegations">around 6% to 20%</a>.
                 Some <a href="https://static1.squarespace.com/static/55ad38b1e4b0185f0285195f/t/5b7ecbda1ae6cf17cbe248a8/1535036379266/TerrillIngramPQ+Civilian+Oversight+Study.pdf">evidence</a>
                 exists that investigations involving a <span style="background-color: rgba(245, 229, 27, 0.5)" class="annotated-text">civilian oversight board</span>
-                are more likely to result in sustained findings, while the demographics of the complainant and officer likely affect finding rates as well.
+                are more likely to result in sustained findings.
             </div>
         </section>
         <div class="mobile-spacer"></div>
@@ -165,10 +177,15 @@
         <section class="step">
             <div class="title">White Complainants</div>
             <div class="body">
-                Even when accounting for the type of complaint made, the race of the complainant and the officer have a
-                significant impact on the rate of guilty outcomes. Complaints filed by
-                <span class="annotated-text category-text white">white</span> complainants, for example, result in a guilty
-                finding in 3.0% of investigations.
+                In line with <a href="https://sci-hub.tw/https://onlinelibrary.wiley.com/doi/abs/10.1111/cico.12388">prior research</a>
+                on complaint data outcomes, an <span style="background-color: rgba(245, 229, 27, 0.5)" class="annotated-text">analysis</span>
+                performed on Philadelphia’s data found that whether or not a complainant was
+                <span class="annotated-text category-text black">Black</span> was one of the two most important features
+                in determining if an investigation would result in a guilty finding, along with whether or not the accused
+                officer was <span class="annotated-text category-text white">white</span>.
+                <br><br>
+                Complaints filed by <span class="annotated-text category-text white">white</span> complainants, for
+                example, result in a guilty finding in 3.0% of investigations.
             </div>
         </section>
         <div class="mobile-spacer"></div>
@@ -176,13 +193,9 @@
             <div class="title">Black Complainants</div>
             <div class="body">
                 Meanwhile, for <span class="annotated-text category-text black">Black</span> complainants, just 1.3% of investigations
-                result in a guilty finding (43% the rate of their <span class="annotated-text category-text white">white</span> counterparts).
-                <br><br>
-                In line with <a href="https://sci-hub.tw/https://onlinelibrary.wiley.com/doi/abs/10.1111/cico.12388">prior research</a>
-                on complaint data outcomes, an <span style="background-color: rgba(245, 229, 27, 0.5)" class="annotated-text">analysis</span>
-                performed on Philadelphia’s data found that whether or not a complainant was Black was one of the two most important
-                features in determining if an investigation would result in a guilty finding, along with whether or not
-                the accused officer was white.
+                result in a guilty finding (43% the rate of their <span class="annotated-text category-text white">white</span>
+                counterparts), underscoring disparities in the way Black communities are policed and a particular lack
+                of accountability for officer actions in these communities.
             </div>
         </section>
         <div class="mobile-spacer"></div>
@@ -317,15 +330,6 @@
                     </p>
                     <br>
                     <p>
-                        While there is no uniform standard for collecting police complaints, the complaint process often
-                        follows a similar procedure across cities. Following an incident, a civilian files a complaint,
-                        either directly with the department or with a civilian oversight agency. An investigation takes
-                        place and sometimes, though not often, an officer faces disciplinary consequences. Investigative
-                        and disciplinary decisions in response to complaints are often made behind closed doors and the
-                        process is not always clear.
-                    </p>
-                    <br>
-                    <p>
                         Police complaint data gives insight into a key mechanism of accountability, but remains unavailable
                         in all but a handful of American cities. Patterns in complaint investigation outcomes are examined
                         below using data from the Philadelphia Police Department—one of just a few cities with publicly-available
@@ -357,16 +361,16 @@
     <div class="tile-wrapper" id="sample-complaint-wrapper" style="margin-bottom: 600px;">
         <div class="container viz-tile" id="sample-complaint-tile">
             <div class="row">
-                <div class="col-12" id='sample-tooltip' style="position:absolute;z-index:-1;">
+                <div class="col-sm-12 col-12" id='sample-tooltip' style="position:absolute; z-index:-1;">
                     <span class='detail-title'>Complaint Date</span>: <span class='details'>5/12/14<br></span>
                     <span class='detail-title'>District</span>: <span class='details'>19<br></span>
                     <span class='detail-title'>District Median Income</span>: <span class='details'>$41,071<br><br></span>
                     <span class='detail-title'>Officer Initials</span>: <span class='details'>MH<br></span>
-                    <span class='detail-title'>Officer Demographics</span>: <span class='details'>white, male<br></span><br>
+                    <span class='detail-title persistent'>Officer Demographics</span>: <span class='details'>white, male<br></span><br>
                     <span class='detail-title'>Complaint ID</span>: <span class='details'>14-0248<br></span>
-                    <span class='detail-title'>Complainant Demographics</span>: <span class='details'>black, female, 46<br><br></span>
-                    <span class='detail-title'>Complaint Type</span>: <span class='details'>Verbal Abuse<br></span>
-                    <span class='detail-title'>Complaint Summary</span>: <span class='details' id='complaint-summary'>The complainant,
+                    <span class='detail-title persistent'>Complainant Demographics</span>: <span class='details'>black, female, 46<br><br></span>
+                    <span class='detail-title persistent'>Complaint Type</span>: <span class='details'>Verbal Abuse<br></span>
+                    <span class='detail-title persistent'>Complaint Summary</span>: <span class='details' id='complaint-summary'>The complainant,
                     SD, 46/B/F, states that she was falsely arrested and verbally abused by Officer H, 19th District. According to the
                     complainant, on 4-26-14, at 11:00 AM, she exited a deli with a can of beer.  When she stopped to talk to a friend,
                     Officer H called her over to the car and asked, "Don't you think it's kind of early to be drinking?" The complainant
@@ -374,6 +378,8 @@
                     just paid a $200.00 fine for an open container of beer in March and showed him a copy of the citation.  He laughed,
                     stating, "I wrote this and I'm going to write you another f**king one." The complainant maintains Officer H incorrectly
                     wrote the can size on the citation as being 16 ounces instead of 24 ounces.<br></span>
+                    <br>
+                    <span class='detail-title persistent'>Investigation Outcome</span>: <span class='details'>No Sustained Findings</span>
                 </div>
             </div>
     </div>
@@ -385,7 +391,11 @@
         <div class="row">
             <div class="col-md-1"></div>
             <div class="col-md-10 col-sm-12 viz-area">
-                <div class="row" id="sunburst-select-text">
+                <div class="row" id="sunburst-static-text" style="position: absolute; text-align: center; font-size: 24px; visibility: visible">
+                    Philadelphia Police Complaint Outcomes
+                </div>
+
+                <div class="row" id="sunburst-select-text" style="visibility: hidden">
                     What happens when
                     <select class="sunburst-select" id="sunburst-po-race" value="po_race">
                         <option value="all">all</option>

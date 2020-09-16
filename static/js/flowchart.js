@@ -464,7 +464,7 @@ FlowChart.prototype.highlightTile = function(disciplineID) {
             .attr("box-shadow", "10px 10px")
         // Once the transition is completed, display/pin the corresponding details tooltip
         .on("end", function() {
-            if (activeIndex === 14) {
+            if (activeIndex === 15) {
                 vis.tip.show(vis.featuredTile._groups[0][0].__data__, vis.featuredTile.node());
 
                 let highlightTip = $(".d3-tip");
