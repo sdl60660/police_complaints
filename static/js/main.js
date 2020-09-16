@@ -553,11 +553,12 @@ function displayIntroText() {
 function showComplaint() {
 
     // Reset highlighting on complaint
-    // $("#sample-tooltip .detail-title:not(.persistent)")
-    //     .css("background-color", "rgba(28, 148, 196, 0.25)");
-
     $("#sample-tooltip .detail-title")
-        .css("background", "none");
+        .css("background", "none")
+        .css("background-color", "rgba(28, 148, 196, 0.0)");
+
+    // $("#sample-tooltip .detail-title")
+    //     .css("background", "none");
 
 }
 
@@ -570,9 +571,9 @@ function highlightComplaint() {
     $("#sunburst-tile")
         .css("opacity", 0.2);
 
-    $("#sample-tooltip .detail-title")
+    // $("#sample-tooltip .detail-title")
     // $("#sample-tooltip .detail-title:not(.persistent)")
-        .css("background-color", "rgba(28, 148, 196, 0)");
+    //     .css("background-color", "rgba(28, 148, 196, 0)");
 
     // Reset fill opacity on all paths to default (0.6)
     $("#sunburst-area path")
@@ -581,7 +582,7 @@ function highlightComplaint() {
     $("#sample-tooltip .persistent").markerAnimation({
             "color":'#fe9',
             'padding_bottom':'.1em',
-            "thickness":'1.1em',
+            "thickness":'1.2em',
             "duration":'1s',
             "function":'ease',
             "repeat": false

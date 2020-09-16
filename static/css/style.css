@@ -357,8 +357,9 @@ strong {
 }
 
 #sample-tooltip {
-    max-width: 500px;
+    max-width: 600px;
     line-height: 1.1;
+    font-size: 18px;
 }
 
 #category-tooltip {
@@ -450,10 +451,15 @@ select.other, span.other {
 }
 
 .detail-title {
-	background-color: rgba(28, 148, 196, 0);
+	background-color: rgba(28, 148, 196, 0.25);
 	border-radius: 3px;
 	/*margin-bottom: 5px;*/
 	/*padding: 1px;*/
+}
+
+
+#sample-tooltip .detail-title {
+	background-color: rgba(28, 148, 196, 0.0);
 }
 
 
