@@ -642,6 +642,10 @@ function highlightNotSustained() {
 
 // Activate function: triggers on annotation "Sustained Complaints"
 function highlightSustained() {
+    $("#sunburst-static-text")
+        .clearQueue()
+        .animate({ 'top': '80px'}, 1000);
+
     sunburst.displaySecondLevel = false;
     sunburst.wrangleData();
 
@@ -662,6 +666,10 @@ function highlightSustained() {
 // Activate function: triggers on annotation "Disciplinary Outcomes"
 function showDisciplinaryGroups() {
     sunburst.displaySecondLevel = true;
+
+    $("#sunburst-static-text")
+        .clearQueue()
+        .animate({ 'top': '0px'}, 1000);
 
     // Make sure the select options are set to all, in case this has been changed (scroll from below or user has enabled controls)
     setSelectOptions([["sunburst-complainant-race", "all"], ["sunburst-po-race", "all"]]);

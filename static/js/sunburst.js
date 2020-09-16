@@ -11,7 +11,7 @@ Sunburst.prototype.initVis = function() {
     // Dimensions of sunburst. Max width of 850, then scale down based on available window width.
     const dimensions = Math.min(850, $("#sunburst-area").width());
 
-    vis.margin = {'top': 15, 'bottom': 10, 'left': 10, 'right': 10};
+    vis.margin = {'top': 10, 'bottom': 10, 'left': 10, 'right': 10};
     vis.width = dimensions - vis.margin.left - vis.margin.right;
     vis.height = dimensions - vis.margin.top - vis.margin.bottom;
     vis.radius = Math.min(vis.width, vis.height) / 2;
@@ -164,7 +164,7 @@ Sunburst.prototype.wrangleData = function() {
     vis.data = { 'name': 'investigative_results', 'children': investigative_result_counts };
     // Put data into proper d3 layout, initialized above in initVis()
     vis.root = vis.partition(vis.data);
-    console.log(vis.root);
+
     vis.root.children
         .find(d => d.children.length > 0).children
         .forEach(child => vis.displaySecondLevel === false ? child.y1 = child.y0 : child.y1 = child.y1);
