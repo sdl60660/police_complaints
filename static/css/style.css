@@ -269,6 +269,10 @@ strong {
         height: 100vh;
     }
 
+    #gap-spacer {
+        margin-bottom: 1000px;
+    }
+
     .viz-tile {
         padding-top: 150px;
     }

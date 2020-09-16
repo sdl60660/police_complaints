@@ -165,9 +165,14 @@ Sunburst.prototype.wrangleData = function() {
     // Put data into proper d3 layout, initialized above in initVis()
     vis.root = vis.partition(vis.data);
 
-    vis.root.children
-        .find(d => d.children.length > 0).children
-        .forEach(child => vis.displaySecondLevel === false ? child.y1 = child.y0 : child.y1 = child.y1);
+    let subroot = vis.root.children
+        .find(d => typeof d.children !== "undefined" && d.children.length > 0)
+
+    if (typeof subroot !== "undefined") {
+        subroot
+            .children
+            .forEach(child => vis.displaySecondLevel === false ? child.y1 = child.y0 : child.y1 = child.y1);
+    };
 
     vis.updateVis();
 
