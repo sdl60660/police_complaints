@@ -89,7 +89,7 @@ function determinePhoneBrowsing() {
     if (phoneBrowsing === true) {
         setDynamicPadding('#sample-complaint-tile', 1, 2);
         setDynamicPadding('#sunburst-tile', 2, 9);
-        setDynamicPadding('#flowchart-tile', 9, 15);
+        setDynamicPadding('#flowchart-tile', 9, 17);
     }
 }
 
@@ -925,7 +925,7 @@ function showComplaintTypes() {
 
 // Activate function: triggers on final, phantom step, if on mobile
 function hideFinalAnnotationSlide() {
-    $("section.step").eq(13)
+    $("section.step").eq(16)
         .css("opacity", hiddenOpacity);
 }
 
@@ -1004,24 +1004,24 @@ function setScrollDispatcher() {
         // console.log(index, progress);
 
         // On the final index, as the end text comes into view and the flowchart starts to scroll out, fade the flowchart
-        if (index === 18 && progress >= 1.5) {
+        if (index === 17 && progress >= 1.5) {
             $("#flowchart-tile")
                 .css("opacity", 0.2);
         }
         // Return opacity to the flowchart if the user scrolls back up
-        else if (index === 18 && progress < 1.5) {
+        else if (index === 17 && progress < 1.5) {
             $("#flowchart-tile")
                 .css("opacity", 1.0);
         }
 
         // On mobile, hide the annotation at the top once the user hits the end text (otherwise this will cover the top of the screen)
-        if (index >= 18 && progress > 2.0 && $("section.step").eq(17).css("opacity") !== "0" && phoneBrowsing === true) {
+        if (index >= 17 && progress > 2.0 && $("section.step").eq(16).css("opacity") !== "0" && phoneBrowsing === true) {
             hideFinalAnnotationSlide();
             $(".step")
                 .css("position", "absolute");
         }
         // Return the annotation if they scroll back up
-        else if (index >= 18 && progress < 2.0 && $("section.step").eq(17).css("opacity") === "0" && phoneBrowsing === true) {
+        else if (index >= 17 && progress < 2.0 && $("section.step").eq(16).css("opacity") === "0" && phoneBrowsing === true) {
             $("section.step").eq(16)
                 .css("opacity", 1.0);
             $(".step")
@@ -1075,17 +1075,17 @@ function setActivateFunctions() {
     activateFunctions[9] = guiltyBlackComplainant;
     activateFunctions[10] = guiltyBlackComplainantWhiteOfficer;
     activateFunctions[11] = guiltyWhiteComplainantBlackOfficer;
-    activateFunctions[12] = enableUserExamine;
+    // activateFunctions[12] = enableUserExamine;
 
     // Flowchart tile functions
-    activateFunctions[13] = flowchartEntrance;
-    activateFunctions[14] = highlightTile;
-    activateFunctions[15] = showFlowchartByRace;
-    activateFunctions[16] = highlightOverduePending;
-    activateFunctions[17] = showComplaintTypes;
+    activateFunctions[12] = flowchartEntrance;
+    activateFunctions[13] = highlightTile;
+    activateFunctions[14] = showFlowchartByRace;
+    activateFunctions[15] = highlightOverduePending;
+    activateFunctions[16] = showComplaintTypes;
 
     // End text functions
-    activateFunctions[18] = hideFinalAnnotationSlide();
+    activateFunctions[17] = hideFinalAnnotationSlide();
 }
 
 
@@ -1099,12 +1099,12 @@ function setTileWrapperHeights() {
 
     // Sunburst annotations run from the second annotation div (first visible) to the ninth (top of ten)
     // There's a little extra finagling at the end to get the margin between the two viz wrappers correct
-    const sunburstWrapperHeight = scrollerDivObjects[13].getBoundingClientRect().bottom - scrollerDivObjects[3].getBoundingClientRect().top + 50 - 415;
+    const sunburstWrapperHeight = scrollerDivObjects[12].getBoundingClientRect().bottom - scrollerDivObjects[3].getBoundingClientRect().top + 50 - 415;
     $("#sunburst-wrapper")
         .css("height", sunburstWrapperHeight);
 
     // Flowchart annotation divs run from the tenth annotation div to the fourteenth
-    const flowChartWrapperHeight = scrollerDivObjects[scrollerDivObjects.length - 1].getBoundingClientRect().top - scrollerDivObjects[13].getBoundingClientRect().top + 700;
+    const flowChartWrapperHeight = scrollerDivObjects[scrollerDivObjects.length - 1].getBoundingClientRect().top - scrollerDivObjects[12].getBoundingClientRect().top + 700;
     $("#flowchart-wrapper")
         .css("height", flowChartWrapperHeight);
 }

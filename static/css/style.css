@@ -164,7 +164,7 @@ strong {
     /*margin-right: 100px;*/
 /*}*/
 
-#gap-annotation {
+.gap-annotation {
     margin-bottom: 1000px;
 }
 
@@ -269,7 +269,7 @@ strong {
         height: 100vh;
     }
 
-    #gap-spacer {
+    .gap-spacer {
         margin-bottom: 1000px;
     }
 
