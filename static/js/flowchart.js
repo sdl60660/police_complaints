@@ -15,10 +15,15 @@ FlowChart.prototype.initVis = function() {
     vis.svg = d3.select(vis.parentElement)
         .append("svg");
 
+    let height = 800;
+    if (phoneBrowsing === true) {
+        height = 1250;
+    }
+
     // Make svg size flexible based on window dimensions
     vis.svg
         .attr("preserveAspectRatio", "xMaxYMax meet")
-        .attr("viewBox", "0 0 1050 800")
+        .attr("viewBox", `0 0 1050 ${height}`);
 
 
     vis.g = vis.svg.append("g")
@@ -35,12 +40,17 @@ FlowChart.prototype.initVis = function() {
     // Set the y-coordinate of the first row of outcome blocks
     vis.row1y = -35;
 
+    // blockSpacing is the number of pixels between tiles, trueBlockWidth is the full width of a tile (blockWidth + blockSpacing)
+    vis.blockSpacing = 1;
+
     // Make adjustments for different screen heights, so that the visualization doesn't get cut off at the bottom
     // blockSize sets the width/height of each tile, blockGroupWidth sets the number of tiles in a block group row
     // (though this actual value may vary based on a scalar)
     if (phoneBrowsing === true) {
-        vis.blockSize = 5;
-        vis.blockGroupWidth = 40;
+        vis.blockSize = 5.5;
+        vis.blockGroupWidth = 31;
+        vis.blockSpacing = 2;
+
 
         // Shift all tile columns over a little on mobile for better centering
         vis.col1x += 25;
@@ -69,8 +79,6 @@ FlowChart.prototype.initVis = function() {
     // Initiliaze this boolean, which will be used to clear a pinned highlight tile tooltip later if set
     vis.pinnedTooltip = false;
 
-    // blockSpacing is the number of pixels between tiles, trueBlockWidth is the full width of a tile (blockWidth + blockSpacing)
-    vis.blockSpacing = 1;
     vis.trueBlockWidth = (vis.blockSize + vis.blockSpacing);
 
     // fullBlockWidth is the width, in pixels, of the group of tiles (the true width of each block multiplied by the number of blocks in a row)
@@ -136,7 +144,7 @@ FlowChart.prototype.initVis = function() {
     // (e.g. the width of 'No Sustained Findings' must be made wider so that the group fits within the window height and some of that screen real-estate
     // can be borrowed from the 'Investigation Pending' group which is made narrower because it has very few tiles)
     vis.colWidths = {
-        "Investigation Pending": Math.round(0.5*vis.blockGroupWidth),
+        "Investigation Pending": Math.round(0.6*vis.blockGroupWidth),
 
         "No Sustained Findings": Math.round(2.0*vis.blockGroupWidth),
 
