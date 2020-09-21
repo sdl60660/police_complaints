@@ -137,6 +137,12 @@ FlowChart.prototype.initVis = function() {
         "Training/Counseling": [vis.col3x, vis.row1y + 175 + vis.rowHeightAdjustment],
         "No Guilty Findings": [vis.col3x, vis.row1y + 395 + 2*vis.rowHeightAdjustment],
         "Discipline Pending": [vis.col3x, vis.row1y + 475 + 2*vis.rowHeightAdjustment]
+    };
+
+    if (phoneBrowsing === true) {
+        vis.outcomeCoordinates["Training/Counseling"][1] += 40;
+        vis.outcomeCoordinates["No Guilty Findings"][1] += 160;
+        vis.outcomeCoordinates["Discipline Pending"][1] += 200;
     }
 
     // Set the true widths of each outcome tile group. These are all based on the blockGroupWidth established above, but are given a scalar to account
@@ -225,7 +231,7 @@ FlowChart.prototype.initVis = function() {
         .attr("x", vis.col3x + 25)
         .attr("y", vis.row1y + 80)
         .attr("width", vis.fullBlockWidth*1.12)
-        .attr("height", 565 + 2*vis.rowHeightAdjustment)
+        .attr("height", () => phoneBrowsing === true ? 820 + 2*vis.rowHeightAdjustment : 565 + 2*vis.rowHeightAdjustment)
         .attr("stroke-width", "1px")
         .attr("stroke", "black")
         .attr("fill", "rgba(255,255,255,0.5)")
