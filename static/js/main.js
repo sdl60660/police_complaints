@@ -564,20 +564,10 @@ function showComplaint() {
 
 
 // Activate function: triggers on annotation "Philadelphia Police Complaint Data"
-function highlightComplaint() {
-    $("#sample-complaint-tile")
-        .css("opacity", 1.0);
-
-    $("#sunburst-tile")
-        .css("opacity", 0.2);
-
+function highlightComplaintDetails() {
     // $("#sample-tooltip .detail-title")
     // $("#sample-tooltip .detail-title:not(.persistent)")
     //     .css("background-color", "rgba(28, 148, 196, 0)");
-
-    // Reset fill opacity on all paths to default (0.6)
-    $("#sunburst-area path")
-        .css("fill-opacity", 0.6);
 
     $("#sample-tooltip .persistent").markerAnimation({
             "color":'#fe9',
@@ -588,6 +578,35 @@ function highlightComplaint() {
             "repeat": false
         })
 
+
+    // Reset highlighting on complaint outcome
+    $("#sample-tooltip .outcome")
+        .css("background", "none")
+        .css("background-color", "rgba(28, 148, 196, 0.0)");
+
+}
+
+
+function highlightComplaintOutcome() {
+    $("#sample-complaint-tile")
+        .css("opacity", 1.0);
+
+    $("#sunburst-tile")
+        .css("opacity", 0.2);
+
+     // Reset fill opacity on all paths to default (0.6)
+    $("#sunburst-area path")
+        .css("fill-opacity", 0.6);
+
+
+    $("#sample-tooltip .outcome").markerAnimation({
+            "color": 'rgba(242,142,44,0.6)',
+            'padding_bottom':'.1em',
+            "thickness":'1.2em',
+            "duration":'1s',
+            "function":'ease',
+            "repeat": false
+        })
 }
 
 
@@ -626,6 +645,31 @@ function showInvestigationGroups() {
 
 // Activate function: triggers on annotation "Discarded Complaints"
 function highlightNotSustained() {
+
+    // If on mobile, the sunburst entrance happens here
+    if (phoneBrowsing === true && sunburstEntered === false) {
+        sunburst = new Sunburst("#sunburst-area");
+        sunburstEntered = true;
+        // Disable user controls over the dropdown selects until the end of the sunburst section
+        // disableSunburstUserControl();
+    }
+
+    $("#sunburst-static-text")
+        .clearQueue()
+        .animate({ 'top': '80px'}, 1000);
+
+    sunburst.displaySecondLevel = false;
+    sunburst.wrangleData();
+
+    // Clears any artificial or real hover (if active)
+    sunburst.mouseout();
+
+    // Fade the sample complaint tile and show the sunburst tile
+    $("#sample-complaint-tile")
+        .css("opacity", 0.2);
+
+    $("#sunburst-tile")
+        .css("opacity", 1.0);
 
     // Simulate a hover over the 'sustained finding' section
     artificialHover("No Sustained Findings");
@@ -925,7 +969,7 @@ function showComplaintTypes() {
 
 // Activate function: triggers on final, phantom step, if on mobile
 function hideFinalAnnotationSlide() {
-    $("section.step").eq(16)
+    $("section.step").eq(12)
         .css("opacity", hiddenOpacity);
 }
 
@@ -1004,25 +1048,25 @@ function setScrollDispatcher() {
         // console.log(index, progress);
 
         // On the final index, as the end text comes into view and the flowchart starts to scroll out, fade the flowchart
-        if (index === 17 && progress >= 1.5) {
+        if (index === 13 && progress >= 1.5) {
             $("#flowchart-tile")
                 .css("opacity", 0.2);
         }
         // Return opacity to the flowchart if the user scrolls back up
-        else if (index === 17 && progress < 1.5) {
+        else if (index === 13 && progress < 1.5) {
             $("#flowchart-tile")
                 .css("opacity", 1.0);
         }
 
         // On mobile, hide the annotation at the top once the user hits the end text (otherwise this will cover the top of the screen)
-        if (index >= 17 && progress > 2.0 && $("section.step").eq(16).css("opacity") !== "0" && phoneBrowsing === true) {
+        if (index >= 13 && progress > 2.0 && $("section.step").eq(12).css("opacity") !== "0" && phoneBrowsing === true) {
             hideFinalAnnotationSlide();
             $(".step")
                 .css("position", "absolute");
         }
         // Return the annotation if they scroll back up
-        else if (index >= 17 && progress < 2.0 && $("section.step").eq(16).css("opacity") === "0" && phoneBrowsing === true) {
-            $("section.step").eq(16)
+        else if (index >= 13 && progress < 2.0 && $("section.step").eq(12).css("opacity") === "0" && phoneBrowsing === true) {
+            $("section.step").eq(12)
                 .css("opacity", 1.0);
             $(".step")
                 .css("position", "fixed");
@@ -1062,30 +1106,26 @@ function setActivateFunctions() {
     activateFunctions[0] = displayIntroText;
 
     // Sample complaint tile functions
-    activateFunctions[1] = showComplaint;
-    activateFunctions[2] = highlightComplaint;
+    activateFunctions[1] = highlightComplaintDetails;
+    activateFunctions[2] = highlightComplaintOutcome;
 
     // Sunburst tile functions
-    activateFunctions[3] = showInvestigationGroups;
-    activateFunctions[4] = highlightNotSustained;
-    activateFunctions[5] = highlightSustained;
-    activateFunctions[6] = showDisciplinaryGroups;
-    activateFunctions[7] = highlightGuilty;
-    activateFunctions[8] = guiltyWhiteComplainant;
-    activateFunctions[9] = guiltyBlackComplainant;
-    activateFunctions[10] = guiltyBlackComplainantWhiteOfficer;
-    activateFunctions[11] = guiltyWhiteComplainantBlackOfficer;
-    // activateFunctions[12] = enableUserExamine;
+    activateFunctions[3] = highlightNotSustained;
+    activateFunctions[4] = showDisciplinaryGroups;
+    activateFunctions[5] = guiltyWhiteComplainant;
+    activateFunctions[6] = guiltyBlackComplainant;
+    activateFunctions[7] = guiltyBlackComplainantWhiteOfficer;
+    // Matrix will go here
 
     // Flowchart tile functions
-    activateFunctions[12] = flowchartEntrance;
-    activateFunctions[13] = highlightTile;
-    activateFunctions[14] = showFlowchartByRace;
-    activateFunctions[15] = highlightOverduePending;
-    activateFunctions[16] = showComplaintTypes;
+    activateFunctions[8] = flowchartEntrance;
+    activateFunctions[9] = highlightTile;
+    activateFunctions[10] = showFlowchartByRace;
+    activateFunctions[11] = highlightOverduePending;
+    activateFunctions[12] = showComplaintTypes;
 
     // End text functions
-    activateFunctions[17] = hideFinalAnnotationSlide();
+    activateFunctions[13] = hideFinalAnnotationSlide();
 }
 
 
@@ -1093,18 +1133,18 @@ function setActivateFunctions() {
 // Actual visualization tiles are set with position: sticky, so the height of the surrounding wrapper div will determine when they stop moving with the scroll
 function setTileWrapperHeights() {
 
-    const sampleComplaintHeight = scrollerDivObjects[3].getBoundingClientRect().bottom - scrollerDivObjects[1].getBoundingClientRect().top - 1100;
+    const sampleComplaintHeight = scrollerDivObjects[3].getBoundingClientRect().bottom - scrollerDivObjects[1].getBoundingClientRect().top - 850;
     $("#sample-complaint-wrapper")
         .css("height", sampleComplaintHeight);
 
     // Sunburst annotations run from the second annotation div (first visible) to the ninth (top of ten)
     // There's a little extra finagling at the end to get the margin between the two viz wrappers correct
-    const sunburstWrapperHeight = scrollerDivObjects[12].getBoundingClientRect().bottom - scrollerDivObjects[3].getBoundingClientRect().top + 50 - 415;
+    const sunburstWrapperHeight = scrollerDivObjects[8].getBoundingClientRect().bottom - scrollerDivObjects[3].getBoundingClientRect().top + 50 - 415;
     $("#sunburst-wrapper")
         .css("height", sunburstWrapperHeight);
 
     // Flowchart annotation divs run from the tenth annotation div to the fourteenth
-    const flowChartWrapperHeight = scrollerDivObjects[scrollerDivObjects.length - 1].getBoundingClientRect().top - scrollerDivObjects[12].getBoundingClientRect().top + 700;
+    const flowChartWrapperHeight = scrollerDivObjects[scrollerDivObjects.length - 1].getBoundingClientRect().top - scrollerDivObjects[8].getBoundingClientRect().top + 700;
     $("#flowchart-wrapper")
         .css("height", flowChartWrapperHeight);
 }

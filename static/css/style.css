@@ -34,7 +34,7 @@ strong {
 }
 
 #intro-wrapper {
-    min-height: 100vh;
+    /*min-height: 100vh;*/
     z-index: 100;
 }
 
@@ -51,7 +51,14 @@ strong {
 
 #sample-complaint-tile {
     top: 100px !important;
+
     margin-top: 50px !important;
+    margin-left: 400px;
+    margin-bottom: 20px;
+}
+
+#sample-tooltip .detail-title {
+    text-decoration: underline;
 }
 
 #intro-tile {
@@ -273,6 +280,11 @@ strong {
         margin-bottom: 1000px;
     }
 
+    #sample-complaint-tile {
+        margin-left: 20px;
+        /*margin: auto;*/
+    }
+
     .viz-tile {
         padding-top: 150px;
     }
@@ -361,9 +373,9 @@ strong {
 }
 
 #sample-tooltip {
-    max-width: 600px;
+    max-width: 630px;
     line-height: 1.1;
-    font-size: 18px;
+    font-size: 17px;
 }
 
 #category-tooltip {
