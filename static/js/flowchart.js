@@ -352,7 +352,7 @@ FlowChart.prototype.wrangleData = function() {
             .sort((a, b) => a.date_received - b.date_received);
     }
 
-    console.log(vis.chartData.length);
+    // console.log(vis.chartData.length);
 
     // Establish sort order for given 'group by' list (this is in reverse because of the unknowns)
     vis.reverseSortOrder = vis.representedVals[vis.representedAttribute].slice().reverse();
@@ -392,7 +392,7 @@ FlowChart.prototype.wrangleData = function() {
 
     // Render/update flowchart tiles
     vis.updateVis();
-}
+};
 
 
 FlowChart.prototype.updateVis = function() {
@@ -403,7 +403,7 @@ FlowChart.prototype.updateVis = function() {
         .selectAll("rect")
         .data(vis.chartData , function(d) {
             return d.discipline_id;
-        })
+        });
 
 
     // EXIT old elements not present in new data (this shouldn't be the case)

@@ -785,9 +785,13 @@ function guiltyBlackComplainant() {
 
 // Activate function: triggers on annotation "Black Complainant/White Officer"
 function guiltyBlackComplainantWhiteOfficer() {
-    // Remove outlined sections in case of a fast scroll up
+    // Since this is the last sunburst annotation, if user enters from below, show the sunburst and fade the flowchart
     if (scrollDirection === 'up') {
-        sunburst.removeOutlineSections();
+        $("#sunburst-tile")
+            .css("opacity", 1.0);
+
+        $("#flowchart-tile")
+            .css("opacity", 0.2);
     }
 
     // Set complainant race select to 'Black' and officer race to 'White
@@ -919,9 +923,17 @@ function showFlowchartByRace() {
     else if (scrollDirection === 'up') {
         flowChart.returnTileSections();
 
-        startRange = startDate;
-        endRange = addMonths(startDate, maxDateOffset);
-        updateFlowchartDates();
+        if (phoneBrowsing === true) {
+            $("#mobile-start-year-select").val("2013");
+            $("#mobile-end-year-select").val("2020");
+
+            flowChart.wrangleData();
+        }
+        else {
+            startRange = startDate;
+            endRange = addMonths(startDate, maxDateOffset);
+            updateFlowchartDates();
+        }
     }
 
 }
@@ -937,15 +949,28 @@ function highlightOverduePending() {
 
     // If coming from below, reset complaint classifications to all
     if (scrollDirection === 'up') {
-        $(".chosen-select").chosen().val(flowChart.incidentTypes).trigger("chosen:updated");
-        flowChart.selectedComplaintTypes = flowChart.incidentTypes;
+        if (phoneBrowsing === true) {
+            $("#mobile-complaint-type-select").val("All");
+        }
+        else {
+            $(".chosen-select").chosen().val(flowChart.incidentTypes).trigger("chosen:updated");
+            flowChart.selectedComplaintTypes = flowChart.incidentTypes;
+        }
     }
 
     // Change date range to only include dates up through the end of 2017
-    startRange = startDate;
-    endRange = new Date("Jan 01 2018");
+    if (phoneBrowsing === true) {
+        $("#mobile-start-year-select").val("2013");
+        $("#mobile-end-year-select").val("2018");
 
-    updateFlowchartDates();
+        flowChart.wrangleData();
+    }
+    else {
+        startRange = startDate;
+        endRange = new Date("Jan 01 2018");
+
+        updateFlowchartDates();
+    }
 
     // Highlight the tiles in the 'Investigation Pending' section
     flowChart.highlightTileSection("Investigation Pending");
