@@ -49,6 +49,16 @@ FlowChart.prototype.initVis = function() {
     // blockSize sets the width/height of each tile, blockGroupWidth sets the number of tiles in a block group row
     // (though this actual value may vary based on a scalar)
     if (phoneBrowsing === true) {
+        vis.blockSize = 10;
+        vis.blockGroupWidth = 94;
+        vis.blockSpacing = 0;
+
+        // Shift all tile columns over a little on mobile for better centering
+        vis.col1x += 25;
+        vis.col2x += 25;
+        vis.col3x += 25;
+
+        vis.rowHeightAdjustment = 0;
         vis.rowHeightAdjustment = 0;
     }
     else if (window.innerHeight > 950) {
@@ -160,10 +170,6 @@ FlowChart.prototype.initVis = function() {
             "No Guilty Findings": [470, 1080],
             "Discipline Pending": [700, 1080]
         };
-
-        vis.blockSize = 10;
-        vis.blockGroupWidth = 94;
-        vis.blockSpacing = 0;
 
         vis.colWidths = {
             "Investigation Pending": Math.round(vis.blockGroupWidth),
@@ -389,7 +395,7 @@ FlowChart.prototype.updateVis = function() {
                 .style("fill-opacity", 0.9)
                 // Initial X and Y coordinates for the tile are set to center top of the visualization area, where they'll 'enter' from
                 .attr("y", -100)
-                .attr("x", vis.col2x + vis.trueBlockWidth * vis.colWidths["No Sustained Findings"]/2)
+                .attr("x", vis.col2x + vis.trueBlockWidth * vis.colWidths["No Sustained Findings"] / 2)
                 .attr("height", vis.blockSize)
                 .attr("width", vis.blockSize)
                 .attr("fill", function(d) {
