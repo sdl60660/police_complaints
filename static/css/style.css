@@ -218,6 +218,24 @@ strong {
     font-size: 20pt;
 }
 
+.ui-slider {
+	visibility: hidden;
+	padding: 0px;
+	border-width: 0px;
+}
+
+.ui-slider-handle {
+	visibility: visible;
+	border: none;
+	/*max-width: 5px;*/
+}
+
+#mobile-controls {
+    max-height: 0px;
+    visibility: hidden;
+    position: absolute;
+}
+
 @media (max-width: 1100px) {
     #sections {
         /*position: fixed;*/
@@ -283,6 +301,20 @@ strong {
     #sample-complaint-tile {
         margin-left: 20px;
         /*margin: auto;*/
+    }
+
+    #desktop-controls, #slider-div, .ui-slider-handle {
+        max-height: 0px;
+        visibility: hidden;
+        position: absolute;
+    }
+
+    #mobile-controls {
+        max-height: unset;
+        visibility: visible;
+        position: relative;
+        font-size: 19px;
+        margin-bottom: 3vh;
     }
 
     .viz-tile {
@@ -478,18 +510,6 @@ select.other, span.other {
 	background-color: rgba(28, 148, 196, 0.0);
 }
 
-
-.ui-slider {
-	visibility: hidden;
-	padding: 0px;
-	border-width: 0px;
-}
-
-.ui-slider-handle {
-	visibility: visible;
-	border: none;
-	/*max-width: 5px;*/
-}
 
 #flowchart-tile.group-label {
 	z-index: 20;

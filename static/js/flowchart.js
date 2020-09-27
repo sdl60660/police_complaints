@@ -139,12 +139,6 @@ FlowChart.prototype.initVis = function() {
         "Discipline Pending": [vis.col3x, vis.row1y + 475 + 2*vis.rowHeightAdjustment]
     };
 
-    if (phoneBrowsing === true) {
-        vis.outcomeCoordinates["Training/Counseling"][1] += 40;
-        vis.outcomeCoordinates["No Guilty Findings"][1] += 160;
-        vis.outcomeCoordinates["Discipline Pending"][1] += 200;
-    }
-
     // Set the true widths of each outcome tile group. These are all based on the blockGroupWidth established above, but are given a scalar to account
     // for the very imbalanced size of these groups so that things can fit neatly on the screen
     // (e.g. the width of 'No Sustained Findings' must be made wider so that the group fits within the window height and some of that screen real-estate
@@ -161,6 +155,41 @@ FlowChart.prototype.initVis = function() {
         "Discipline Pending": Math.round(vis.blockGroupWidth)
     }
 
+    if (phoneBrowsing === true) {
+        vis.outcomeCoordinates = {
+            "Investigation Pending": [30, 1080],
+
+            "No Sustained Findings": [30, 30],
+
+            "Sustained Finding": [30, 660],
+
+            "Guilty Finding": [30, 700],
+            "Training/Counseling": [250, 700],
+            "No Guilty Findings": [470, 700],
+            "Discipline Pending": [700, 700]
+        };
+
+        vis.blockGroupWidth = 90;
+
+        vis.colWidths = {
+            "Investigation Pending": Math.round(0.3*vis.blockGroupWidth),
+
+            "No Sustained Findings": Math.round(1.3*vis.blockGroupWidth),
+
+            "Sustained Finding": Math.round(0.3*vis.blockGroupWidth),
+            "Guilty Finding": Math.round(0.3*vis.blockGroupWidth),
+            "Training/Counseling": Math.round(0.3*vis.blockGroupWidth),
+            "No Guilty Findings": Math.round(0.3*vis.blockGroupWidth),
+            "Discipline Pending": Math.round(0.3*vis.blockGroupWidth)
+        }
+
+        // vis.outcomeCoordinates["Training/Counseling"][1] += 40;
+        // vis.outcomeCoordinates["No Guilty Findings"][1] += 160;
+        // vis.outcomeCoordinates["Discipline Pending"][1] += 200;
+    }
+
+
+
     // Add outcome labels to the top of each tile group
     // On hover, these will display summary statistics for the tiles in the group
     vis.outcomeLabels = vis.g.selectAll("text")
@@ -171,12 +200,17 @@ FlowChart.prototype.initVis = function() {
             return "group-label " + formatSpacedStrings(d);
         })
         .attr("x", function(d) {
-            return vis.outcomeCoordinates[d][0] + (vis.trueBlockWidth * vis.colWidths[d] / 2);
+            if (phoneBrowsing === true) {
+                return vis.outcomeCoordinates[d][0];
+            }
+            else {
+                return vis.outcomeCoordinates[d][0] + (vis.trueBlockWidth * vis.colWidths[d] / 2);
+            }
         })
         .attr("y", function(d) {
             return vis.outcomeCoordinates[d][1] - 30;
         })
-        .attr("text-anchor", "middle")
+        .attr("text-anchor", () => phoneBrowsing === true ? "start" : "middle")
         .style("font-size", function(d) {
             // Adjust font size for mobile to make these headings more visible
             // Top-level labels are larger than the second-level (disciplinary) outcomes
@@ -227,17 +261,19 @@ FlowChart.prototype.initVis = function() {
     vis.incidentTypes = ['Departmental Violations', 'Lack Of Service', 'Physical Abuse',  'Verbal Abuse','Unprofessional Conduct', 'Criminal Allegation', 'Harassment','Civil Rights Complaint','Domestic', 'Falsification', 'Sexual Crime/Misconduct','Drugs']
 
     // Outline all Sustained Finding subgroups to make relationship more clear
-    vis.svg.append("rect")
-        .attr("x", vis.col3x + 25)
-        .attr("y", vis.row1y + 80)
-        .attr("width", vis.fullBlockWidth*1.12)
-        .attr("height", () => phoneBrowsing === true ? 820 + 2*vis.rowHeightAdjustment : 565 + 2*vis.rowHeightAdjustment)
-        .attr("stroke-width", "1px")
-        .attr("stroke", "black")
-        .attr("fill", "rgba(255,255,255,0.5)")
-        .attr("rx", 10)
-        .attr("ry", 10)
-        .lower();
+    if (phoneBrowsing !== true) {
+        vis.svg.append("rect")
+            .attr("x", vis.col3x + 25)
+            .attr("y", vis.row1y + 80)
+            .attr("width", vis.fullBlockWidth * 1.12)
+            .attr("height", () => phoneBrowsing === true ? 820 + 2 * vis.rowHeightAdjustment : 565 + 2 * vis.rowHeightAdjustment)
+            .attr("stroke-width", "1px")
+            .attr("stroke", "black")
+            .attr("fill", "rgba(255,255,255,0.5)")
+            .attr("rx", 10)
+            .attr("ry", 10)
+            .lower();
+    }
 
     // Add a box under the 'Group By' select for a dynamic/updating legend based on the 'group by' value
     vis.legendSVG = d3.select("#flowchart-legend-area").append("svg");
