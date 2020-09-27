@@ -1258,6 +1258,35 @@ function main() {
                 flowChart.wrangleData();
             });
 
+
+        $("#mobile-start-year-select, #mobile-end-year-select")
+            .on('change', () => {
+                const startYear = $("#mobile-start-year-select").children("option:selected").val();
+                const endYear = $("#mobile-end-year-select").children("option:selected").val();
+
+                $("#mobile-end-year-select option, #mobile-start-year-select option")
+                    .removeAttr("disabled");
+
+                for (let i=2013; i < startYear; i++) {
+                    $(`#mobile-end-year-select option[value="${i}"]`)
+                        .attr("disabled", "disabled")
+                }
+
+                for (let i=endYear; i <= 2020; i++) {
+                    $(`#mobile-start-year-select option[value="${i}"]`)
+                        .attr("disabled", "disabled")
+                }
+
+                // $("option[value='stackoverflow']")
+                //     .attr("disabled", "disabled");
+            });
+
+        // $("#mobile-end-year-select")
+        //     .on('change', () => {
+        //
+        //     });
+
+
         displayIntroText();
 
         // If user loads visualization in the middle of the page, run all activate functions that they should have passed
