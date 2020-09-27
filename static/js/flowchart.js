@@ -10,14 +10,14 @@ FlowChart.prototype.initVis = function() {
     var vis = this;
 
     // Establish margins
-    vis.margin = {top: 85, right: 15, bottom: 45, left: 40};
+    vis.margin = {top: 40, right: 15, bottom: 45, left: 40};
 
     vis.svg = d3.select(vis.parentElement)
         .append("svg");
 
     let height = 800;
     if (phoneBrowsing === true) {
-        height = 1250;
+        height = 1760;
     }
 
     // Make svg size flexible based on window dimensions
@@ -41,32 +41,23 @@ FlowChart.prototype.initVis = function() {
     vis.row1y = -35;
 
     // blockSpacing is the number of pixels between tiles, trueBlockWidth is the full width of a tile (blockWidth + blockSpacing)
-    vis.blockSpacing = 1;
+    // (Replacing with colored border on tile)
+    vis.blockSpacing = 0;
 
     // Make adjustments for different screen heights, so that the visualization doesn't get cut off at the bottom
     // blockSize sets the width/height of each tile, blockGroupWidth sets the number of tiles in a block group row
     // (though this actual value may vary based on a scalar)
     if (phoneBrowsing === true) {
-        vis.blockSize = 5.5;
-        vis.blockGroupWidth = 31;
-        vis.blockSpacing = 2;
-
-
-        // Shift all tile columns over a little on mobile for better centering
-        vis.col1x += 25;
-        vis.col2x += 25;
-        vis.col3x += 25;
-
         vis.rowHeightAdjustment = 0;
     }
     else if (window.innerHeight > 950) {
-        vis.blockSize = 5;
+        vis.blockSize = 6;
         vis.blockGroupWidth = 40;
 
         vis.rowHeightAdjustment = 0;
     }
     else {
-         vis.blockSize = 4;
+         vis.blockSize = 5;
          vis.blockGroupWidth = 43;
 
          vis.col2x += 25;
@@ -157,30 +148,32 @@ FlowChart.prototype.initVis = function() {
 
     if (phoneBrowsing === true) {
         vis.outcomeCoordinates = {
-            "Investigation Pending": [30, 1080],
+            "Investigation Pending": [30, 1660],
 
             "No Sustained Findings": [30, 30],
 
-            "Sustained Finding": [30, 660],
+            "Sustained Finding": [30, 1040],
 
-            "Guilty Finding": [30, 700],
-            "Training/Counseling": [250, 700],
-            "No Guilty Findings": [470, 700],
-            "Discipline Pending": [700, 700]
+            "Guilty Finding": [30, 1080],
+            "Training/Counseling": [250, 1080],
+            "No Guilty Findings": [470, 1080],
+            "Discipline Pending": [700, 1080]
         };
 
-        vis.blockGroupWidth = 90;
+        vis.blockSize = 10;
+        vis.blockGroupWidth = 94;
+        vis.blockSpacing = 0;
 
         vis.colWidths = {
-            "Investigation Pending": Math.round(0.3*vis.blockGroupWidth),
+            "Investigation Pending": Math.round(vis.blockGroupWidth),
 
-            "No Sustained Findings": Math.round(1.3*vis.blockGroupWidth),
+            "No Sustained Findings": Math.round(vis.blockGroupWidth),
 
-            "Sustained Finding": Math.round(0.3*vis.blockGroupWidth),
-            "Guilty Finding": Math.round(0.3*vis.blockGroupWidth),
-            "Training/Counseling": Math.round(0.3*vis.blockGroupWidth),
-            "No Guilty Findings": Math.round(0.3*vis.blockGroupWidth),
-            "Discipline Pending": Math.round(0.3*vis.blockGroupWidth)
+            "Sustained Finding": Math.round(0.22*vis.blockGroupWidth),
+            "Guilty Finding": Math.round(0.22*vis.blockGroupWidth),
+            "Training/Counseling": Math.round(0.22*vis.blockGroupWidth),
+            "No Guilty Findings": Math.round(0.22*vis.blockGroupWidth),
+            "Discipline Pending": Math.round(0.25*vis.blockGroupWidth)
         }
 
         // vis.outcomeCoordinates["Training/Counseling"][1] += 40;
@@ -323,7 +316,7 @@ FlowChart.prototype.wrangleData = function() {
             // Revisit this later
             return vis.selectedComplaintTypes.includes(d.general_cap_classification);
         })
-        .sort((a, b) => a.date_received - b.date_received)
+        .sort((a, b) => a.date_received - b.date_received);
 
     console.log(vis.chartData.length);
 
@@ -410,6 +403,8 @@ FlowChart.prototype.updateVis = function() {
                         return vis.color(d[vis.representedAttribute]);
                     }
                 })
+                .style("stroke", "#f9f9f9")
+                .style("stroke-width", () => phoneBrowsing === true ? "2px" : "1px")
                 // Mouseenter/mouseout callback functions will trigger/remove tooltips for given investigation tile
                 .on("mouseenter", function(d) {
                     // If there's a highlighted tile with a pinned tooltip, we'll be extra cautious about removing that
@@ -615,25 +610,37 @@ FlowChart.prototype.setToolTips = function() {
             // After the flowchart has fallen into fixed, position, this will be the difference between the trueMarginSize and the tileOffset
             // Without this offset, the tooltip would render in a position as if the the flowchart is in its original, pre-scroll location
             let yOffset = trueMarginSize - Math.min(trueMarginSize, tileOffset);
-
-            // Based on the outcome group, the direction of the tooltip relative to the tile will change, and therefore
-            // the offsets will need to change a little too, so that the tooltip is positioned next ot the tile and not on top of it
-            if (d.investigative_findings === 'Sustained Finding') {
-                var xOffset = -4;
-            }
-            else if ((d.end_state === 'No Sustained Findings' && d.final_state_index / (vis.colWidths['No Sustained Findings'])) ||
-                d.end_state === 'No Guilty Findings' || d.end_state === 'Discipline Pending') {
-                var xOffset = 0;
-                yOffset -= vis.blockSize;
-            }
-            else {
-                var xOffset = vis.blockSize + 6;
-            }
+            let xOffset = 0;
 
             // If browser isn't Chrome, don't worry about the yOffset issue, it doesn't seem to try to render the tooltip in the original
             // tile position on Firefox/Safari (other browsers untested)
             if (typeof window.chrome === "undefined") {
-                yOffset = -vis.blockSize;
+                yOffset = 0;
+            }
+
+            // Based on the outcome group, the direction of the tooltip relative to the tile will change, and therefore
+            // the offsets will need to change a little too, so that the tooltip is positioned next ot the tile and not on top of it
+            if (d.end_state === 'No Guilty Findings' || d.end_state === 'Discipline Pending') {
+                yOffset -= vis.blockSize;
+            }
+            else if (d.end_state === 'No Sustained Findings') {
+                // Determine tile row by dividing the tile's index number by the width of the 'No Sustained Findings' group
+                const tileRow = d.final_state_index / (vis.colWidths['No Sustained Findings']);
+                if (tileRow >= 62) {
+                    yOffset -= vis.blockSize;
+                }
+                else {
+                    xOffset = vis.blockSize;
+                    yOffset -= vis.blockSize / 2;
+                }
+            }
+            else if (d.investigative_findings === 'Sustained Finding') {
+                xOffset -= vis.blockSize - 1;
+                yOffset -= vis.blockSize / 2;
+            }
+            else {
+                xOffset = vis.blockSize;
+                yOffset -= vis.blockSize / 2;
             }
 
             return [yOffset, xOffset];

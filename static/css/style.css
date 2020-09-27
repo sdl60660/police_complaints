@@ -112,7 +112,7 @@ strong {
 .step.phantom {
     /*margin-top: var(--spacer-top);*/
 	/*margin-bottom: var(--spacer-bottom);*/
-	/*background-color: rgba(0,0,0,0) !important;*/
+	background-color: rgba(0,0,0,0) !important;
     opacity: 0.0;
     z-index: -1;
     margin-bottom: 61vh;
@@ -240,30 +240,37 @@ strong {
     #sections {
         /*position: fixed;*/
         /*display: inline-block;*/
-        width: 0px;
-        top: 0;
-        left: 50;
+        /*width: 0px;*/
+        /*top: 0;*/
+        /*display: flex;*/
+        /*align-content: center;*/
+
         z-index: 50;
+        width: 600px;
     }
 
     .step {
-        margin-top: 0px;
-        margin-bottom: 0px;
-        margin-left: 0px;
+        /*margin-top: 0px;*/
+        /*margin-bottom: 0px;*/
+        /*margin-left: 0px;*/
 
-        min-height: 150px;
-        padding-bottom: 10px;
-        border-radius: 15px;
+        /*min-height: 150px;*/
+        /*padding-bottom: 10px;*/
+        /*border-radius: 15px;*/
 
-        width: 100%;
+        /*width: 100%;*/
 
-        font-size: 15pt;
+        font-size: 13pt;
 
-        position: fixed;
-        left: 50;
-        top: 0;
+        /*position: fixed;*/
+        left: 50%;
+        transform: translate(-25%, 0);
 
-        opacity: 0.0;
+        margin-top: 100vh;
+	    margin-bottom: 0;
+        /*top: 0;*/
+
+        opacity: 0.95;
 
         z-index: 80;
 
@@ -286,17 +293,18 @@ strong {
         padding-bottom: 6px;
     }
 
+    /*.mobile-spacer {*/
+        /*height: 100vh;*/
+    /*}*/
+
+    /*.gap-spacer {*/
+        /*margin-bottom: 1000px;*/
+    /*}*/
+
     #sunburst-val-pct-text {
         font-size: 30pt;
     }
 
-    .mobile-spacer {
-        height: 100vh;
-    }
-
-    .gap-spacer {
-        margin-bottom: 1000px;
-    }
 
     #sample-complaint-tile {
         margin-left: 20px;
@@ -319,6 +327,10 @@ strong {
 
     .viz-tile {
         padding-top: 150px;
+    }
+
+    #flowchart-tile {
+        padding-top: 60px;
     }
 
     .container {
@@ -349,6 +361,14 @@ strong {
 
     #annotation-tooltip {
         font-size: 14pt;
+    }
+
+    #intro-wrapper {
+        min-height: 50vh;
+    }
+
+    .step.section-change {
+        margin-top: 200vh;
     }
 
     h2 {

@@ -79,18 +79,19 @@ function determinePhoneBrowsing() {
     // On mobile, fade non-current annotation slides to 0, because they are all fixed at the top and overlapping
     // On desktop keep them visible, but low opacity
     if (phoneBrowsing === true) {
-        hiddenOpacity = 0.0;
+        // hiddenOpacity = 0.0;
+        hiddenOpacity = 0.2;
     }
     else {
         hiddenOpacity = 0.2;
     }
 
     // If mobile, and annotations are up top, adjust top-padding on viz-tiles to make room for fixed-position annotation
-    if (phoneBrowsing === true) {
-        setDynamicPadding('#sample-complaint-tile', 1, 2);
-        setDynamicPadding('#sunburst-tile', 2, 9);
-        setDynamicPadding('#flowchart-tile', 9, 17);
-    }
+    // if (phoneBrowsing === true) {
+    //     setDynamicPadding('#sample-complaint-tile', 1, 2);
+    //     setDynamicPadding('#sunburst-tile', 2, 9);
+    //     setDynamicPadding('#flowchart-tile', 9, 17);
+    // }
 }
 
 
@@ -541,11 +542,17 @@ function displayIntroText() {
         .end();
 
     // If on Desktop, trigger the sunburst entrance here. On Mobile, it'll trigger when the user scrolls into that tile.
-    if (phoneBrowsing === false && sunburstEntered === false) {
+    // if (phoneBrowsing === false && sunburstEntered === false) {
+    if (sunburstEntered === false) {
         sunburst = new Sunburst("#sunburst-area");
         sunburstEntered = true;
         // disableSunburstUserControl();
     }
+
+    // Reset highlighting on complaint
+    $("#sample-tooltip .detail-title")
+        .css("background", "none")
+        .css("background-color", "rgba(28, 148, 196, 0.0)");
 }
 
 
@@ -614,7 +621,8 @@ function highlightComplaintOutcome() {
 // Activate function: triggers on annotation "Investigative Outcomes"
 function showInvestigationGroups() {
     // If on mobile, the sunburst entrance happens here
-    if (phoneBrowsing === true && sunburstEntered === false) {
+    // if (phoneBrowsing === true && sunburstEntered === false) {
+    if (sunburstEntered === false) {
         sunburst = new Sunburst("#sunburst-area");
         sunburstEntered = true;
         // Disable user controls over the dropdown selects until the end of the sunburst section
@@ -980,13 +988,15 @@ function hideFinalAnnotationSlide() {
 function activate(index) {
 
     // Fade/show corresponding annotation slide
-    $("section.step")
-        .css("opacity", hiddenOpacity)
-        .css("z-index", 10);
+    if (phoneBrowsing === false) {
+        $("section.step:not(.phantom)")
+            .css("opacity", hiddenOpacity)
+            .css("z-index", 10);
+    }
 
     if (index-1 > 0) {
         $("section.step").eq(index - 1)
-            .css("opacity", 1.0)
+            .css("opacity", () => phoneBrowsing === true ? 0.95 : 1.0)
             .css("z-index", 51);
     }
 
@@ -1023,7 +1033,8 @@ function setScrollDispatcher() {
     // If on mobile, the scrollerDiv used to identify the scroll controller sections will be the '.mobile-spacer' divs
     // If on desktop, it will be the '.step' divs with the annotation content (on mobile these are all fixed to the top)
     if (phoneBrowsing === true) {
-        scrollerDiv = '.mobile-spacer';
+        // scrollerDiv = '.mobile-spacer';
+        scrollerDiv = '.step';
     }
     else {
         scrollerDiv = '.step';
@@ -1133,7 +1144,13 @@ function setActivateFunctions() {
 // Actual visualization tiles are set with position: sticky, so the height of the surrounding wrapper div will determine when they stop moving with the scroll
 function setTileWrapperHeights() {
 
-    const sampleComplaintHeight = scrollerDivObjects[3].getBoundingClientRect().bottom - scrollerDivObjects[1].getBoundingClientRect().top - 850;
+    let sampleComplaintHeight = null;
+    if (phoneBrowsing === true) {
+        sampleComplaintHeight = scrollerDivObjects[3].getBoundingClientRect().bottom - scrollerDivObjects[1].getBoundingClientRect().top;
+    }
+    else {
+        sampleComplaintHeight = scrollerDivObjects[3].getBoundingClientRect().bottom - scrollerDivObjects[1].getBoundingClientRect().top - 850;
+    }
     $("#sample-complaint-wrapper")
         .css("height", sampleComplaintHeight);
 
