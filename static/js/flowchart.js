@@ -10,7 +10,7 @@ FlowChart.prototype.initVis = function() {
     var vis = this;
 
     // Establish margins
-    vis.margin = {top: 40, right: 15, bottom: 45, left: 40};
+    vis.margin = {top: 90, right: 15, bottom: 45, left: 40};
 
     vis.svg = d3.select(vis.parentElement)
         .append("svg");
@@ -18,6 +18,7 @@ FlowChart.prototype.initVis = function() {
     let height = 800;
     if (phoneBrowsing === true) {
         height = 1760;
+        vis.margin.top = 40;
     }
 
     // Make svg size flexible based on window dimensions
