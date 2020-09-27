@@ -244,9 +244,10 @@ strong {
         /*top: 0;*/
         /*display: flex;*/
         /*align-content: center;*/
-
+        width: 0;
         z-index: 50;
-        width: 600px;
+
+        left: 50%;
     }
 
     .step {
@@ -263,8 +264,8 @@ strong {
         font-size: 13pt;
 
         /*position: fixed;*/
-        left: 50%;
-        transform: translate(-25%, 0);
+
+        transform: translate(-50%, 0);
 
         margin-top: 100vh;
 	    margin-bottom: 0;
@@ -273,6 +274,8 @@ strong {
         opacity: 0.95;
 
         z-index: 80;
+
+        width: 600px;
 
         overflow: hidden;
     }

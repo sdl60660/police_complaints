@@ -7,7 +7,7 @@ FlowChart = function(_parentElement) {
 
 
 FlowChart.prototype.initVis = function() {
-    var vis = this;
+    const vis = this;
 
     // Establish margins
     vis.margin = {top: 90, right: 15, bottom: 45, left: 40};
@@ -293,7 +293,7 @@ FlowChart.prototype.initVis = function() {
 
 // This will gather variable values and format data correctly render/re-render flowchart
 FlowChart.prototype.wrangleData = function() {
-    var vis = this;
+    const vis = this;
 
     // Update the represented attribute for the 'group by' value
     vis.representedAttribute = $("#sort-feature-select").val();
@@ -315,26 +315,50 @@ FlowChart.prototype.wrangleData = function() {
     // 1. Only include investigations within the dates designated on the timeline slider
     // 2. Only include investigations whose types are selected in the 'Complaint Classification' multi-select
     // 3. Sort all tiles by date (this will remain one of the ways the tiles are sorted, but will ultimately be secondary to 'group by', if selected)
-    vis.chartData = officerDisciplineResults
-        .filter(function (d) {
-            return d.date_received >= startRange && d.date_received <= endRange;
-        })
-        .filter(function(d) {
-            // Revisit this later
-            return vis.selectedComplaintTypes.includes(d.general_cap_classification);
-        })
-        .sort((a, b) => a.date_received - b.date_received);
+
+    if (phoneBrowsing === false) {
+        vis.chartData = officerDisciplineResults
+            .filter(d => {
+                return d.date_received >= startRange && d.date_received <= endRange;
+            })
+            .filter(d => {
+                // Revisit this later
+                return vis.selectedComplaintTypes.includes(d.general_cap_classification);
+            })
+            .sort((a, b) => a.date_received - b.date_received);
+
+        // Update the counts on the complaint types in the 'Complaint Classification' multi-select with counts based on filtered dataset
+        vis.updateComplaintTypes();
+    }
+    else {
+        let startYear = $("#mobile-start-year-select").val();
+        let endYear = $("#mobile-end-year-select").val();
+
+        let singleSelectedComplaintType = $("#mobile-complaint-type-select").val()
+            .replace(/-/g, ' ');
+
+        vis.chartData = officerDisciplineResults
+            .filter(d => {
+                return d.date_received.getFullYear() >= startYear && d.date_received.getFullYear() <= endYear;
+            })
+            .filter(d => {
+                if (singleSelectedComplaintType === "All") {
+                    return true;
+                }
+                else {
+                    return d.general_cap_classification === singleSelectedComplaintType;
+                }
+            })
+            .sort((a, b) => a.date_received - b.date_received);
+    }
 
     console.log(vis.chartData.length);
-
-    // Update the counts on the complaint types in the 'Complaint Classification' multi-select with counts based on filtered dataset
-    vis.updateComplaintTypes();
 
     // Establish sort order for given 'group by' list (this is in reverse because of the unknowns)
     vis.reverseSortOrder = vis.representedVals[vis.representedAttribute].slice().reverse();
 
     // If there's a 'group by' attribute selected (i.e. not 'no_group'), re-sort chart data based on this attribute (tiles will retain secondary sort of date)
-    if (vis.representedAttribute != 'no_group') {
+    if (vis.representedAttribute !== 'no_group') {
         vis.chartData = vis.chartData
             .sort(function (a, b) {
                 return vis.reverseSortOrder.indexOf(b[vis.representedAttribute]) - vis.reverseSortOrder.indexOf(a[vis.representedAttribute]);
@@ -356,12 +380,12 @@ FlowChart.prototype.wrangleData = function() {
     vis.chartData.forEach(function(d) {
         d.final_state_index = vis.finalOutcomeIndices[d.end_state];
         vis.finalOutcomeIndices[d.end_state] += 1
-    })
+    });
 
 
     // Set the color scale domain based on 'group by' attribute
     vis.color
-        .domain(vis.representedVals[vis.representedAttribute])
+        .domain(vis.representedVals[vis.representedAttribute]);
 
     // Update the legend under the 'Group By' select based on the selected 'group by' attribute
     vis.updateLegend();
@@ -372,7 +396,7 @@ FlowChart.prototype.wrangleData = function() {
 
 
 FlowChart.prototype.updateVis = function() {
-    var vis = this;
+    const vis = this;
 
     // JOIN data with any existing elements
     vis.flowchart = vis.g
@@ -600,7 +624,7 @@ FlowChart.prototype.returnTileSections = function() {
 
 // Initializes hover tooltips with investigation details
 FlowChart.prototype.setToolTips = function() {
-    var vis = this;
+    const vis = this;
 
     // Use d3-tip extension to initialize tooltip
     vis.tip = d3.tip()

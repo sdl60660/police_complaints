@@ -1217,11 +1217,19 @@ function main() {
         });
 
         flowChart = new FlowChart("#chart-area");
-        timeline = new Timeline("#slider-div");
+
+        if (phoneBrowsing === false) {
+            timeline = new Timeline("#slider-div");
+        }
 
         $(".select")
             .chosen()
-            .on('change', function (event) {
+            .on('change', () => {
+                flowChart.wrangleData();
+            });
+
+        $("#mobile-start-year-select, #mobile-end-year-select, #mobile-complaint-type-select")
+            .on('change', () => {
                 flowChart.wrangleData();
             });
 
