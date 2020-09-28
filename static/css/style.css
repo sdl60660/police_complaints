@@ -10,12 +10,20 @@
 	width: 100%;
 }
 
+html {
+  font-size: 16px;
+}
+
 body {
-	font-family: 'Inconsolata', Monaco, "Lucida Console", Consolas, "Courier New", "Helvetica Neue";
+	font-family: 'Atlas Grotesk Web',sans-serif;
 	background-color: #f9f9f9;
-    width: 100%;
-	/*height: 9000px;*/
-    position: absolute;
+  width: 100%;
+  position: absolute;
+  -webkit-font-feature-settings: 'kern' 1,'onum' 0,'liga' 0,'tnum' 1;
+  font-feature-settings: 'kern' 1,'onum' 0,'liga' 0,'tnum' 1;
+  -webkit-font-smoothing: antialiased;
+  -webkit-tap-highlight-color: rgba(0,0,0,0);
+  font-size: 16px;
 }
 
 .spacer {
@@ -66,8 +74,13 @@ strong {
     left: 50%;
     transform: translate(-50%, 0%);
     margin: auto;
-    font-family: 'Merriweather';
-    font-size: 16px;
+    font-family: 'Publico Text Web';
+    font-size: 1.2rem;
+}
+
+#intro-tile h1{
+  font-family: 'Atlas Grotesk Web';
+  font-weight:400;
 }
 
 .annotated-text {
@@ -134,12 +147,10 @@ strong {
 
 .step .body {
 	margin-top: 10px;
-	font-size: 10pt;
-
+	font-size: 1rem;
 	padding-left: 15px;
-    padding-right: 15px;
-
-    padding-bottom: 10px;
+  padding-right: 15px;
+  padding-bottom: 10px;
 }
 
 #scroller-buffer {
@@ -682,4 +693,55 @@ hr {
   100% {
     transform: rotate(360deg);
   }
+}
+
+
+
+@font-face {
+  font-family: 'Atlas Grotesk Web';
+  src: url('../fonts/atlas/AtlasGrotesk-Regular-Web.woff2') format('woff2'),
+  url('../fonts/atlas/AtlasGrotesk-Regular-Web.woff') format('woff');
+  font-weight: 400;
+  font-style: normal;
+  font-stretch: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Atlas Grotesk Web';
+  src: url('../fonts/atlas/AtlasGrotesk-Medium-Web.woff2') format('woff2'),
+  url('../fonts/atlas/AtlasGrotesk-Medium-Web.woff') format('woff');
+  font-weight: 500;
+  font-style: normal;
+  font-stretch: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Atlas Grotesk Web';
+  src: url('../fonts/atlas/AtlasGrotesk-Bold-Web.woff2') format('woff2'),
+  url('../fonts/atlas/AtlasGrotesk-Bold-Web.woff') format('woff');
+  font-weight: 600;
+  font-style: normal;
+  font-stretch: normal;
+  font-display: swap;
+}
+
+
+@font-face {
+  font-family: 'Publico Text Web';
+  src: url('../fonts/publico/PublicoText-Roman-Web.woff2') format('woff2'),
+  url('../fonts/publico/PublicoText-Roman-Web.woff') format('woff');
+  font-weight: 400;
+  font-style: normal;
+  font-stretch: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Publico Text Web';
+  src: url('../fonts/publico/PublicoText-Bold-Web.woff2') format('woff2'),
+  url('../fonts/publico/PublicoText-Bold-Web.woff') format('woff');
+  font-weight: 700;
+  font-style: normal;
+  font-stretch: normal;
+  font-display: swap;
 }
