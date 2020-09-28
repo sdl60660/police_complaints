@@ -560,13 +560,14 @@ FlowChart.prototype.highlightTile = function(disciplineID) {
 
                 // Get screen coordinates of the corresponding tile
                 let tileY = flowChart.featuredTile.node().getBoundingClientRect().y;
-                let tileX = flowChart.featuredTile.node().getBoundingClientRect().y;
+                let tileX = flowChart.featuredTile.node().getBoundingClientRect().x;
 
                 let tileHeight = flowChart.featuredTile.node().getBoundingClientRect().height;
                 let tileWidth = flowChart.featuredTile.node().getBoundingClientRect().width;
 
                 // Get the height of the tooltip so that it can be centered
                 let tooltipHeight = highlightTip[0].getBoundingClientRect().height;
+                let tooltipWidth = highlightTip[0].getBoundingClientRect().width;
 
                 // Get the right edge of the corresonding tile
                 let tileRight = flowChart.featuredTile.node().getBoundingClientRect().right;
@@ -578,7 +579,7 @@ FlowChart.prototype.highlightTile = function(disciplineID) {
                     highlightTip
                         .css("position", "fixed")
                         .css("top", tileY + tileHeight + 5)
-                        .css("left", tileX);
+                        .css("left", tileX - (tooltipWidth / 2) + (tileWidth / 2));
                 }
                 else {
                     highlightTip
