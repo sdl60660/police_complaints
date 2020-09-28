@@ -553,7 +553,7 @@ function displayIntroText() {
     }
 
     // Reset highlighting on complaint
-    $("#sample-tooltip .detail-title")
+    $("#sample-tooltip .detail-title, #sample-tooltip .outcome")
         .css("background", "none")
         .css("font-weight", "unset")
         .css("background-color", "rgba(28, 148, 196, 0.0)");
@@ -585,6 +585,7 @@ function highlightComplaintDetails() {
             'padding_bottom':'.1em',
             "thickness":'1.2em',
             "duration":'1s',
+            "font_weight":'normal',
             "function":'ease',
             "repeat": false
         })
@@ -614,6 +615,7 @@ function highlightComplaintOutcome() {
             "color": 'rgba(242,142,44,0.6)',
             'padding_bottom':'.1em',
             "thickness":'1.2em',
+            "font_weight":'normal',
             "duration":'1s',
             "function":'ease',
             "repeat": false
