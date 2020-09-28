@@ -49,6 +49,9 @@ let scroll;
 // Initialize an array of activate functions which will activate on scroll for corresponding annotation slides
 let activateFunctions = [];
 
+// Used to keep tilechart highlight complaint on screen during scroll
+let stickyTooltip = false;
+
 // Min width that browser window must be before switching to phoneBrowsing mode (even on Desktop, it will display everything as if on Mobile)
 const phoneBrowsingCutoff = 1100;
 
@@ -209,8 +212,13 @@ function setAnnotationTooltips() {
                 .css("opacity", 0.0)
                 .css("z-index", -1);
 
-           $("#category-tooltip, .d3-tip")
+           $("#category-tooltip")
                .css("opacity", 0.0);
+
+           if (stickyTooltip === false) {
+               $(".d3-tip")
+                   .css("opacity", 0.0);
+           }
         });
     }
 }

@@ -461,6 +461,8 @@ FlowChart.prototype.updateVis = function() {
                         vis.pinnedTooltip = false;
                     }
                     vis.tip.show(d);
+
+                    stickyTooltip = false;
                 })
                 .on("mouseout", function(d) {
                     $(".d3-tip")
@@ -555,6 +557,8 @@ FlowChart.prototype.highlightTile = function(disciplineID) {
         .on("end", function() {
             if (activeIndex === 10) {
                 vis.tip.show(vis.featuredTile._groups[0][0].__data__, vis.featuredTile.node());
+
+                stickyTooltip = true;
 
                 let highlightTip = $(".d3-tip");
 
