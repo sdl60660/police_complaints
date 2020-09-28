@@ -280,7 +280,7 @@ FlowChart.prototype.initVis = function() {
 
     // Add a box under the 'Group By' select for a dynamic/updating legend based on the 'group by' value
     if (phoneBrowsing === true) {
-        vis.legendSVG = d3.select("#flowchart-mobile-legend-area").append("svg").attr("height", "33px").attr("width", vis.width);
+        vis.legendSVG = d3.select("#flowchart-mobile-legend-area").append("svg").attr("height", "33px").attr("width", 700);
     }
     else {
         vis.legendSVG = d3.select("#flowchart-legend-area").append("svg");
@@ -873,7 +873,7 @@ FlowChart.prototype.updateLegend = function() {
     const vis = this;
 
     let keys = vis.representedVals[vis.representedAttribute].slice();
-    keys.push('other/unknown')
+    keys.push('other/unknown');
 
     // If 'no_group' is selected as the 'group by' variable, pass through empty keys
     // to remove any existing legend items and prevent anything else from rendering
@@ -890,7 +890,7 @@ FlowChart.prototype.updateLegend = function() {
     }
     const leftMargin = 5;
     const verticalSpacing = 9;
-    const horizontalSpacing = 150;
+    const horizontalSpacing = 130;
     const rects = vis.legendSVG.selectAll(".legend-rect")
       .data(keys, function(d) {
           return d;
@@ -925,6 +925,7 @@ FlowChart.prototype.updateLegend = function() {
         .text(d => d)
         .attr("text-anchor", "left")
         .attr("class", "legend-label")
+        .attr("font-size", () => phoneBrowsing === true ? "16px" : "14px")
         .style("alignment-baseline", "middle");
 
 };

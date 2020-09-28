@@ -905,7 +905,12 @@ function highlightTile() {
 
     // If scrolling up, reset the 'group by' on the flowchart
     else if (scrollDirection === 'up') {
-        $("#sort-feature-select").val("no_group").trigger("chosen:updated");
+        if (phoneBrowsing === true) {
+            $("#mobile-group-by-select").val("no_group");
+        }
+        else {
+            $("#sort-feature-select").val("no_group").trigger("chosen:updated");
+        }
         // flowChart.representedAttribute = 'no_group';
         flowChart.wrangleData();
     }
@@ -917,7 +922,12 @@ function highlightTile() {
 function showFlowchartByRace() {
 
     // Set the 'Group By' select to 'complainant race' and trigger the update on the chosen.js select
-    $("#sort-feature-select").val("complainant_race").trigger("chosen:updated");
+    if (phoneBrowsing === true) {
+        $("#mobile-group-by-select").val("complainant_race");
+    }
+    else {
+        $("#sort-feature-select").val("complainant_race").trigger("chosen:updated");
+    }
 
     // If coming from above, reset tooltips and return the highlight tile
     if (scrollDirection === 'down' && typeof flowChart.highlightTileX !== "undefined") {
@@ -992,16 +1002,25 @@ function showComplaintTypes() {
         resetFlowchartTooltips();
     }
 
-    // Select specific complaint types to include in multi-select and then trigger the chosen.js select box to update
-    const selectedVals = ['Physical Abuse', 'Criminal Allegation', 'Verbal Abuse', 'Sexual Crime/Misconduct', 'Civil Rights Complaint'];
-    $(".chosen-select").chosen().val(selectedVals).trigger("chosen:updated");
-    flowChart.selectedComplaintTypes = selectedVals;
+    if (phoneBrowsing == true) {
+        $("#mobile-complaint-type-select").val("Physical-Abuse");
+        $("#mobile-start-year-select").val("2013");
+        $("#mobile-end-year-select").val("2020");
 
-    // Reset date range to full range
-    startRange = startDate;
-    endRange = addMonths(startDate, maxDateOffset);
+        flowChart.wrangleData();
+    }
+    else {
+        // Select specific complaint types to include in multi-select and then trigger the chosen.js select box to update
+        const selectedVals = ['Physical Abuse', 'Criminal Allegation', 'Verbal Abuse', 'Sexual Crime/Misconduct', 'Civil Rights Complaint'];
+        $(".chosen-select").chosen().val(selectedVals).trigger("chosen:updated");
+        flowChart.selectedComplaintTypes = selectedVals;
 
-    updateFlowchartDates();
+        // Reset date range to full range
+        startRange = startDate;
+        endRange = addMonths(startDate, maxDateOffset);
+
+        updateFlowchartDates();
+    }
 
 }
 
