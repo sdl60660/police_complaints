@@ -555,6 +555,7 @@ function displayIntroText() {
     // Reset highlighting on complaint
     $("#sample-tooltip .detail-title")
         .css("background", "none")
+        .css("font-weight", "unset")
         .css("background-color", "rgba(28, 148, 196, 0.0)");
 }
 

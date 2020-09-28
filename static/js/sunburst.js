@@ -404,7 +404,7 @@ Sunburst.prototype.mouseover = function(value, element) {
         .text(d3.format(".1%")(value/vis.totalSize));
 
     vis.selectedValTotals
-        .text(`(${value} of ${vis.totalSize} investigations)`)
+        .text(`(${d3.format(",")(value)} of ${d3.format(",")(vis.totalSize)} investigations)`)
 
     let parentName = $(element).attr("parent");
 
