@@ -11,7 +11,7 @@ Sunburst.prototype.initVis = function() {
     // Dimensions of sunburst. Max width of 850, then scale down based on available window width.
     const dimensions = Math.min(850, $("#sunburst-area").width());
 
-    vis.margin = {'top': 10, 'bottom': 10, 'left': 10, 'right': 10};
+    vis.margin = {'top': 20, 'bottom': 10, 'left': 10, 'right': 10};
     vis.width = dimensions - vis.margin.left - vis.margin.right;
     vis.height = dimensions - vis.margin.top - vis.margin.bottom;
     vis.radius = Math.min(vis.width, vis.height) / 2;

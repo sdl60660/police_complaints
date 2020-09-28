@@ -236,7 +236,8 @@ FlowChart.prototype.initVis = function() {
 
             // Find/format summary stats for the tile group using the updateCounts() function (below)
             tooltipSelect
-                .html(vis.updateCounts($(this).text()));
+                .html(vis.updateCounts($(this).text()))
+                // .css('position', 'fixed');
 
             let xOffset = event.pageX - tooltipSelect.width()/2;
             if (xOffset < 0) {
@@ -244,6 +245,7 @@ FlowChart.prototype.initVis = function() {
             }
 
             tooltipSelect
+                // .css('position', 'fixed')
                 .css({top: event.pageY - tooltipSelect.height() - 40, left: xOffset})
                 .css("opacity", 1.0)
                 .css("z-index", 100);
@@ -547,7 +549,10 @@ FlowChart.prototype.highlightTile = function(disciplineID) {
 
                 // Get screen coordinates of the corresponding tile
                 let tileY = flowChart.featuredTile.node().getBoundingClientRect().y;
+                let tileX = flowChart.featuredTile.node().getBoundingClientRect().y;
+
                 let tileHeight = flowChart.featuredTile.node().getBoundingClientRect().height;
+                let tileWidth = flowChart.featuredTile.node().getBoundingClientRect().width;
 
                 // Get the height of the tooltip so that it can be centered
                 let tooltipHeight = highlightTip[0].getBoundingClientRect().height;
@@ -557,10 +562,19 @@ FlowChart.prototype.highlightTile = function(disciplineID) {
 
                 // Fix position of tooltip on screen and set position based on tile positions calculated above
                 // Use the height of the tooltip to make sure it's vertically centered on tile
-                highlightTip
-                    .css("position", "fixed")
-                    .css("top", tileY + (tileHeight / 2) - (tooltipHeight / 2))
-                    .css("left", tileRight + 3);
+                // On mobile: it's oriented "south", so the fixed position is a little different
+                if (phoneBrowsing === true) {
+                    highlightTip
+                        .css("position", "fixed")
+                        .css("top", tileY + tileHeight + 5)
+                        .css("left", tileX);
+                }
+                else {
+                    highlightTip
+                        .css("position", "fixed")
+                        .css("top", tileY + (tileHeight / 2) - (tooltipHeight / 2))
+                        .css("left", tileRight + 3);
+                }
             }
         });
 };
@@ -649,9 +663,18 @@ FlowChart.prototype.setToolTips = function() {
                 yOffset = 0;
             }
 
+            if (phoneBrowsing === true) {
+                const tileRow = d.final_state_index / (vis.colWidths['No Sustained Findings']);
+                if (d.end_state === 'No Sustained Findings' && tileRow <= 60) {
+                    yOffset += vis.blockSize / 2;
+                }
+                else {
+                    yOffset -= vis.blockSize / 2;
+                }
+            }
             // Based on the outcome group, the direction of the tooltip relative to the tile will change, and therefore
             // the offsets will need to change a little too, so that the tooltip is positioned next ot the tile and not on top of it
-            if (d.end_state === 'No Guilty Findings' || d.end_state === 'Discipline Pending') {
+            else if (d.end_state === 'No Guilty Findings' || d.end_state === 'Discipline Pending') {
                 yOffset -= vis.blockSize;
             }
             else if (d.end_state === 'No Sustained Findings') {
@@ -682,6 +705,16 @@ FlowChart.prototype.setToolTips = function() {
         // Because the 'No Sustained Findings' section is so large and often has tiles near the bottom of the screen, any tile
         // below row 62 of the section will trigger a 'north' tooltip as well
         .direction(function(d) {
+            if (phoneBrowsing === true) {
+                const tileRow = d.final_state_index / (vis.colWidths['No Sustained Findings']);
+                if (d.end_state === 'No Sustained Findings' && tileRow <= 60) {
+                    return "s";
+                }
+                else {
+                    return "n";
+                }
+            }
+
             if (d.end_state === 'No Guilty Findings' || d.end_state === 'Discipline Pending') {
                 return "n";
             }
