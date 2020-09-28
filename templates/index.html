@@ -383,7 +383,7 @@
             <div class="col-md-2 col-sm-2">
                 <div class="row" style="text-align: center; font-size: 11pt;">Group By</div>
                 <div class="row">
-                    <select data-placeholder="Select Complaint Types" class="select" tabindex="1" id="sort-feature-select">
+                    <select data-placeholder="Group By" class="select" tabindex="1" id="sort-feature-select">
                         <option value="no_group">None</option>
                         <option value="complainant_race">Complainant Race</option>
                         <option value="po_race">Officer Race</option>
@@ -415,50 +415,70 @@
             </div>
         </div>
         <div class="row viz-area" id="mobile-controls">
-            <div class="col-sm-1"></div>
-            <div class="col-sm-4">
-                <span>Year: </span>
-                <select data-placeholder="Select Year" tabindex="1" id="mobile-start-year-select">
-                    <option selected value="2013">2013</option>
-                    <option value="2014">2014</option>
-                    <option value="2015">2015</option>
-                    <option value="2016">2016</option>
-                    <option value="2017">2017</option>
-                    <option value="2018">2018</option>
-                    <option value="2019">2019</option>
-                    <option value="2020">2020</option>
-                </select>
-                <span> to </span>
-                <select data-placeholder="Select Year" tabindex="1" id="mobile-end-year-select">
-                    <option value="2013">2013</option>
-                    <option value="2014">2014</option>
-                    <option value="2015">2015</option>
-                    <option value="2016">2016</option>
-                    <option value="2017">2017</option>
-                    <option value="2018">2018</option>
-                    <option value="2019">2019</option>
-                    <option selected value="2020">2020</option>
-                </select>
+            <div class="row">
+                <div class="col-sm-1"></div>
+                <div class="col-sm-3">
+                    <span>Year: </span>
+                    <br>
+                    <select data-placeholder="Select Year" tabindex="1" id="mobile-start-year-select">
+                        <option selected value="2013">2013</option>
+                        <option value="2014">2014</option>
+                        <option value="2015">2015</option>
+                        <option value="2016">2016</option>
+                        <option value="2017">2017</option>
+                        <option value="2018">2018</option>
+                        <option value="2019">2019</option>
+                        <option value="2020">2020</option>
+                    </select>
+                    <span> to </span>
+                    <select data-placeholder="Select Year" tabindex="1" id="mobile-end-year-select">
+                        <option value="2013">2013</option>
+                        <option value="2014">2014</option>
+                        <option value="2015">2015</option>
+                        <option value="2016">2016</option>
+                        <option value="2017">2017</option>
+                        <option value="2018">2018</option>
+                        <option value="2019">2019</option>
+                        <option selected value="2020">2020</option>
+                    </select>
+                </div>
+                <div class="col-sm-4">
+                    <span>Complaint Type: </span>
+                    <select data-placeholder="Select Complaint Type" tabindex="1" id="mobile-complaint-type-select">
+                        <option value="All" selected>All</option>
+                        <option value="Departmental-Violations">Departmental Violations</option>
+                        <option value="Lack-Of-Service">Lack of Service</option>
+                        <option value="Physical-Abuse">Physical Abuse</option>
+                        <option value="Verbal-Abuse">Verbal Abuse</option>
+                        <option value="Unprofessional-Conduct">Unprofessional Conduct</option>
+                        <option value="Criminal-Allegation">Criminal Allegation</option>
+                        <option value="Harassment">Harassment</option>
+                        <option value="Civil-Rights-Complaint">Civil Rights Complaint</option>
+                        <option value="Domestic">Domestic</option>
+                        <option value="Falsification">Falsification</option>
+                        <option value="Sexual-Crime/Misconduct">Sexual Crime/Misconduct</option>
+                        <option value="Drugs">Drugs</option>
+                    </select>
+                </div>
+                <div class="col-sm-4">
+                    <span>Group By: </span>
+                    <select data-placeholder="Group By" tabindex="1" id="mobile-group-by-select">
+                        <option value="no_group">None</option>
+                        <option value="complainant_race">Complainant Race</option>
+                        <option value="po_race">Officer Race</option>
+                        <option value="district_income_group">Median District Income</option>
+                        <option value="complainant_sex">Complainant Gender</option>
+                        <option value="po_sex">Officer Gender</option>
+                        <option value="prior_complaints_group">Known Prior Complaints</option>
+                    </select>
+                </div>
             </div>
-            <div class="col-md-7 col-sm-7">
-                <span>Complaint Type: </span>
-                <select data-placeholder="Select Complaint Type" tabindex="1" id="mobile-complaint-type-select">
-                    <option value="All" selected>All</option>
-                    <option value="Departmental-Violations">Departmental Violations</option>
-                    <option value="Lack-Of-Service">Lack of Service</option>
-                    <option value="Physical-Abuse">Physical Abuse</option>
-                    <option value="Verbal-Abuse">Verbal Abuse</option>
-                    <option value="Unprofessional-Conduct">Unprofessional Conduct</option>
-                    <option value="Criminal-Allegation">Criminal Allegation</option>
-                    <option value="Harassment">Harassment</option>
-                    <option value="Civil-Rights-Complaint">Civil Rights Complaint</option>
-                    <option value="Domestic">Domestic</option>
-                    <option value="Falsification">Falsification</option>
-                    <option value="Sexual-Crime/Misconduct">Sexual Crime/Misconduct</option>
-                    <option value="Drugs">Drugs</option>
-                </select>
+            <div class="row">
+                <div class="col-sm-1"></div>
+                <div class="col-sm-11">
+                    <div id="flowchart-mobile-legend-area"></div>
+                </div>
             </div>
-{#            <div class="col-sm-1"></div>#}
         </div>
         <div class="row">
             <div class="col-md-1"></div>

@@ -1259,7 +1259,7 @@ function main() {
                 flowChart.wrangleData();
             });
 
-        $("#mobile-start-year-select, #mobile-end-year-select, #mobile-complaint-type-select")
+        $("#mobile-start-year-select, #mobile-end-year-select, #mobile-complaint-type-select, #mobile-group-by-select")
             .on('change', () => {
                 flowChart.wrangleData();
             });

@@ -15,16 +15,17 @@ FlowChart.prototype.initVis = function() {
     vis.svg = d3.select(vis.parentElement)
         .append("svg");
 
-    let height = 800;
+    vis.height = 800;
     if (phoneBrowsing === true) {
-        height = 1760;
+        vis.height = 1760;
         vis.margin.top = 40;
     }
+    vis.width = 1050;
 
     // Make svg size flexible based on window dimensions
     vis.svg
         .attr("preserveAspectRatio", "xMaxYMax meet")
-        .attr("viewBox", `0 0 1050 ${height}`);
+        .attr("viewBox", `0 0 ${vis.width} ${vis.height}`);
 
 
     vis.g = vis.svg.append("g")
@@ -278,7 +279,12 @@ FlowChart.prototype.initVis = function() {
     }
 
     // Add a box under the 'Group By' select for a dynamic/updating legend based on the 'group by' value
-    vis.legendSVG = d3.select("#flowchart-legend-area").append("svg");
+    if (phoneBrowsing === true) {
+        vis.legendSVG = d3.select("#flowchart-mobile-legend-area").append("svg").attr("height", "33px").attr("width", vis.width);
+    }
+    else {
+        vis.legendSVG = d3.select("#flowchart-legend-area").append("svg");
+    }
 
     // Set this boolean to true once flowchart has rendered for the first time. Used by other annotation functions in the main
     // controller to keep events from firing too early (before flowchart render) on very fast scrolls
@@ -298,7 +304,12 @@ FlowChart.prototype.wrangleData = function() {
     const vis = this;
 
     // Update the represented attribute for the 'group by' value
-    vis.representedAttribute = $("#sort-feature-select").val();
+    if (phoneBrowsing === true) {
+        vis.representedAttribute = $("#mobile-group-by-select").val();
+    }
+    else {
+        vis.representedAttribute = $("#sort-feature-select").val();
+    }
 
     // If this is the first time the flowchart is rendered (determined in main.js controller), set the timeline to include all dates
     if (initFlowChart === true) {
@@ -873,9 +884,13 @@ FlowChart.prototype.updateLegend = function() {
     // Add one dot in the legend for each value
     // Size is the size of the legend rectangles (squares)
     const size = 8;
-    const topMargin = 10;
+    let topMargin = 15;
+    if (phoneBrowsing === true) {
+        topMargin = 20;
+    }
     const leftMargin = 5;
     const verticalSpacing = 9;
+    const horizontalSpacing = 150;
     const rects = vis.legendSVG.selectAll(".legend-rect")
       .data(keys, function(d) {
           return d;
@@ -886,8 +901,8 @@ FlowChart.prototype.updateLegend = function() {
     rects
       .enter()
       .append("rect")
-        .attr("x", leftMargin)
-        .attr("y", function (d,i) { return topMargin + i*(size+verticalSpacing); } )
+        .attr("x", (d,i) => phoneBrowsing === true ? leftMargin + i*(horizontalSpacing) : leftMargin)
+        .attr("y", (d,i) => phoneBrowsing === true ? topMargin : topMargin + i*(size+verticalSpacing) )
         .attr("width", size)
         .attr("height", size)
         .attr("class", "legend-rect")
@@ -904,10 +919,10 @@ FlowChart.prototype.updateLegend = function() {
     labels
       .enter()
       .append("text")
-        .attr("x", leftMargin + size*1.2 + 3)
-        .attr("y", function(d,i) { return  topMargin + i*(size+verticalSpacing) + (size/2)})
-        .style("fill", function(d) { return vis.color(d); })
-        .text(function(d){ return d})
+        .attr("x", (d,i) => phoneBrowsing === true ? leftMargin + size*1.2 + 3 + (i*horizontalSpacing) : leftMargin + size*1.2 + 3)
+        .attr("y", (d,i) => phoneBrowsing === true ? topMargin + (size/2) : topMargin + i*(size+verticalSpacing) + (size/2) )
+        .style("fill", d => vis.color(d))
+        .text(d => d)
         .attr("text-anchor", "left")
         .attr("class", "legend-label")
         .style("alignment-baseline", "middle");
