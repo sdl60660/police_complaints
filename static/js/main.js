@@ -208,6 +208,9 @@ function setAnnotationTooltips() {
            $("#annotation-tooltip")
                 .css("opacity", 0.0)
                 .css("z-index", -1);
+
+           $("#category-tooltip, .d3-tip")
+               .css("opacity", 0.0);
         });
     }
 }
