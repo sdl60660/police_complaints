@@ -1019,7 +1019,8 @@ function showComplaintTypes() {
     }
     else {
         // Select specific complaint types to include in multi-select and then trigger the chosen.js select box to update
-        const selectedVals = ['Physical Abuse', 'Criminal Allegation', 'Verbal Abuse', 'Sexual Crime/Misconduct', 'Civil Rights Complaint'];
+        // const selectedVals = ['Physical Abuse', 'Criminal Allegation', 'Verbal Abuse', 'Sexual Crime/Misconduct', 'Civil Rights Complaint'];
+        const selectedVals = ['Physical Abuse'];
         $(".chosen-select").chosen().val(selectedVals).trigger("chosen:updated");
         flowChart.selectedComplaintTypes = selectedVals;
 
