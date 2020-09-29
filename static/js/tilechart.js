@@ -237,7 +237,7 @@ TileChart.prototype.initVis = function() {
 
             // Find/format summary stats for the tile group using the updateCounts() function (below)
             tooltipSelect
-                .html(vis.updateCounts($(this).text()))
+                .html(vis.updateCounts($(this).text()));
                 // .css('position', 'fixed');
 
             let xOffset = event.pageX - tooltipSelect.width()/2;
@@ -451,6 +451,7 @@ TileChart.prototype.updateVis = function() {
 
                         vis.pinnedTooltip = false;
                     }
+
                     vis.tip.show(d);
 
                     stickyTooltip = false;
