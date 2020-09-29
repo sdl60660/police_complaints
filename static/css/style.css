@@ -231,7 +231,7 @@ strong {
 }
 
 #sunburst-val-pct-text {
-    font-size: 40px;
+    font-size: 36px;
 }
 
 .ui-slider {
@@ -266,6 +266,13 @@ strong {
     max-width: 630px;
     line-height: 1.1;
     font-size: 17px;
+}
+
+#sunburst-static-text {
+    position: absolute;
+    top: 80px;
+    text-align: center;
+    font-size: 26px;
 }
 
 @media (max-width: 1100px) {
@@ -323,7 +330,11 @@ strong {
 
 
     #sunburst-val-pct-text {
-        font-size: 30pt;
+        font-size: 40px;
+    }
+
+    #sunburst-static-text {
+        font-size: 30px;
     }
 
 

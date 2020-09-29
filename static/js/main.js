@@ -734,7 +734,11 @@ function highlightSustained() {
 function showDisciplinaryGroups() {
     sunburst.displaySecondLevel = true;
 
+    $("#sunburst-select-text")
+        .css("visibility", "hidden");
+
     $("#sunburst-static-text")
+        .css("visibility", "visible")
         .clearQueue()
         .animate({ 'top': '0px'}, 1000);
 
