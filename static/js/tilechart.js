@@ -667,7 +667,12 @@ TileChart.prototype.setToolTips = function() {
 
             if (phoneBrowsing === true) {
                 const tileRow = d.final_state_index / (vis.colWidths['No Sustained Findings']);
-                if (d.end_state === 'No Sustained Findings' && tileRow <= 60) {
+                if (d.end_state === "Guilty Finding" ||
+                    ((d.end_state === "No Sustained Findings" || d.end_state === "Investigation Pending")
+                        && d.final_state_index % vis.colWidths[d.end_state] < 15)) {
+                    xOffset += 3;
+                }
+                else if (d.end_state === 'No Sustained Findings' && tileRow <= 60) {
                     yOffset += vis.blockSize / 2;
                 }
                 else {
@@ -709,6 +714,11 @@ TileChart.prototype.setToolTips = function() {
         .direction(function(d) {
             if (phoneBrowsing === true) {
                 const tileRow = d.final_state_index / (vis.colWidths['No Sustained Findings']);
+                if (d.end_state === "Guilty Finding" ||
+                    ((d.end_state === "No Sustained Findings" || d.end_state === "Investigation Pending")
+                        && d.final_state_index % vis.colWidths[d.end_state] < 15)) {
+                    return "e";
+                }
                 if (d.end_state === 'No Sustained Findings' && tileRow <= 60) {
                     return "s";
                 }
