@@ -89,7 +89,7 @@ Sunburst.prototype.initVis = function() {
         .attr("transform", "translate(" + (vis.radius - vis.radiusOffset/2) + "," + vis.radius + ")")
         .attr("text-anchor", "middle")
         .attr("dy", 22)
-        .style("font-size", "9pt")
+        .style("font-size", "14px")
         .style("fill-opacity", 0.6)
         .text("")
 
