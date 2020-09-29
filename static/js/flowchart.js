@@ -530,10 +530,12 @@ FlowChart.prototype.highlightTile = function(disciplineID) {
 
     // If the selected disciplineID is not on the visualization (due to filtering), choose another featuredTile at random
     if (vis.featuredTile.empty() === true) {
-        const numRects = vis.g.selectAll("rect.complaint-box")._groups[0].length;
+        const noSustainedRects = vis.g.selectAll("rect.complaint-box").filter((d, i) => d.end_state === "No Sustained Findings");
+        // const numRects = vis.g.selectAll("rect.complaint-box")._groups[0].length;
+        const numRects = noSustainedRects._groups[0].length;
         const tileIndex = Math.round(getRandomArbitrary(0, numRects-1));
 
-        vis.featuredTile = vis.g.selectAll("rect.complaint-box").filter(function(d,i) { return i === tileIndex});
+        vis.featuredTile = noSustainedRects.filter((d, i) => i === tileIndex);
     }
 
     // Save the initial coordinates for the tile so that it can be properly returned
