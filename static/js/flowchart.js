@@ -897,7 +897,7 @@ FlowChart.prototype.updateLegend = function() {
     }
     const leftMargin = 5;
     const verticalSpacing = 9;
-    const horizontalSpacing = 130;
+    const horizontalSpacing = 100;
     const rects = vis.legendSVG.selectAll(".legend-rect")
       .data(keys, function(d) {
           return d;
@@ -917,9 +917,7 @@ FlowChart.prototype.updateLegend = function() {
         .style("fill", function(d) { return vis.color(d); });
 
     const labels = vis.legendSVG.selectAll(".legend-label")
-      .data(keys, function(d) {
-          return d;
-      });
+      .data(keys, d => d);
 
     labels.exit().remove();
 
