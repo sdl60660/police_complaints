@@ -1220,7 +1220,13 @@ function setTileWrapperHeights() {
         .css("height", sunburstWrapperHeight);
 
     // Flowchart annotation divs run from the tenth annotation div to the fourteenth
-    const flowChartWrapperHeight = scrollerDivObjects[scrollerDivObjects.length - 1].getBoundingClientRect().top - scrollerDivObjects[8].getBoundingClientRect().top + 700;
+    let flowChartWrapperHeight = null;
+    if (phoneBrowsing === true) {
+        flowChartWrapperHeight = scrollerDivObjects[scrollerDivObjects.length - 1].getBoundingClientRect().bottom - scrollerDivObjects[8].getBoundingClientRect().top + 1300;
+    }
+    else {
+        flowChartWrapperHeight = scrollerDivObjects[scrollerDivObjects.length - 1].getBoundingClientRect().top - scrollerDivObjects[8].getBoundingClientRect().top + 700;
+    }
     $("#flowchart-wrapper")
         .css("height", flowChartWrapperHeight);
 }
