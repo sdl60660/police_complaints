@@ -11,10 +11,19 @@ Sunburst.prototype.initVis = function() {
     // Dimensions of sunburst. Max width of 850, then scale down based on available window width.
     const dimensions = Math.min(850, $("#sunburst-area").width());
 
-    vis.margin = {'top': 30, 'bottom': 10, 'left': 10, 'right': 10};
+    vis.margin = {'top': 40, 'bottom': 10, 'left': 10, 'right': 10};
     vis.width = dimensions - vis.margin.left - vis.margin.right;
     vis.height = dimensions - vis.margin.top - vis.margin.bottom;
-    vis.radius = Math.min(vis.width, vis.height) / 2;
+
+    // This allows for better use of the phone screen by translating the sunburst down and making better use of the vertical space
+    if (phoneBrowsing === true) {
+        vis.radiusOffset = 100;
+    }
+    else {
+        vis.radiusOffset = 0;
+    }
+
+    vis.radius = Math.min(vis.width+vis.radiusOffset, vis.height+vis.radiusOffset) / 2;
 
     vis.displaySecondLevel = false;
 
@@ -36,9 +45,9 @@ Sunburst.prototype.initVis = function() {
 
 
     // Create hierarchical data
-    vis.partition = data => d3.partition()
+    vis.partition = (data) => d3.partition()
         .size([2 * Math.PI, vis.radius])
-            (d3.hierarchy(vis.data)
+            (d3.hierarchy(data)
         .sum(d => d.value));
         // .sort((a, b) => b.value - a.value))
 
@@ -62,7 +71,7 @@ Sunburst.prototype.initVis = function() {
 
     // Label in center of sunburst with the percentage value of the hovered section
     vis.selectedValPct = vis.g.append("text")
-        .attr("transform", "translate(" + vis.radius + "," + vis.radius + ")")
+        .attr("transform", "translate(" + (vis.radius - vis.radiusOffset/2) + "," + vis.radius + ")")
         .attr("id", "sunburst-val-pct-text")
         .attr("text-anchor", "middle")
         // .style("font-size", "20pt")
@@ -71,7 +80,7 @@ Sunburst.prototype.initVis = function() {
 
     // Lebel in the center of the sunburst with count value of the hovered section
     vis.selectedValTotals = vis.g.append("text")
-        .attr("transform", "translate(" + vis.radius + "," + vis.radius + ")")
+        .attr("transform", "translate(" + (vis.radius - vis.radiusOffset/2) + "," + vis.radius + ")")
         .attr("text-anchor", "middle")
         .attr("dy", 22)
         .style("font-size", "9pt")
@@ -90,7 +99,7 @@ Sunburst.prototype.initVis = function() {
     vis.mousedOverElement = null;
 
     vis.wrangleData();
-}
+};
 
 Sunburst.prototype.wrangleData = function() {
     const vis = this;
@@ -238,7 +247,7 @@ Sunburst.prototype.addSunburstSlices = function() {
         })
         .attr("d", vis.arc)
         .attr("fill-opacity", 0.6)
-        .attr("transform", "translate(" + vis.radius + "," + vis.radius + ")")
+        .attr("transform", "translate(" + (vis.radius-(vis.radiusOffset / 2)) + "," + (vis.radius) + ")")
         .on("mouseover", function(d,i,n) {
             $("#sunburst-area path").removeAttr('style');
             vis.mouseover(d.value, n[i]);
@@ -339,15 +348,15 @@ Sunburst.prototype.addSunburstLabels = function() {
         // The entrance of a 'new' label will be different if it is genuinely new vs. if it just didn't appear in the last filtering
         // A truly new label (on sunburst entrance) will 'spawn' from the center of the sunburst, one that is making a 're-entrance'
         // will initially re-appear where it was last located before making its way to its new position
-        .attr("transform", function(d) {
+        .attr("transform", d => {
             if (vis.previouslyAddedLabels.includes(d.data.name)) {
                 const x = (d.x0 + d.x1) / 2 * 180 / Math.PI;
                 const y = (d.y0 + d.y1) / 2;
-                return `translate(${vis.radius}, ${vis.radius}) rotate(${x - 90}) translate(${y},0) rotate(${90 - x}) rotate(${90-x < 180 ? 0 : 180})`;
+                return `translate(${vis.radius - vis.radiusOffset/2}, ${vis.radius}) rotate(${x - 90}) translate(${y},0) rotate(${90 - x}) rotate(${90-x < 180 ? 0 : 180})`;
             }
             else {
                 vis.previouslyAddedLabels.push(d.data.name);
-                return `translate(${vis.radius}, ${vis.radius})`;
+                return `translate(${vis.radius - vis.radiusOffset/2}, ${vis.radius})`;
             }
         })
         .attr("dy", "0.35em")
@@ -358,7 +367,7 @@ Sunburst.prototype.addSunburstLabels = function() {
             .attr("transform", function(d) {
                 const x = (d.x0 + d.x1) / 2 * 180 / Math.PI;
                 const y = (d.y0 + d.y1) / 2;
-                return `translate(${vis.radius}, ${vis.radius}) rotate(${x - 90}) translate(${y},0) rotate(${90 - x}) rotate(${90-x < 180 ? 0 : 180})`;
+                return `translate(${vis.radius - vis.radiusOffset/2}, ${vis.radius}) rotate(${x - 90}) translate(${y},0) rotate(${90 - x}) rotate(${90-x < 180 ? 0 : 180})`;
             });
 
     // Update existing labels position to center them on new corresponding slice position
@@ -371,7 +380,7 @@ Sunburst.prototype.addSunburstLabels = function() {
         .attr("transform", function(d) {
             const x = (d.x0 + d.x1) / 2 * 180 / Math.PI;
             const y = (d.y0 + d.y1) / 2;
-            return `translate(${vis.radius}, ${vis.radius}) rotate(${x - 90}) translate(${y},0) rotate(${90 - x}) rotate(${90-x < 180 ? 0 : 180})`;
+            return `translate(${vis.radius - vis.radiusOffset/2}, ${vis.radius}) rotate(${x - 90}) translate(${y},0) rotate(${90 - x}) rotate(${90-x < 180 ? 0 : 180})`;
         })
 
     vis.labelGroup.raise();
