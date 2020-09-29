@@ -975,15 +975,13 @@ function highlightOverduePending() {
         resetTilechartTooltips();
     }
 
-    // If coming from below, reset complaint classifications to all
-    if (scrollDirection === 'up') {
-        if (phoneBrowsing === true) {
-            $("#mobile-complaint-type-select").val("All");
-        }
-        else {
-            $(".chosen-select").chosen().val(tileChart.incidentTypes).trigger("chosen:updated");
-            tileChart.selectedComplaintTypes = tileChart.incidentTypes;
-        }
+    // Reset complaint classifications to all
+    if (phoneBrowsing === true) {
+        $("#mobile-complaint-type-select").val("All");
+    }
+    else {
+        $(".chosen-select").chosen().val(tileChart.incidentTypes).trigger("chosen:updated");
+        tileChart.selectedComplaintTypes = tileChart.incidentTypes;
     }
 
     // Change date range to only include dates up through the end of 2017
