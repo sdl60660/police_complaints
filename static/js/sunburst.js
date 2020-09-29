@@ -59,10 +59,16 @@ Sunburst.prototype.initVis = function() {
     vis.g = vis.svg.append("g")
         .attr("transform", "translate(" + vis.margin.left + ", " + vis.margin.top + ")");
 
+    vis.labelFontSize = "14px";
+    vis.outlineLabelGroup = vis.g.append("g")
+        .attr("pointer-events", "none")
+        .attr("text-anchor", "middle")
+        .attr("font-size", vis.labelFontSize);
+
     vis.labelGroup = vis.g.append("g")
         .attr("pointer-events", "none")
         .attr("text-anchor", "middle")
-        .attr("font-size", 11);
+        .attr("font-size", vis.labelFontSize);
 
     // We'll use this later in the attrTween function for animating transitions on the sunburst
     vis.previousAngles = {};
@@ -192,6 +198,8 @@ Sunburst.prototype.updateVis = function() {
     const vis = this;
 
     vis.addSunburstSlices();
+
+    vis.addLabelShadows();
     vis.addSunburstLabels();
 };
 
@@ -323,11 +331,78 @@ Sunburst.prototype.addSunburstSlices = function() {
 };
 
 
+Sunburst.prototype.addLabelShadows = function() {
+    const vis = this;
+
+    // Join data to text labels, using the outcome name as a key
+    vis.labelShadows = vis.outlineLabelGroup.selectAll("text.sunburst-chart-label-shadows")
+        .data(vis.root.descendants().filter(d => d.depth && (d.y0 + d.y1) / 2 * (d.x1 - d.x0) > 10)
+            , function(d) {
+                return d.data.name;
+            });
+
+    // Remove anylabels that are not present in current filtering
+    // (e.g. if there are no 'guilty findings' with a particular filter set, remove the 'guilty finding' label)
+    vis.labelShadows
+        .exit()
+        .remove();
+
+    // Add new outcomes to sunburst as labels
+    vis.labelShadows
+        .enter()
+        .append("text")
+        .attr("class", "sunburst-chart-label-shadows")
+        .attr("opacity", d => vis.displaySecondLevel === false && d.depth > 1 ? 0.0 : 1.0)
+        // The entrance of a 'new' label will be different if it is genuinely new vs. if it just didn't appear in the last filtering
+        // A truly new label (on sunburst entrance) will 'spawn' from the center of the sunburst, one that is making a 're-entrance'
+        // will initially re-appear where it was last located before making its way to its new position
+        .attr("transform", d => {
+            if (vis.previouslyAddedLabels.includes(d.data.name)) {
+                const x = (d.x0 + d.x1) / 2 * 180 / Math.PI;
+                const y = (d.y0 + d.y1) / 2;
+                return `translate(${vis.radius - vis.radiusOffset/2}, ${vis.radius}) rotate(${x - 90}) translate(${y},0) rotate(${90 - x}) rotate(${90-x < 180 ? 0 : 180})`;
+            }
+            else {
+                vis.previouslyAddedLabels.push(d.data.name);
+                return `translate(${vis.radius - vis.radiusOffset/2}, ${vis.radius})`;
+            }
+        })
+        .attr("dy", "0.35em")
+        .style("stroke", "white")
+        .style("stroke-width", "2px")
+        .style("fill", "white")
+        .text(d => d.data.name)
+        .transition()
+            .duration(1000)
+            .ease(d3.easePoly)
+            .attr("transform", function(d) {
+                const x = (d.x0 + d.x1) / 2 * 180 / Math.PI;
+                const y = (d.y0 + d.y1) / 2;
+                return `translate(${vis.radius - vis.radiusOffset/2}, ${vis.radius}) rotate(${x - 90}) translate(${y},0) rotate(${90 - x}) rotate(${90-x < 180 ? 0 : 180})`;
+            });
+
+    // Update existing labels position to center them on new corresponding slice position
+    vis.labelShadows
+        .transition()
+        .delay(0)
+        .duration(1000)
+        .ease(d3.easePoly)
+        .attr("opacity", d => vis.displaySecondLevel === false && d.depth > 1 ? 0.0 : 1.0)
+        .attr("transform", function(d) {
+            const x = (d.x0 + d.x1) / 2 * 180 / Math.PI;
+            const y = (d.y0 + d.y1) / 2;
+            return `translate(${vis.radius - vis.radiusOffset/2}, ${vis.radius}) rotate(${x - 90}) translate(${y},0) rotate(${90 - x}) rotate(${90-x < 180 ? 0 : 180})`;
+        })
+
+    vis.outlineLabelGroup.raise();
+};
+
+
 Sunburst.prototype.addSunburstLabels = function() {
     const vis = this;
 
     // Join data to text labels, using the outcome name as a key
-    vis.labels = vis.labelGroup.selectAll("text")
+    vis.labels = vis.labelGroup.selectAll("text.sunburst-chart-labels")
         .data(vis.root.descendants().filter(d => d.depth && (d.y0 + d.y1) / 2 * (d.x1 - d.x0) > 10)
             , function(d) {
                 return d.data.name;

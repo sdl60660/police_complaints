@@ -173,7 +173,9 @@ strong {
         -1px 1px 0 #fff,
         0px 1px 0 #fff,
         1px 1px 0 #fff;
+}
 
+.sunburst-chart-labels, .sunburst-chart-label-shadows {
     font-size: 14px;
 }
 
@@ -350,7 +352,7 @@ strong {
         margin-bottom: 8vh;
     }
 
-    .sunburst-chart-labels {
+    .sunburst-chart-labels, .sunburst-chart-label-shadows {
         font-size: 16pt;
     }
 
