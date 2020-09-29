@@ -87,6 +87,9 @@ strong {
     z-index: 90;
     padding: 1px;
     cursor: pointer;
+    background-color: rgba(0,0,0,0);
+    border: 2px solid black;
+    border-radius: 4px;
 }
 
 @media (hover: none) .d3-tip {
