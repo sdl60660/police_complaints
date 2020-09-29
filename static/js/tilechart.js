@@ -540,7 +540,7 @@ TileChart.prototype.highlightTile = function(disciplineID) {
             .style("opacity", 0.9)
             .attr("box-shadow", "10px 10px")
         // Once the transition is completed, display/pin the corresponding details tooltip
-        .on("end", () => {
+        .on("end", (d) => {
             if (activeIndex === 10) {
                 vis.tip.show(vis.featuredTile._groups[0][0].__data__, vis.featuredTile.node());
 
@@ -564,8 +564,10 @@ TileChart.prototype.highlightTile = function(disciplineID) {
 
                 // Fix position of tooltip on screen and set position based on tile positions calculated above
                 // Use the height of the tooltip to make sure it's vertically centered on tile
-                // On mobile: it's oriented "south", so the fixed position is a little different
-                if (phoneBrowsing === true) {
+                // On mobile: it's oriented "south", so the fixed position is a little different, unless it's a random tile
+                // or non-standard filters and the tile is on the far left, in which case it'll default back to the "east" orientation
+
+                if (phoneBrowsing === true && d.final_state_index % vis.colWidths[d.end_state] >= 15) {
                     highlightTip
                         .css("position", "fixed")
                         .css("top", tileY + tileHeight + 5)
