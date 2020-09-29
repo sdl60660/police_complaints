@@ -3,7 +3,7 @@ FlowChart = function(_parentElement) {
     this.parentElement = _parentElement;
 
     this.initVis();
-}
+};
 
 
 FlowChart.prototype.initVis = function() {
@@ -331,13 +331,8 @@ FlowChart.prototype.wrangleData = function() {
 
     if (phoneBrowsing === false) {
         vis.chartData = officerDisciplineResults
-            .filter(d => {
-                return d.date_received >= startRange && d.date_received <= endRange;
-            })
-            .filter(d => {
-                // Revisit this later
-                return vis.selectedComplaintTypes.includes(d.general_cap_classification);
-            })
+            .filter(d => d.date_received >= startRange && d.date_received <= endRange)
+            .filter(d => vis.selectedComplaintTypes.includes(d.general_cap_classification))
             .sort((a, b) => a.date_received - b.date_received);
 
         // Update the counts on the complaint types in the 'Complaint Classification' multi-select with counts based on filtered dataset
@@ -373,9 +368,7 @@ FlowChart.prototype.wrangleData = function() {
     // If there's a 'group by' attribute selected (i.e. not 'no_group'), re-sort chart data based on this attribute (tiles will retain secondary sort of date)
     if (vis.representedAttribute !== 'no_group') {
         vis.chartData = vis.chartData
-            .sort(function (a, b) {
-                return vis.reverseSortOrder.indexOf(b[vis.representedAttribute]) - vis.reverseSortOrder.indexOf(a[vis.representedAttribute]);
-            });
+            .sort( (a, b) => vis.reverseSortOrder.indexOf(b[vis.representedAttribute]) - vis.reverseSortOrder.indexOf(a[vis.representedAttribute]))
     }
 
     // Keep a running count of how many tiles fall in each outcome group, which will allow the next section to assign indices to each tile,
@@ -390,7 +383,7 @@ FlowChart.prototype.wrangleData = function() {
     }
 
     // Assign an index to each tile within its outcome group so that it can be properly positioned using an offset from the group's outcomeCoordinates
-    vis.chartData.forEach(function(d) {
+    vis.chartData.forEach( d => {
         d.final_state_index = vis.finalOutcomeIndices[d.end_state];
         vis.finalOutcomeIndices[d.end_state] += 1
     });
@@ -414,9 +407,7 @@ FlowChart.prototype.updateVis = function() {
     // JOIN data with any existing elements
     vis.flowchart = vis.g
         .selectAll("rect")
-        .data(vis.chartData , function(d) {
-            return d.discipline_id;
-        });
+        .data(vis.chartData , d => d.discipline_id);
 
 
     // EXIT old elements not present in new data (this shouldn't be the case)
@@ -435,7 +426,7 @@ FlowChart.prototype.updateVis = function() {
                 .attr("x", vis.col2x + vis.trueBlockWidth * vis.colWidths["No Sustained Findings"] / 2)
                 .attr("height", vis.blockSize)
                 .attr("width", vis.blockSize)
-                .attr("fill", function(d) {
+                .attr("fill", d => {
                     // If there's no 'group by' selected, color the tiles according to their outcome group, using the
                     // scale established in the main.js controller file. This will help the user a little in understanding
                     // the flowchart, as this coloring will match the outcome colors from the sunburst above
@@ -450,7 +441,7 @@ FlowChart.prototype.updateVis = function() {
                 .style("stroke", "#f9f9f9")
                 .style("stroke-width", () => phoneBrowsing === true ? "2px" : "1px")
                 // Mouseenter/mouseout callback functions will trigger/remove tooltips for given investigation tile
-                .on("mouseenter", function(d) {
+                .on("mouseenter", d => {
                     // If there's a highlighted tile with a pinned tooltip, we'll be extra cautious about removing that
                     // before making further tooltip changes
                     if (vis.pinnedTooltip === true) {
@@ -464,7 +455,7 @@ FlowChart.prototype.updateVis = function() {
 
                     stickyTooltip = false;
                 })
-                .on("mouseout", function(d) {
+                .on("mouseout", () => {
                     $(".d3-tip")
                         .css('opacity', 0)
                         .css('pointer-events', 'none');
@@ -474,12 +465,8 @@ FlowChart.prototype.updateVis = function() {
                 .transition()
                     .duration(400)
                     .delay(100)
-                    .attr("x",  function(d,i) {
-                        return vis.outcomeCoordinates[d.end_state][0] + vis.trueBlockWidth * (d.final_state_index%vis.colWidths[d.end_state]);
-                    })
-                    .attr("y", function(d,i) {
-                        return vis.outcomeCoordinates[d.end_state][1] + vis.trueBlockWidth * ~~(d.final_state_index/vis.colWidths[d.end_state]);
-                    })
+                    .attr("x",  d => vis.outcomeCoordinates[d.end_state][0] + vis.trueBlockWidth * (d.final_state_index%vis.colWidths[d.end_state]))
+                    .attr("y", d => vis.outcomeCoordinates[d.end_state][1] + vis.trueBlockWidth * ~~(d.final_state_index/vis.colWidths[d.end_state]))
                     .on("end", function() {
                         // Now, flowchartReady is set to true, where it will remain permanently. Initialized as false to protect against things that shouldn't run
                         // prior to full initialization running from the main.js controller on very fast scrolls.
@@ -493,13 +480,9 @@ FlowChart.prototype.updateVis = function() {
         .transition()
             .duration(400)
             .delay(100)
-                .attr("x",  function(d,i) {
-                    return vis.outcomeCoordinates[d.end_state][0] + vis.trueBlockWidth * (d.final_state_index%(vis.colWidths[d.end_state]));
-                })
-                .attr("y", function(d,i) {
-                    return vis.outcomeCoordinates[d.end_state][1] + vis.trueBlockWidth * Math.floor(1.0*(d.final_state_index)/vis.colWidths[d.end_state]);
-                })
-                .attr("fill", function(d) {
+                .attr("x",  d => vis.outcomeCoordinates[d.end_state][0] + vis.trueBlockWidth * (d.final_state_index%(vis.colWidths[d.end_state])))
+                .attr("y", (d) => vis.outcomeCoordinates[d.end_state][1] + vis.trueBlockWidth * Math.floor(1.0*(d.final_state_index)/vis.colWidths[d.end_state]))
+                .attr("fill", d => {
                     if (vis.representedAttribute === 'no_group') {
                         return outcomeColors(d.end_state);
                     }
@@ -526,11 +509,11 @@ FlowChart.prototype.highlightTile = function(disciplineID) {
     vis.pinnedTooltip = true;
 
     // Find the featuredTile based on the input disciplineID (explicitly chosen in this case)
-    vis.featuredTile = vis.g.selectAll("rect.complaint-box").filter(function(d) { return d.discipline_id === disciplineID});
+    vis.featuredTile = vis.g.selectAll("rect.complaint-box").filter(d => d.discipline_id === disciplineID);
 
     // If the selected disciplineID is not on the visualization (due to filtering), choose another featuredTile at random
     if (vis.featuredTile.empty() === true) {
-        const noSustainedRects = vis.g.selectAll("rect.complaint-box").filter((d, i) => d.end_state === "No Sustained Findings");
+        const noSustainedRects = vis.g.selectAll("rect.complaint-box").filter((d) => d.end_state === "No Sustained Findings");
         // const numRects = vis.g.selectAll("rect.complaint-box")._groups[0].length;
         const numRects = noSustainedRects._groups[0].length;
         const tileIndex = Math.round(getRandomArbitrary(0, numRects-1));
@@ -556,7 +539,7 @@ FlowChart.prototype.highlightTile = function(disciplineID) {
             .style("opacity", 0.9)
             .attr("box-shadow", "10px 10px")
         // Once the transition is completed, display/pin the corresponding details tooltip
-        .on("end", function() {
+        .on("end", () => {
             if (activeIndex === 10) {
                 vis.tip.show(vis.featuredTile._groups[0][0].__data__, vis.featuredTile.node());
 
@@ -756,7 +739,7 @@ FlowChart.prototype.setToolTips = function() {
         // Set the text of the tooltip itself
         // Most of this is fairly straightforward
         .html(function(d) {
-            var tipText = "<div class='tip-text'>";
+            let tipText = "<div class='tip-text'>";
 
             tipText += "<span class='detail-title'>Complaint Date</span>: <span class='details'>" + d3.timeFormat("%-m/%d/%y")(d.date_received) + "<br></span>"
             if(d.incident_time) {
@@ -830,18 +813,18 @@ function calloutSummary(summaryText) {
         'the officer said, "If you hold your d**k tight it won\'t fall off, do you want me to hold it for you, f*ggot?"',
         'he cut him off, stating that his officers would not say anything like that and what occurred was not harassment',
         'The sergeant ordered the complainant to put his hands up.  After he was handcuffed, the sergeant kicked him numerous times.'
-    ]
+    ];
 
-    highlights.forEach(function(textBlock) {
+    highlights.forEach((textBlock) => {
         summaryText = summaryText.replace(textBlock, (`<span style="background-color:rgba(245, 229, 27, 0.5)">${textBlock}</span>`));
-    })
+    });
 
     return summaryText;
-}
+};
 
 // Set the available options for the 'Complaint Classification' multi-select and trigger the chosen.js wrapper
 FlowChart.prototype.setComplaintTypes = function() {
-    var vis = this;
+    const vis = this;
 
     vis.incidentTypes.forEach(function(complaintName) {
         $("select#incident-type-select")
@@ -851,7 +834,7 @@ FlowChart.prototype.setComplaintTypes = function() {
     // A change to the multi-select will update the selected complaint types and update the visualization with this filtering
     $(".chosen-select")
         .chosen()
-        .on('change', function () {
+        .on('change', () => {
             vis.selectedComplaintTypes = $(".chosen-select").chosen().val();
             vis.wrangleData();
         });
@@ -864,11 +847,11 @@ FlowChart.prototype.setComplaintTypes = function() {
 
 // On a change to the filtering of investigations, update complaint type counts
 FlowChart.prototype.updateComplaintTypes = function() {
-    var vis = this;
+    const vis = this;
 
     // Change labels on complaint types to include counts in parentheses according to number of matching investigations in the current set
-    vis.selectedComplaintTypes.forEach(function(d) {
-        var numInstances = vis.chartData.filter(function(x) {return x.general_cap_classification == d}).length;
+    vis.selectedComplaintTypes.forEach(d => {
+        let numInstances = vis.chartData.filter((x) => x.general_cap_classification === d ).length;
         $(("#incident-type-select option#" + formatSpacedStrings(d))).text((d + ' (' + numInstances + ')'));
     });
     $("#incident-type-select").trigger("chosen:updated");
@@ -899,9 +882,7 @@ FlowChart.prototype.updateLegend = function() {
     const verticalSpacing = 9;
     const horizontalSpacing = 100;
     const rects = vis.legendSVG.selectAll(".legend-rect")
-      .data(keys, function(d) {
-          return d;
-      });
+      .data(keys, d => d);
 
     rects.exit().remove();
 
@@ -914,7 +895,7 @@ FlowChart.prototype.updateLegend = function() {
         .attr("height", size)
         .attr("class", "legend-rect")
         .attr("fill-opacity", 0.8)
-        .style("fill", function(d) { return vis.color(d); });
+        .style("fill", d => vis.color(d));
 
     const labels = vis.legendSVG.selectAll(".legend-label")
       .data(keys, d => d);
@@ -953,9 +934,7 @@ FlowChart.prototype.updateCounts = function(outcome) {
     }
 
     // Within the current chartData, return the length of only those investigations that match the selected outcome
-    const fullGroupCount = vis.chartData.filter(function(d) {
-        return d[stateVar] === outcome;
-    }).length;
+    const fullGroupCount = vis.chartData.filter(d => d[stateVar] === outcome).length;
     // Find the total number of investigations in the current chartData
     const fullGroupTotal = vis.chartData.length;
 
@@ -971,13 +950,8 @@ FlowChart.prototype.updateCounts = function(outcome) {
     // Otherwise, for each subgroup within the selected 'group by' category, calculate the precentage that fit in the given outcome group
     // and add that to the text string
     vis.representedVals[vis.representedAttribute].forEach(function(group) {
-        let groupCount = vis.chartData.filter(function(d) {
-            return d[stateVar] === outcome && d[vis.representedAttribute] === group;
-        }).length;
-
-        let groupTotal = vis.chartData.filter(function(d) {
-            return d[vis.representedAttribute] === group;
-        }).length;
+        let groupCount = vis.chartData.filter( d => d[stateVar] === outcome && d[vis.representedAttribute] === group).length;
+        let groupTotal = vis.chartData.filter(d => d[vis.representedAttribute] === group).length;
 
         if (groupTotal > 0) {
             percentageVal = ' (' + d3.format('.1f')(100 * (groupCount / groupTotal)) + '%)';
