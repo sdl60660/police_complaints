@@ -252,6 +252,22 @@ strong {
     position: absolute;
 }
 
+.d3-tip, #annotation-tooltip, #category-tooltip, #sample-tooltip {
+    max-width: 400px;
+	background-color: white;
+	color: black;
+	border-radius: 5px;
+	border: 1px solid black;
+	z-index: 100;
+    padding: 12px;
+}
+
+#sample-tooltip {
+    max-width: 630px;
+    line-height: 1.1;
+    font-size: 17px;
+}
+
 @media (max-width: 1100px) {
     #sections {
         width: 0;
@@ -272,9 +288,9 @@ strong {
 
         z-index: 80;
 
-        /*width: 95%;*/
-        /*max-width: 600px;*/
-        width: 600px;
+        width: calc(100vw - 25px);
+        max-width: 600px;
+        /*width: 600px;*/
 
         overflow: hidden;
     }
@@ -299,6 +315,12 @@ strong {
         /*margin-top: 100vh;*/
     /*}*/
 
+    #sample-tooltip {
+        max-width: calc(100vw - 40px);
+        /*line-height: 1.1;*/
+        font-size: 24px;
+    }
+
 
     #sunburst-val-pct-text {
         font-size: 30pt;
@@ -307,6 +329,8 @@ strong {
 
     #sample-complaint-tile {
         margin-left: 20px;
+
+        width: calc(100vw - 50px);
         /*margin: auto;*/
     }
 
@@ -415,22 +439,6 @@ strong {
 
 	padding-left: 3px;
 	padding-right: 3px;
-}
-
-.d3-tip, #annotation-tooltip, #category-tooltip, #sample-tooltip {
-    max-width: 400px;
-	background-color: white;
-	color: black;
-	border-radius: 5px;
-	border: 1px solid black;
-	z-index: 100;
-    padding: 12px;
-}
-
-#sample-tooltip {
-    max-width: 630px;
-    line-height: 1.1;
-    font-size: 17px;
 }
 
 #category-tooltip {
