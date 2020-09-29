@@ -14,7 +14,7 @@ let startRange = addMonths(startDate, 0);
 let endRange = addMonths(startDate, 1);
 
 // Declare tile visualization elements
-let flowChart;
+let tileChart;
 let sunburst;
 let timeline;
 
@@ -31,8 +31,8 @@ let lastIndex;
 // Declare maxDateOffset (months) to be determined by last investigation date on dataset when it is loaded
 let maxDateOffset;
 
-// Flowchart still in "initialization mode" to prevent events from triggering on fast that shouldn't until it's rendered for the first time
-let initFlowChart = true;
+// Tilechart still in "initialization mode" to prevent events from triggering on fast that shouldn't until it's rendered for the first time
+let initTileChart = true;
 // Sunburst has not entered yet, meaning on mobile it will grow from center on entrance
 let sunburstEntered = false;
 
@@ -55,7 +55,7 @@ let stickyTooltip = false;
 // Min width that browser window must be before switching to phoneBrowsing mode (even on Desktop, it will display everything as if on Mobile)
 const phoneBrowsingCutoff = 1100;
 
-// Set color scale for outcome cateogries, to be used in sunburst, flowchart, and in text of some annotation slides
+// Set color scale for outcome cateogries, to be used in sunburst, tilechart, and in text of some annotation slides
 const outcomeColors = d3.scaleOrdinal()
     .domain(["Sustained Finding", "No Sustained Findings", "Investigation Pending", "Guilty Finding", "Training/Counseling", "No Guilty Findings", "Discipline Pending"])
     .range(['#658dc6', '#f28e2c', '#8dc665', "#7498cb", "#93afd7", "#b2c6e2", "#a2a2a2"]);
@@ -93,7 +93,7 @@ function determinePhoneBrowsing() {
     // if (phoneBrowsing === true) {
     //     setDynamicPadding('#sample-complaint-tile', 1, 2);
     //     setDynamicPadding('#sunburst-tile', 2, 9);
-    //     setDynamicPadding('#flowchart-tile', 9, 17);
+    //     setDynamicPadding('#tilechart-tile', 9, 17);
     // }
 }
 
@@ -285,7 +285,7 @@ function preprocessDataset(dataset) {
             d.prior_complaints_group = 'none';
         }
 
-        // Used for matching the syntax of the 'no_group' group by in the flowchart visualization
+        // Used for matching the syntax of the 'no_group' group by in the tilechart visualization
         d.no_group = 'default';
     })
 
@@ -311,7 +311,7 @@ function initSlider(maxDate) {
             startRange = addMonths(startDate, ui.values[0]);
             endRange = addMonths(startDate, ui.values[1]);
 
-            updateFlowchartDates();
+            updateTilechartDates();
         }
     })
 
@@ -345,12 +345,12 @@ function setScrollArrow() {
             if ($(window).scrollTop() < window.innerHeight) {
                 $('html, body').animate({scrollTop: $('#sample-complaint-wrapper').offset().top }, 'slow');
             }
-            // If at joint between sunburst/flowchart, be specific
+            // If at joint between sunburst/tilechart, be specific
             else if ($("#last-sunburst-annotation").css("opacity") === "1") {
-                $('html, body').animate({scrollTop: $('#flowchart-wrapper').offset().top }, 'slow');
+                $('html, body').animate({scrollTop: $('#tilechart-wrapper').offset().top }, 'slow');
             }
-            // If at joint between flowchart and conclusion, be specific
-            else if ($("#last-flowchart-annotation").css("opacity") === "1") {
+            // If at joint between tilechart and conclusion, be specific
+            else if ($("#last-tilechart-annotation").css("opacity") === "1") {
                 $('html, body').animate({scrollTop: $('#end-text-block').offset().top - 100 }, 'slow');
             }
             else {
@@ -419,7 +419,7 @@ function setWindowFunctions() {
         });
 }
 
-// This is the function that runs on an interval if the user presses play on the flowchart
+// This is the function that runs on an interval if the user presses play on the tilechart
 function step() {
     // The new end date is either one month past the current end date (with addMonths())
     // or resets to one month past the start date if the user has hit the max end date
@@ -429,8 +429,8 @@ function step() {
     $("#slider-div")
         .slider("values", 1, sliderValue);
 
-    // Update the text valeus and re-render the flowchart visualiztion (see below)
-    updateFlowchartDates();
+    // Update the text valeus and re-render the tilechart visualiztion (see below)
+    updateTilechartDates();
 
     // If the user is at the max end date, pause the interval function for them. It'll loop back around if they hit play again
     if (monthDiff(startDate, endRange) === maxDateOffset) {
@@ -442,11 +442,11 @@ function step() {
 }
 
 // Forces a reset on d3-tips, as things can get a little murky when the highlightTile() function starts messing with defaults
-function resetFlowchartTooltips() {
+function resetTilechartTooltips() {
     // Clear any existing d3-tip divs
     d3.selectAll(".d3-tip").remove();
-    // Call the function on the flowchart svg again to add a new (default hidden) d3-tip div
-    flowChart.svg.call(flowChart.tip);
+    // Call the function on the tilechart svg again to add a new (default hidden) d3-tip div
+    tileChart.svg.call(tileChart.tip);
 }
 
 
@@ -466,8 +466,8 @@ function catchupPagePosition(startYPosition) {
 }
 
 
-// Update the start/end dates of the flowchart and re-render the visual
-function updateFlowchartDates() {
+// Update the start/end dates of the tilechart and re-render the visual
+function updateTilechartDates() {
     // Update the texst dates
     $("#start-date-display")
         .text(d3.timeFormat("%B %Y")(startRange));
@@ -482,8 +482,8 @@ function updateFlowchartDates() {
         .slider("values", 0, startSliderValue)
         .slider("values", 1, endSliderValue);
 
-    // Re-render the flowchart
-    flowChart.wrangleData();
+    // Re-render the tilechart
+    tileChart.wrangleData();
 }
 
 // Used to simulate a mousehover (tap on mobile) over a section of the sunburst
@@ -803,12 +803,12 @@ function guiltyBlackComplainant() {
 
 // Activate function: triggers on annotation "Black Complainant/White Officer"
 function guiltyBlackComplainantWhiteOfficer() {
-    // Since this is the last sunburst annotation, if user enters from below, show the sunburst and fade the flowchart
+    // Since this is the last sunburst annotation, if user enters from below, show the sunburst and fade the tilechart
     if (scrollDirection === 'up') {
         $("#sunburst-tile")
             .css("opacity", 1.0);
 
-        $("#flowchart-tile")
+        $("#tilechart-tile")
             .css("opacity", 0.2);
     }
 
@@ -820,9 +820,9 @@ function guiltyBlackComplainantWhiteOfficer() {
 
 function guiltyWhiteComplainantBlackOfficer() {
 
-    // Double-check that flowchart tooltips are reset after highlight tile on a fast scroll up
+    // Double-check that tilechart tooltips are reset after highlight tile on a fast scroll up
     if (scrollDirection === 'up') {
-        resetFlowchartTooltips();
+        resetTilechartTooltips();
     }
 
     // Clear any existing outlined section
@@ -866,12 +866,12 @@ function disableSunburstUserControl() {
 
 // Activate function: triggers on annotation "Examine On Your Own"
 function enableUserExamine() {
-    // Since this is the last sunburst annotation, if user enters from below, show the sunburst and fade the flowchart
+    // Since this is the last sunburst annotation, if user enters from below, show the sunburst and fade the tilechart
     if (scrollDirection === 'up') {
         $("#sunburst-tile")
             .css("opacity", 1.0);
 
-        $("#flowchart-tile")
+        $("#tilechart-tile")
             .css("opacity", 0.2);
     }
 
@@ -882,18 +882,18 @@ function enableUserExamine() {
 
 
 // Activate function: triggers on annotation "The Full Picture"
-function flowchartEntrance() {
-    // Since this is the first flowchart section, fade the sunburst tile, show the flowchart
+function tilechartEntrance() {
+    // Since this is the first tilechart section, fade the sunburst tile, show the tilechart
     $("#sunburst-tile")
         .css("opacity", 0.2);
 
-    $("#flowchart-tile")
+    $("#tilechart-tile")
         .css("opacity", 1.0);
 
     // Return the highlighted tile from below if the user scrolls up
-    if (scrollDirection === 'up' && typeof flowChart.highlightTileX !== "undefined") {
-        // resetFlowchartTooltips();
-        flowChart.returnTile();
+    if (scrollDirection === 'up' && typeof tileChart.highlightTileX !== "undefined") {
+        // resetTilechartTooltips();
+        tileChart.returnTile();
     }
 
 }
@@ -905,17 +905,17 @@ function highlightTile() {
     const selectedStory = "13-0541-PS-Physical Abuse";
 
     // Only if coming from the top, clear any existing tooltips and trigger the highlightTile() function
-    if (scrollDirection === 'down' && flowChart.flowchartReady === true) {
-        resetFlowchartTooltips();
+    if (scrollDirection === 'down' && tileChart.tilechartReady === true) {
+        resetTilechartTooltips();
 
         // startRange = startDate;
         // endRange = addMonths(startDate, maxDateOffset);
-        // updateFlowchartDates();
+        // updateTilechartDates();
 
-        flowChart.highlightTile(selectedStory);
+        tileChart.highlightTile(selectedStory);
     }
 
-    // If scrolling up, reset the 'group by' on the flowchart
+    // If scrolling up, reset the 'group by' on the tilechart
     else if (scrollDirection === 'up') {
         if (phoneBrowsing === true) {
             $("#mobile-group-by-select").val("no_group");
@@ -923,15 +923,15 @@ function highlightTile() {
         else {
             $("#sort-feature-select").val("no_group").trigger("chosen:updated");
         }
-        // flowChart.representedAttribute = 'no_group';
-        flowChart.wrangleData();
+        // tileChart.representedAttribute = 'no_group';
+        tileChart.wrangleData();
     }
 
 }
 
 
 // Activate function: triggers on annotation "Organizing The Data"
-function showFlowchartByRace() {
+function showTilechartByRace() {
 
     // Set the 'Group By' select to 'complainant race' and trigger the update on the chosen.js select
     if (phoneBrowsing === true) {
@@ -942,25 +942,25 @@ function showFlowchartByRace() {
     }
 
     // If coming from above, reset tooltips and return the highlight tile
-    if (scrollDirection === 'down' && typeof flowChart.highlightTileX !== "undefined") {
-        resetFlowchartTooltips();
-        flowChart.returnTile();
+    if (scrollDirection === 'down' && typeof tileChart.highlightTileX !== "undefined") {
+        resetTilechartTooltips();
+        tileChart.returnTile();
     }
 
     // If coming from below, reset opactity on the investigation pending section and reset the date range
     else if (scrollDirection === 'up') {
-        flowChart.returnTileSections();
+        tileChart.returnTileSections();
 
         if (phoneBrowsing === true) {
             $("#mobile-start-year-select").val("2013");
             $("#mobile-end-year-select").val("2020");
 
-            flowChart.wrangleData();
+            tileChart.wrangleData();
         }
         else {
             startRange = startDate;
             endRange = addMonths(startDate, maxDateOffset);
-            updateFlowchartDates();
+            updateTilechartDates();
         }
     }
 
@@ -972,7 +972,7 @@ function highlightOverduePending() {
 
     // If coming from above, reset tooltips again in case of a fast scroll (doesn't seem to be necessary anymore, but just to be safe)
     if (scrollDirection === 'down') {
-        resetFlowchartTooltips();
+        resetTilechartTooltips();
     }
 
     // If coming from below, reset complaint classifications to all
@@ -981,8 +981,8 @@ function highlightOverduePending() {
             $("#mobile-complaint-type-select").val("All");
         }
         else {
-            $(".chosen-select").chosen().val(flowChart.incidentTypes).trigger("chosen:updated");
-            flowChart.selectedComplaintTypes = flowChart.incidentTypes;
+            $(".chosen-select").chosen().val(tileChart.incidentTypes).trigger("chosen:updated");
+            tileChart.selectedComplaintTypes = tileChart.incidentTypes;
         }
     }
 
@@ -991,17 +991,17 @@ function highlightOverduePending() {
         $("#mobile-start-year-select").val("2013");
         $("#mobile-end-year-select").val("2018");
 
-        flowChart.wrangleData();
+        tileChart.wrangleData();
     }
     else {
         startRange = startDate;
         endRange = new Date("Jan 01 2018");
 
-        updateFlowchartDates();
+        updateTilechartDates();
     }
 
     // Highlight the tiles in the 'Investigation Pending' section
-    flowChart.highlightTileSection("Investigation Pending");
+    tileChart.highlightTileSection("Investigation Pending");
 
 }
 
@@ -1011,7 +1011,7 @@ function showComplaintTypes() {
 
     // If coming from above, reset tooltips again in case of a fast scroll (doesn't seem to be necessary anymore, but just to be safe)
     if (scrollDirection === 'down') {
-        resetFlowchartTooltips();
+        resetTilechartTooltips();
     }
 
     if (phoneBrowsing == true) {
@@ -1019,20 +1019,20 @@ function showComplaintTypes() {
         $("#mobile-start-year-select").val("2013");
         $("#mobile-end-year-select").val("2020");
 
-        flowChart.wrangleData();
+        tileChart.wrangleData();
     }
     else {
         // Select specific complaint types to include in multi-select and then trigger the chosen.js select box to update
         // const selectedVals = ['Physical Abuse', 'Criminal Allegation', 'Verbal Abuse', 'Sexual Crime/Misconduct', 'Civil Rights Complaint'];
         const selectedVals = ['Physical Abuse'];
         $(".chosen-select").chosen().val(selectedVals).trigger("chosen:updated");
-        flowChart.selectedComplaintTypes = selectedVals;
+        tileChart.selectedComplaintTypes = selectedVals;
 
         // Reset date range to full range
         startRange = startDate;
         endRange = addMonths(startDate, maxDateOffset);
 
-        updateFlowchartDates();
+        updateTilechartDates();
     }
 
 }
@@ -1121,14 +1121,14 @@ function setScrollDispatcher() {
     scroll.on('progress', function(index, progress) {
         // console.log(index, progress);
 
-        // On the final index, as the end text comes into view and the flowchart starts to scroll out, fade the flowchart
+        // On the final index, as the end text comes into view and the tilechart starts to scroll out, fade the tilechart
         if (index === 13 && progress >= 1.5) {
-            $("#flowchart-tile")
+            $("#tilechart-tile")
                 .css("opacity", 0.2);
         }
-        // Return opacity to the flowchart if the user scrolls back up
+        // Return opacity to the tilechart if the user scrolls back up
         else if (index === 13 && progress < 1.5) {
-            $("#flowchart-tile")
+            $("#tilechart-tile")
                 .css("opacity", 1.0);
         }
 
@@ -1191,10 +1191,10 @@ function setActivateFunctions() {
     activateFunctions[7] = guiltyBlackComplainantWhiteOfficer;
     // Matrix will go here
 
-    // Flowchart tile functions
-    activateFunctions[8] = flowchartEntrance;
+    // Tilechart tile functions
+    activateFunctions[8] = tilechartEntrance;
     activateFunctions[9] = highlightTile;
-    activateFunctions[10] = showFlowchartByRace;
+    activateFunctions[10] = showTilechartByRace;
     activateFunctions[11] = highlightOverduePending;
     activateFunctions[12] = showComplaintTypes;
 
@@ -1223,16 +1223,16 @@ function setTileWrapperHeights() {
     $("#sunburst-wrapper")
         .css("height", sunburstWrapperHeight);
 
-    // Flowchart annotation divs run from the tenth annotation div to the fourteenth
-    let flowChartWrapperHeight = null;
+    // Tilechart annotation divs run from the tenth annotation div to the fourteenth
+    let tileChartWrapperHeight = null;
     if (phoneBrowsing === true) {
-        flowChartWrapperHeight = scrollerDivObjects[scrollerDivObjects.length - 1].getBoundingClientRect().bottom - scrollerDivObjects[8].getBoundingClientRect().top + 1300;
+        tileChartWrapperHeight = scrollerDivObjects[scrollerDivObjects.length - 1].getBoundingClientRect().bottom - scrollerDivObjects[8].getBoundingClientRect().top + 1300;
     }
     else {
-        flowChartWrapperHeight = scrollerDivObjects[scrollerDivObjects.length - 1].getBoundingClientRect().top - scrollerDivObjects[8].getBoundingClientRect().top + 700;
+        tileChartWrapperHeight = scrollerDivObjects[scrollerDivObjects.length - 1].getBoundingClientRect().top - scrollerDivObjects[8].getBoundingClientRect().top + 700;
     }
-    $("#flowchart-wrapper")
-        .css("height", flowChartWrapperHeight);
+    $("#tilechart-wrapper")
+        .css("height", tileChartWrapperHeight);
 }
 
 
@@ -1248,7 +1248,7 @@ function main() {
     $("#sunburst-tile")
         .css("opacity", 0.2);
 
-    $("#flowchart-tile")
+    $("#tilechart-tile")
         .css("opacity", 0.2);
 
     determinePhoneBrowsing();
@@ -1285,7 +1285,7 @@ function main() {
              return d.investigative_findings !== "Not Applicable" && !(d.investigative_findings === "Sustained Finding" && d.disciplinary_findings === "Not Applicable");
         });
 
-        flowChart = new FlowChart("#chart-area");
+        tileChart = new TileChart("#chart-area");
 
         if (phoneBrowsing === false) {
             timeline = new Timeline("#slider-div");
@@ -1294,12 +1294,12 @@ function main() {
         $(".select")
             .chosen()
             .on('change', () => {
-                flowChart.wrangleData();
+                tileChart.wrangleData();
             });
 
         $("#mobile-start-year-select, #mobile-end-year-select, #mobile-complaint-type-select, #mobile-group-by-select")
             .on('change', () => {
-                flowChart.wrangleData();
+                tileChart.wrangleData();
             });
 
 

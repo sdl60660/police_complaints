@@ -1,12 +1,12 @@
 
-FlowChart = function(_parentElement) {
+TileChart = function(_parentElement) {
     this.parentElement = _parentElement;
 
     this.initVis();
 };
 
 
-FlowChart.prototype.initVis = function() {
+TileChart.prototype.initVis = function() {
     const vis = this;
 
     // Establish margins
@@ -280,15 +280,15 @@ FlowChart.prototype.initVis = function() {
 
     // Add a box under the 'Group By' select for a dynamic/updating legend based on the 'group by' value
     if (phoneBrowsing === true) {
-        vis.legendSVG = d3.select("#flowchart-mobile-legend-area").append("svg").attr("height", "33px").attr("width", 700);
+        vis.legendSVG = d3.select("#tilechart-mobile-legend-area").append("svg").attr("height", "33px").attr("width", 700);
     }
     else {
-        vis.legendSVG = d3.select("#flowchart-legend-area").append("svg");
+        vis.legendSVG = d3.select("#tilechart-legend-area").append("svg");
     }
 
-    // Set this boolean to true once flowchart has rendered for the first time. Used by other annotation functions in the main
-    // controller to keep events from firing too early (before flowchart render) on very fast scrolls
-    vis.flowchartReady = false;
+    // Set this boolean to true once tilechart has rendered for the first time. Used by other annotation functions in the main
+    // controller to keep events from firing too early (before tilechart render) on very fast scrolls
+    vis.tilechartReady = false;
 
     // Set up the chosen.js multi-select with complaint types/counts
     vis.setComplaintTypes();
@@ -299,8 +299,8 @@ FlowChart.prototype.initVis = function() {
 }
 
 
-// This will gather variable values and format data correctly render/re-render flowchart
-FlowChart.prototype.wrangleData = function() {
+// This will gather variable values and format data correctly render/re-render tilechart
+TileChart.prototype.wrangleData = function() {
     const vis = this;
 
     // Update the represented attribute for the 'group by' value
@@ -311,9 +311,9 @@ FlowChart.prototype.wrangleData = function() {
         vis.representedAttribute = $("#sort-feature-select").val();
     }
 
-    // If this is the first time the flowchart is rendered (determined in main.js controller), set the timeline to include all dates
-    if (initFlowChart === true) {
-        initFlowChart = false;
+    // If this is the first time the TileChart is rendered (determined in main.js controller), set the timeline to include all dates
+    if (initTileChart === true) {
+        initTileChart = false;
 
         endRange = addMonths(startRange, maxDateOffset);
         $("#end-date-display")
@@ -396,27 +396,27 @@ FlowChart.prototype.wrangleData = function() {
     // Update the legend under the 'Group By' select based on the selected 'group by' attribute
     vis.updateLegend();
 
-    // Render/update flowchart tiles
+    // Render/update tilechart tiles
     vis.updateVis();
 };
 
 
-FlowChart.prototype.updateVis = function() {
+TileChart.prototype.updateVis = function() {
     const vis = this;
 
     // JOIN data with any existing elements
-    vis.flowchart = vis.g
+    vis.tilechart = vis.g
         .selectAll("rect")
         .data(vis.chartData , d => d.discipline_id);
 
 
     // EXIT old elements not present in new data (this shouldn't be the case)
-    vis.flowchart
+    vis.tilechart
         .exit()
             .remove();
 
     // ENTER new elements present in the data...
-    vis.flowchart
+    vis.tilechart
         .enter()
             .append("rect")
                 .attr("class", "complaint-box")
@@ -429,7 +429,7 @@ FlowChart.prototype.updateVis = function() {
                 .attr("fill", d => {
                     // If there's no 'group by' selected, color the tiles according to their outcome group, using the
                     // scale established in the main.js controller file. This will help the user a little in understanding
-                    // the flowchart, as this coloring will match the outcome colors from the sunburst above
+                    // the TileChart, as this coloring will match the outcome colors from the sunburst above
                     if (vis.representedAttribute === 'no_group') {
                         return outcomeColors(d.end_state);
                     }
@@ -468,15 +468,15 @@ FlowChart.prototype.updateVis = function() {
                     .attr("x",  d => vis.outcomeCoordinates[d.end_state][0] + vis.trueBlockWidth * (d.final_state_index%vis.colWidths[d.end_state]))
                     .attr("y", d => vis.outcomeCoordinates[d.end_state][1] + vis.trueBlockWidth * ~~(d.final_state_index/vis.colWidths[d.end_state]))
                     .on("end", function() {
-                        // Now, flowchartReady is set to true, where it will remain permanently. Initialized as false to protect against things that shouldn't run
+                        // Now, tilechartReady is set to true, where it will remain permanently. Initialized as false to protect against things that shouldn't run
                         // prior to full initialization running from the main.js controller on very fast scrolls.
-                        vis.flowchartReady = true;
+                        vis.tilechartReady = true;
                     });
 
     // For tile already in place, find/move to new position based on updated sort order. Because tiles are sorted by 'group by' attribute and date,
     // there's a level or re-arranging that needs to take place among existing tiles whenever parameters change and new tile enter/leave.
     // This process was kind of a nightmare to sort out, but this works!
-    vis.flowchart
+    vis.tilechart
         .transition()
             .duration(400)
             .delay(100)
@@ -501,7 +501,7 @@ FlowChart.prototype.updateVis = function() {
 
 // Pull a featured tile out to enlarge/pin tooltip. This is designed for the corresponding annotation slide,
 // which discusses the 'Stories Behind the Complaints' and shows the user that they can read details by hovering
-FlowChart.prototype.highlightTile = function(disciplineID) {
+TileChart.prototype.highlightTile = function(disciplineID) {
     const vis = this;
     const transitionDuration = 600;
 
@@ -548,18 +548,18 @@ FlowChart.prototype.highlightTile = function(disciplineID) {
                 let highlightTip = $(".d3-tip");
 
                 // Get screen coordinates of the corresponding tile
-                let tileY = flowChart.featuredTile.node().getBoundingClientRect().y;
-                let tileX = flowChart.featuredTile.node().getBoundingClientRect().x;
+                let tileY = tileChart.featuredTile.node().getBoundingClientRect().y;
+                let tileX = tileChart.featuredTile.node().getBoundingClientRect().x;
 
-                let tileHeight = flowChart.featuredTile.node().getBoundingClientRect().height;
-                let tileWidth = flowChart.featuredTile.node().getBoundingClientRect().width;
+                let tileHeight = tileChart.featuredTile.node().getBoundingClientRect().height;
+                let tileWidth = tileChart.featuredTile.node().getBoundingClientRect().width;
 
                 // Get the height of the tooltip so that it can be centered
                 let tooltipHeight = highlightTip[0].getBoundingClientRect().height;
                 let tooltipWidth = highlightTip[0].getBoundingClientRect().width;
 
                 // Get the right edge of the corresonding tile
-                let tileRight = flowChart.featuredTile.node().getBoundingClientRect().right;
+                let tileRight = tileChart.featuredTile.node().getBoundingClientRect().right;
 
                 // Fix position of tooltip on screen and set position based on tile positions calculated above
                 // Use the height of the tooltip to make sure it's vertically centered on tile
@@ -582,7 +582,7 @@ FlowChart.prototype.highlightTile = function(disciplineID) {
 
 
 // Return to highlighted tile to its original position and remove pinned tooltip (if not already removed due to user hover)
-FlowChart.prototype.returnTile = function() {
+TileChart.prototype.returnTile = function() {
     const vis = this;
 
     // Hide and remove the pinned tooltip (its CSS has been changed, so we'll want to get rid of it and totally reset/re-initialize tooltips)
@@ -613,7 +613,7 @@ FlowChart.prototype.returnTile = function() {
 
 // Used to highlight a particular outcome group and fade the others to draw the user's attention there
 // The annotations use this to direct the user's attention to overdue pending investigations
-FlowChart.prototype.highlightTileSection = function(sectionName) {
+TileChart.prototype.highlightTileSection = function(sectionName) {
     const vis = this;
 
     vis.g.selectAll("rect")
@@ -630,31 +630,31 @@ FlowChart.prototype.highlightTileSection = function(sectionName) {
 };
 
 // Returns regular opacity to all tile sections to negate highlightTileSection() function
-FlowChart.prototype.returnTileSections = function() {
+TileChart.prototype.returnTileSections = function() {
     const vis = this;
 
-    vis.flowchart
+    vis.tilechart
         .style("fill-opacity", 0.9);
 };
 
 // Initializes hover tooltips with investigation details
-FlowChart.prototype.setToolTips = function() {
+TileChart.prototype.setToolTips = function() {
     const vis = this;
 
     // Use d3-tip extension to initialize tooltip
     vis.tip = d3.tip()
         .attr('class', 'd3-tip')
-        // Offset can be a little complicated due to sticky positioning of the flowchart-tile (only seems to apply on Chrome)
+        // Offset can be a little complicated due to sticky positioning of the tilechart-tile (only seems to apply on Chrome)
         .offset(function(d) {
-            // Find offset of the top of the flowchart-wrapper from the top of the page (this will vary based on window size)
-            const tileOffset = $("#flowchart-wrapper")[0].getBoundingClientRect().y;
-            // Find offset from top of page to flowchart-tile
-            const trueMarginSize = $("#flowchart-tile")[0].getBoundingClientRect().y;
+            // Find offset of the top of the tilechart-wrapper from the top of the page (this will vary based on window size)
+            const tileOffset = $("#tilechart-wrapper")[0].getBoundingClientRect().y;
+            // Find offset from top of page to tilechart-tile
+            const trueMarginSize = $("#tilechart-tile")[0].getBoundingClientRect().y;
 
             // yOffset will be used to adjust the top position of the tooltip
-            // Before the flowchart has fallen into its fixed position, no adjustment is necessary, so this shoul come out to 0
-            // After the flowchart has fallen into fixed, position, this will be the difference between the trueMarginSize and the tileOffset
-            // Without this offset, the tooltip would render in a position as if the the flowchart is in its original, pre-scroll location
+            // Before the tilechart has fallen into its fixed position, no adjustment is necessary, so this shoul come out to 0
+            // After the tilechart has fallen into fixed, position, this will be the difference between the trueMarginSize and the tileOffset
+            // Without this offset, the tooltip would render in a position as if the the tilechart is in its original, pre-scroll location
             let yOffset = trueMarginSize - Math.min(trueMarginSize, tileOffset);
             let xOffset = 0;
 
@@ -823,7 +823,7 @@ function calloutSummary(summaryText) {
 };
 
 // Set the available options for the 'Complaint Classification' multi-select and trigger the chosen.js wrapper
-FlowChart.prototype.setComplaintTypes = function() {
+TileChart.prototype.setComplaintTypes = function() {
     const vis = this;
 
     vis.incidentTypes.forEach(function(complaintName) {
@@ -846,7 +846,7 @@ FlowChart.prototype.setComplaintTypes = function() {
 };
 
 // On a change to the filtering of investigations, update complaint type counts
-FlowChart.prototype.updateComplaintTypes = function() {
+TileChart.prototype.updateComplaintTypes = function() {
     const vis = this;
 
     // Change labels on complaint types to include counts in parentheses according to number of matching investigations in the current set
@@ -859,7 +859,7 @@ FlowChart.prototype.updateComplaintTypes = function() {
 };
 
 // Updates legend beneath 'Group By' select with values from selected 'group by' category
-FlowChart.prototype.updateLegend = function() {
+TileChart.prototype.updateLegend = function() {
     const vis = this;
 
     let keys = vis.representedVals[vis.representedAttribute].slice();
@@ -919,7 +919,7 @@ FlowChart.prototype.updateLegend = function() {
 // Formats and returns text with summary statistics for a given outcome group
 // Returns the prevalence of an outcome for each subgroup within 'group by' category
 // This is then used for the hover tooltip over the section labels/headers
-FlowChart.prototype.updateCounts = function(outcome) {
+TileChart.prototype.updateCounts = function(outcome) {
     const vis = this;
 
     let outputString = '';

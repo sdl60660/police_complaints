@@ -183,7 +183,7 @@ strong {
     /*margin-bottom: 150px;*/
 /*}*/
 
-/*#flowchart-tile {*/
+/*#tilechart-tile {*/
     /*margin-right: 100px;*/
 /*}*/
 
@@ -192,7 +192,7 @@ strong {
 }
 
 
-#flowchart-wrapper, #sunburst-wrapper {
+#tilechart-wrapper, #sunburst-wrapper {
     padding-left: calc(var(--annotation-width) + 10px);
     width: calc(100% - var(--annotation-width) + 10px);
 }
@@ -363,7 +363,7 @@ strong {
         padding-top: 150px;
     }
 
-    #flowchart-tile {
+    #tilechart-tile {
         padding-top: 60px;
     }
 
@@ -372,12 +372,12 @@ strong {
         padding-right: 25px !important;
     }
 
-    #sample-complaint-wrapper, #flowchart-wrapper, #sunburst-wrapper {
+    #sample-complaint-wrapper, #tilechart-wrapper, #sunburst-wrapper {
         padding-left: unset;
         width: unset;
     }
 
-    #flowchart-tile {
+    #tilechart-tile {
         margin-left: 10px;
         margin-right: 10px;
 
@@ -385,7 +385,7 @@ strong {
         padding-right: 10px;
     }
 
-    #flowchart-wrapper {
+    #tilechart-wrapper {
         margin-bottom: 8vh;
     }
 
@@ -511,7 +511,7 @@ select.other, span.other {
     width: 100%;
 }
 
-#flowchart-legend-area {
+#tilechart-legend-area {
     width: 100%;
     margin-top: 8px;
 }
@@ -553,7 +553,7 @@ select.other, span.other {
 }
 
 
-#flowchart-tile.group-label {
+#tilechart-tile.group-label {
 	z-index: 20;
 }
 
