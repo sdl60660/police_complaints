@@ -117,7 +117,7 @@ const textAnnotations = {
     "Police Board of Inquiry for a hearing and possible discipline.",
     'investigation pending': "This indicates a PPD Interval Affairs investigation that is still in progress. " +
     "Sometimes investigations stay here for much longer than the mandated completion time of 75 days.",
-    'no sustained findings': "PPD's Internal Affairs investigation determined that 'allegations could not be proven, allegations that did not occur" +
+    "no sustained findings": "PPD's Internal Affairs investigation determined that 'allegations could not be proven, allegations that did not occur" +
     " or that actions that occurred, but were correct, lawful and complied with departmental policies'.",
 
     'guilty finding': "On recommendation from the Police Board of Inquiry hearing, the Police Commissioner (or a delegate)" +
