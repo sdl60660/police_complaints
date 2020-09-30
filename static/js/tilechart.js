@@ -393,6 +393,10 @@ TileChart.prototype.wrangleData = function() {
     vis.color
         .domain(vis.representedVals[vis.representedAttribute]);
 
+    // Unpin/hide the highlighted complaint if user alters the tilechart on mobile
+    stickyTooltip = false;
+    vis.tip.hide();
+
     // Update the legend under the 'Group By' select based on the selected 'group by' attribute
     vis.updateLegend();
 
