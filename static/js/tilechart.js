@@ -256,9 +256,7 @@ TileChart.prototype.initVis = function() {
                 .css("opacity", 0.0)
                 .css("z-index", -1);
         })
-        .text(function(d) {
-            return d;
-        });
+        .text(d => d);
 
     // Definte all incident types for initializing the 'Complaint Classification' multi-select
     vis.incidentTypes = ['Departmental Violations', 'Lack Of Service', 'Physical Abuse',  'Verbal Abuse','Unprofessional Conduct', 'Criminal Allegation', 'Harassment','Civil Rights Complaint','Domestic', 'Falsification', 'Sexual Crime/Misconduct','Drugs']

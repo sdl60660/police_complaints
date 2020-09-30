@@ -931,14 +931,14 @@ function highlightTile() {
 
 
 // Activate function: triggers on annotation "Organizing The Data"
-function showTilechartByRace() {
+function showTilechartByPriorComplaints() {
 
     // Set the 'Group By' select to 'complainant race' and trigger the update on the chosen.js select
     if (phoneBrowsing === true) {
-        $("#mobile-group-by-select").val("complainant_race");
+        $("#mobile-group-by-select").val("prior_complaints_group");
     }
     else {
-        $("#sort-feature-select").val("complainant_race").trigger("chosen:updated");
+        $("#sort-feature-select").val("prior_complaints_group").trigger("chosen:updated");
     }
 
     // If coming from above, reset tooltips and return the highlight tile
@@ -987,7 +987,7 @@ function highlightOverduePending() {
     // Change date range to only include dates up through the end of 2017
     if (phoneBrowsing === true) {
         $("#mobile-start-year-select").val("2013");
-        $("#mobile-end-year-select").val("2018");
+        $("#mobile-end-year-select").val("2017");
 
         tileChart.wrangleData();
     }
@@ -1192,7 +1192,7 @@ function setActivateFunctions() {
     // Tilechart tile functions
     activateFunctions[8] = tilechartEntrance;
     activateFunctions[9] = highlightTile;
-    activateFunctions[10] = showTilechartByRace;
+    activateFunctions[10] = showTilechartByPriorComplaints;
     activateFunctions[11] = highlightOverduePending;
     activateFunctions[12] = showComplaintTypes;
 
@@ -1314,7 +1314,9 @@ function main() {
                         .attr("disabled", "disabled")
                 }
 
-                for (let i=endYear; i <= 2020; i++) {
+                console.log(endYear);
+                for (let i=(parseInt(endYear) + 1); i <= 2020; i++) {
+                    console.log(endYear, i);
                     $(`#mobile-start-year-select option[value="${i}"]`)
                         .attr("disabled", "disabled")
                 }
