@@ -368,9 +368,6 @@ Sunburst.prototype.addLabelShadows = function() {
             }
         })
         .attr("dy", "0.35em")
-        .style("stroke", "white")
-        .style("stroke-width", "2px")
-        .style("fill", "white")
         .text(d => d.data.name)
         .transition()
             .duration(1000)

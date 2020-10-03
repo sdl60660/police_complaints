@@ -116,15 +116,13 @@ TileChart.prototype.initVis = function() {
         .attr("x", 0)
         .attr("y", 30)
         .attr("text-anchor", "start")
-        .style("font-size", "14px")
-        .text(d3.timeFormat("%B %Y")(startRange))
+        .text(d3.timeFormat("%b '%y")(startRange))
     vis.endDateText = d3.select("#end-date-display").append("text")
         .attr("class", "date-display")
         .attr("x", 0)
         .attr("y", 30)
         .attr("text-anchor", "start")
-        .style("font-size", "14px")
-        .text(d3.timeFormat("%B %Y")(endRange))
+        .text(d3.timeFormat("%b '%y")(endRange))
 
 
     // Set the coordinates for each outcome group, used by the tiles to find the correct position (these coordinates, plus some offset depending on the tile index)
@@ -278,10 +276,10 @@ TileChart.prototype.initVis = function() {
 
     // Add a box under the 'Group By' select for a dynamic/updating legend based on the 'group by' value
     if (phoneBrowsing === true) {
-        vis.legendSVG = d3.select("#tilechart-mobile-legend-area").append("svg").attr("height", "33px").attr("width", 700);
+        vis.legendSVG = d3.select("#tilechart-mobile-legend-area");
     }
     else {
-        vis.legendSVG = d3.select("#tilechart-legend-area").append("svg");
+        vis.legendSVG = d3.select("#tilechart-legend-area");
     }
 
     // Set this boolean to true once tilechart has rendered for the first time. Used by other annotation functions in the main
@@ -315,7 +313,7 @@ TileChart.prototype.wrangleData = function() {
 
         endRange = addMonths(startRange, maxDateOffset);
         $("#end-date-display")
-            .text(d3.timeFormat("%B %Y")(endRange));
+            .text(d3.timeFormat("%b '%y")(endRange));
 
         var sliderValue = monthDiff(startDate, endRange);
         $("#slider-div")
@@ -896,38 +894,40 @@ TileChart.prototype.updateLegend = function() {
     const leftMargin = 5;
     const verticalSpacing = 9;
     const horizontalSpacing = 100;
-    const rects = vis.legendSVG.selectAll(".legend-rect")
-      .data(keys, d => d);
 
-    rects.exit().remove();
+    d3.selectAll(".legend-row").remove()
+
+    const rects = vis.legendSVG
+      .style("display",function(d){
+        if(keys.length > 0){
+          return "flex";
+        }
+        return null;
+      })
+      .selectAll(".legend-rect")
+      .data(keys, d => d)
+      .enter()
+      .append("div")
+      .attr("class","legend-row")
+      ;
 
     rects
-      .enter()
-      .append("rect")
-        .attr("x", (d,i) => phoneBrowsing === true ? leftMargin + i*(horizontalSpacing) : leftMargin)
-        .attr("y", (d,i) => phoneBrowsing === true ? topMargin : topMargin + i*(size+verticalSpacing) )
-        .attr("width", size)
-        .attr("height", size)
+      .append("div")
+        // .attr("x", (d,i) => phoneBrowsing === true ? leftMargin + i*(horizontalSpacing) : leftMargin)
+        // .attr("y", (d,i) => phoneBrowsing === true ? topMargin : topMargin + i*(size+verticalSpacing) )
         .attr("class", "legend-rect")
-        .attr("fill-opacity", 0.8)
-        .style("fill", d => vis.color(d));
+        // .attr("fill-opacity", 0.8)
+        .style("background-color", d => vis.color(d));
 
-    const labels = vis.legendSVG.selectAll(".legend-label")
-      .data(keys, d => d);
-
-    labels.exit().remove();
-
-    labels
-      .enter()
-      .append("text")
-        .attr("x", (d,i) => phoneBrowsing === true ? leftMargin + size*1.2 + 3 + (i*horizontalSpacing) : leftMargin + size*1.2 + 3)
-        .attr("y", (d,i) => phoneBrowsing === true ? topMargin + (size/2) : topMargin + i*(size+verticalSpacing) + (size/2) )
-        .style("fill", d => vis.color(d))
+    rects
+      .append("p")
+        // .attr("x", (d,i) => phoneBrowsing === true ? leftMargin + size*1.2 + 3 + (i*horizontalSpacing) : leftMargin + size*1.2 + 3)
+        // .attr("y", (d,i) => phoneBrowsing === true ? topMargin + (size/2) : topMargin + i*(size+verticalSpacing) + (size/2) )
+        .style("color", d => vis.color(d))
         .text(d => d)
-        .attr("text-anchor", "left")
+        // .attr("text-anchor", "left")
         .attr("class", "legend-label")
-        .attr("font-size", () => phoneBrowsing === true ? "16px" : "14px")
-        .style("alignment-baseline", "middle");
+        // .style("alignment-baseline", "middle");
 
 };
 

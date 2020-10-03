@@ -72,11 +72,6 @@ function determinePhoneBrowsing() {
 
     //
     if (phoneBrowsing === true) {
-        $(".step")
-            .css("font-size", "18pt");
-
-        $(".step .body")
-            .css("font-size", "18pt");
     }
 
     // On mobile, fade non-current annotation slides to 0, because they are all fixed at the top and overlapping
@@ -197,8 +192,8 @@ function setAnnotationTooltips() {
     if (phoneBrowsing === false) {
         $('.annotated-text')
             .on("mouseout", function () {
-                let tooltipSelect = $(this).attr("id") === 'sample-investigation' ? 
-                    $("#sample-tooltip") : 
+                let tooltipSelect = $(this).attr("id") === 'sample-investigation' ?
+                    $("#sample-tooltip") :
                     $("#annotation-tooltip");
 
                 tooltipSelect
@@ -403,7 +398,7 @@ function setWindowFunctions() {
         // a little before the end text on mobile)
         .scroll(function () {
             let arrowFadeHeight = (phoneBrowsing === true) ?
-                $('#end-text-block').offset().top - 110 : 
+                $('#end-text-block').offset().top - 110 :
                 $('#sunburst-wrapper').offset().top;
 
             if ($(window).scrollTop() > arrowFadeHeight) {
@@ -424,7 +419,7 @@ function step() {
     // The new end date is either one month past the current end date (with addMonths())
     // or resets to one month past the start date if the user has hit the max end date
     endRange = monthDiff(startDate, endRange) >= maxDateOffset ? addMonths(startRange, 1) : addMonths(endRange, 1);
-    
+
     let sliderValue = monthDiff(startDate, endRange);
     $("#slider-div")
         .slider("values", 1, sliderValue);
@@ -470,10 +465,10 @@ function catchupPagePosition(startYPosition) {
 function updateTilechartDates() {
     // Update the texst dates
     $("#start-date-display")
-        .text(d3.timeFormat("%B %Y")(startRange));
+        .text(d3.timeFormat("%b '%y")(startRange));
 
     $("#end-date-display")
-        .text( d3.timeFormat("%B %Y")(endRange));
+        .text( d3.timeFormat("%b '%y")(endRange));
 
     // Update the slider
     let startSliderValue = monthDiff(startDate, startRange);
@@ -735,12 +730,13 @@ function showDisciplinaryGroups() {
     sunburst.displaySecondLevel = true;
 
     $("#sunburst-select-text")
-        .css("visibility", "hidden");
+        .css("visibility", "visible")
+        .css("display", "block")
+        ;
 
     $("#sunburst-static-text")
-        .css("visibility", "visible")
-        .clearQueue()
-        .animate({ 'top': '0px'}, 1000);
+      .css("display", "none");
+
 
     // Make sure the select options are set to all, in case this has been changed (scroll from below or user has enabled controls)
     setSelectOptions([["sunburst-complainant-race", "all"], ["sunburst-po-race", "all"]]);
@@ -1057,7 +1053,7 @@ function activate(index) {
 
     if (index-1 > 0) {
         $("section.step").eq(index - 1)
-            .css("opacity", () => phoneBrowsing === true ? 0.95 : 1.0)
+            .css("opacity", () => phoneBrowsing === true ? 1.0 : 1.0)
             .css("z-index", 51);
     }
 
@@ -1165,8 +1161,6 @@ function setDynamicPadding(tileID, startIndex, endIndex) {
 
     $(tileID)
         .css("padding-top", maxAnnotationHeight);
-
-    console.log(maxAnnotationHeight);
 }
 
 
@@ -1205,6 +1199,8 @@ function setActivateFunctions() {
 // Actual visualization tiles are set with position: sticky, so the height of the surrounding wrapper div will determine when they stop moving with the scroll
 function setTileWrapperHeights() {
 
+
+
     let sampleComplaintHeight = null;
     if (phoneBrowsing === true) {
         sampleComplaintHeight = scrollerDivObjects[3].getBoundingClientRect().bottom - scrollerDivObjects[1].getBoundingClientRect().top;
@@ -1217,7 +1213,7 @@ function setTileWrapperHeights() {
 
     // Sunburst annotations run from the second annotation div (first visible) to the ninth (top of ten)
     // There's a little extra finagling at the end to get the margin between the two viz wrappers correct
-    const sunburstWrapperHeight = scrollerDivObjects[8].getBoundingClientRect().bottom - scrollerDivObjects[3].getBoundingClientRect().top + 50 - 415;
+    const sunburstWrapperHeight = scrollerDivObjects[8].getBoundingClientRect().bottom - scrollerDivObjects[3].getBoundingClientRect().top;
     $("#sunburst-wrapper")
         .css("height", sunburstWrapperHeight);
 
@@ -1343,9 +1339,3 @@ function main() {
 }
 
 main();
-
-
-
-
-
-
