@@ -723,7 +723,7 @@ hr {
 }
 
 #tilechart-legend-area {
-  width:200px;
+  width:160px;
   flex-wrap:wrap;
   display:none;
   height: 40px;
@@ -737,7 +737,7 @@ hr {
   order:2;
 }
 .group-by-wrapper{
-  margin-right:2rem;
+  margin-right: 1rem;
 }
 .control-title{
   align-self:center;
@@ -763,6 +763,7 @@ hr {
   margin:0;
   margin-right:10px;
   align-self:center;
+  font-size: 12px;
 }
 
 .timeline-title{
@@ -900,7 +901,7 @@ hr {
       position: relative;
       display:flex;
       flex-wrap:wrap;
-      justify-content: center;
+      justify-content: flex-start;
     }
 
     #tilechart-tile {
@@ -976,4 +977,14 @@ hr {
     font-size:10px;
   }
 
+  .sunburst-chart-labels, .sunburst-chart-label-shadows {
+    font-size: 11px;
+  }
+
+}
+
+.mobile-legend-title{
+  min-width: 120px;
+  text-align:right;
+  font-size:14px;
 }

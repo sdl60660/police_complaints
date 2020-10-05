@@ -16,11 +16,13 @@ TileChart.prototype.initVis = function() {
         .append("svg");
 
     vis.height = 800;
+    vis.width = 1050;
+
     if (phoneBrowsing === true) {
         vis.height = 1760;
         vis.margin.top = 40;
+        vis.width = 1160;
     }
-    vis.width = 1050;
 
     // Make svg size flexible based on window dimensions
     vis.svg
