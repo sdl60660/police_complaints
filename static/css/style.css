@@ -59,7 +59,7 @@ strong {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    height: 100vh;
+    /*height: auto;*/
 }
 
 #sample-complaint-tile :before{
@@ -126,12 +126,12 @@ p {
 .step {
 	margin-top: var(--spacer-top);
 	margin-left: 2rem;
-  position: relative;
+    position: relative;
 	min-height: 320px;
 	border-radius: 15px;
-  background-color: white;
+    background-color: white;
 	overflow: hidden;
-  display:block;
+    display:block;
 }
 
 #last-sunburst-annotation {
@@ -674,13 +674,14 @@ hr {
 }
 
 #tilechart-tile {
-  width: auto;
-  padding: 0;
-  margin: 0;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around;
-  height: 100vh;
+    width: auto;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    /*height: 100vh;*/
+    height: auto;
 }
 
 #desktop-controls{

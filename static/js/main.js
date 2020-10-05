@@ -671,9 +671,16 @@ function highlightNotSustained() {
         // disableSunburstUserControl();
     }
 
+    // $("#sunburst-static-text")
+    //     .clearQueue()
+    //     .animate({ 'top': '80px'}, 1000);
+
+    $("#sunburst-select-text")
+        .css("visibility", "hidden")
+        .css("display", "none");
+
     $("#sunburst-static-text")
-        .clearQueue()
-        .animate({ 'top': '80px'}, 1000);
+        .css("display", "block");
 
     sunburst.displaySecondLevel = false;
     sunburst.wrangleData();
@@ -704,9 +711,9 @@ function highlightNotSustained() {
 
 // Activate function: triggers on annotation "Sustained Complaints"
 function highlightSustained() {
-    $("#sunburst-static-text")
-        .clearQueue()
-        .animate({ 'top': '80px'}, 1000);
+    // $("#sunburst-static-text")
+    //     .clearQueue()
+    //     .animate({ 'top': '80px'}, 1000)
 
     sunburst.displaySecondLevel = false;
     sunburst.wrangleData();
@@ -731,8 +738,7 @@ function showDisciplinaryGroups() {
 
     $("#sunburst-select-text")
         .css("visibility", "visible")
-        .css("display", "block")
-        ;
+        .css("display", "block");
 
     $("#sunburst-static-text")
       .css("display", "none");
