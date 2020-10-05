@@ -45,7 +45,6 @@ Timeline.prototype.updateDimensions = function() {
     	.range([0, $('.ui-slider').outerWidth()])
 
 	vis.timelineAxis
-        .style("font-size", "14px")
         .style("font-family", "Helvetica Neue,helvetica,arial,sans-serif")
 		.call(d3.axisBottom(vis.x)
             .tickSize(10)

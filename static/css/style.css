@@ -8,6 +8,7 @@
 
 .row {
 	width: 100%;
+  margin: 0 auto;
 }
 
 html {
@@ -16,9 +17,8 @@ html {
 
 body {
     font-family: 'Atlas Grotesk Web',sans-serif;
-	background-color: #f9f9f9;
+	  background-color: #f9f9f9;
     width: 100%;
-    position: absolute;
     -webkit-font-feature-settings: 'kern' 1,'onum' 0,'liga' 0,'tnum' 1;
     font-feature-settings: 'kern' 1,'onum' 0,'liga' 0,'tnum' 1;
     -webkit-font-smoothing: antialiased;
@@ -44,43 +44,53 @@ strong {
 #intro-wrapper {
     /*min-height: 100vh;*/
     z-index: 100;
+    height: auto;
 }
 
 .viz-tile {
-	/*visibility: hidden;*/
-	/*display: none;*/
 	position: sticky;
-    /*display: none;*/
-    top: 40px;
-	margin-top: 60px;
-	margin-right: 15px;
-    /*height: 800px;*/
+  top:0;
 }
 
 #sample-complaint-tile {
-    top: 100px !important;
-
-    margin-top: 50px !important;
     margin-left: 400px;
     margin-bottom: 20px;
+    width: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 100vh;
 }
+
+#sample-complaint-tile :before{
+  display:none;
+}
+
+
 
 #sample-tooltip .detail-title {
     text-decoration: underline;
 }
 
 #intro-tile {
-    position: absolute;
-    left: 50%;
-    transform: translate(-50%, 0%);
     margin: auto;
     font-family: 'Publico Text Web';
     font-size: 1.2rem;
 }
 
+p {
+  margin-bottom: 1.5rem;
+}
+
 #intro-tile h1{
   font-family: 'Atlas Grotesk Web';
   font-weight:400;
+  margin: 0 auto;
+  margin-bottom: 4rem;
+  text-align:center;
+  margin-top: 4rem;
+  line-height:1.4;
+  max-width:700px;
 }
 
 .annotated-text {
@@ -88,8 +98,12 @@ strong {
     padding: 1px;
     cursor: pointer;
     background-color: rgba(0,0,0,0);
-    border: 2px solid black;
-    border-radius: 4px;
+    display: inline-block;
+    padding-left: 5px;
+    padding-right: 5px;
+    font-weight:500;
+    font-size:.9rem;
+    font-family: 'Atlas Grotesk Web';
 }
 
 @media (hover: none) .d3-tip {
@@ -111,18 +125,20 @@ strong {
 
 .step {
 	margin-top: var(--spacer-top);
-	margin-bottom: var(--spacer-bottom);
-	margin-left: 10px;
-
-    position: relative;
-
+	margin-left: 2rem;
+  position: relative;
 	min-height: 320px;
 	border-radius: 15px;
-
-    background-color: white;
-
+  background-color: white;
 	overflow: hidden;
+  display:block;
 }
+
+#last-sunburst-annotation {
+  margin-bottom: 50vh;
+}
+
+
 
 
 .step.phantom {
@@ -149,11 +165,12 @@ strong {
 }
 
 .step .body {
-    margin-top: 10px;
+  margin-top: 10px;
 	font-size: 1rem;
 	padding-left: 15px;
-    padding-right: 15px;
-    padding-bottom: 10px;
+  padding-right: 15px;
+  padding-bottom: 10px;
+  font-family: 'Publico Text Web';
 }
 
 #scroller-buffer {
@@ -166,17 +183,11 @@ strong {
 }
 
 .sunburst-chart-labels {
-    text-shadow:
-        -1px -1px 0 #fff,
-        0px -1px 0 #fff,
-        1px -1px 0 #fff,
-        -1px 1px 0 #fff,
-        0px 1px 0 #fff,
-        1px 1px 0 #fff;
 }
 
 .sunburst-chart-labels, .sunburst-chart-label-shadows {
     font-size: 14px;
+    font-weight:500;
 }
 
 /*#sunburst-wrapper {*/
@@ -194,7 +205,9 @@ strong {
 
 #tilechart-wrapper, #sunburst-wrapper {
     padding-left: calc(var(--annotation-width) + 10px);
-    width: calc(100% - var(--annotation-width) + 10px);
+}
+
+#tilechart-wrapper {
 }
 
 /*.sunburst-select::-ms-expand {*/
@@ -215,19 +228,14 @@ strong {
 }
 
 #sort_feature_select_chosen {
-    width: 110% !important;
 }
 
 #end-text-block {
     /*margin-bottom: 200px;*/
-    margin-bottom: 25vh;
-    padding: 20px;
-    padding-top: 25px;
-    padding-bottom: 30px;
-
-    background-color: white;
-    border: 1px solid black;
-    border-radius: 15px;
+    max-width: 600px;
+    margin: 0 auto;
+    font-family: 'Publico Text Web';
+    font-size: 1.2rem;
 }
 
 #sunburst-val-pct-text {
@@ -249,7 +257,14 @@ strong {
 #mobile-controls {
     max-height: 0px;
     visibility: hidden;
-    position: absolute;
+}
+
+
+
+
+#mobile-controls span{
+  align-self:center;
+  margin-right: 10px;
 }
 
 .d3-tip, #annotation-tooltip, #category-tooltip, #sample-tooltip {
@@ -262,173 +277,41 @@ strong {
     padding: 12px;
 }
 
+#complaint-summary{
+  margin-bottom:1rem;
+}
+
 #sample-tooltip {
     max-width: 630px;
-    line-height: 1.1;
+    line-height: 1.4;
     font-size: 17px;
+    width:100%;
+    float:none;
+}
+#sample-tooltip div{
+    margin-bottom: .2rem;
+}
+
+
+#sample-tooltip div:first-of-type{
+    margin-bottom: 2rem;
 }
 
 #sunburst-static-text {
-    position: absolute;
-    top: 80px;
     text-align: center;
     font-size: 26px;
+    margin-top:3rem;
 }
 
-@media (max-width: 1100px) {
-    #sections {
-        width: 0;
-        z-index: 50;
-
-        left: 50%;
-    }
-
-    .step {
-        font-size: 13pt;
-
-        transform: translate(-50%, 0);
-
-        margin-top: 100vh;
-	    margin-bottom: 0;
-
-        opacity: 0.95;
-
-        z-index: 80;
-
-        width: calc(100vw - 25px);
-        max-width: 600px;
-        /*width: 600px;*/
-
-        overflow: hidden;
-    }
-
-    .step .body {
-        padding: 5px 20px 15px 20px;
-
-        font-size: 15pt;
-    }
-
-    .step .title {
-        text-align: center;
-        font-weight: bolder;
-        background-color: rgba(28, 148, 196, 0.25);
-        /*border-radius: 3px;*/
-
-        padding-top: 6px;
-        padding-bottom: 6px;
-    }
-
-    /*#first-annotation {*/
-        /*margin-top: 100vh;*/
-    /*}*/
-
-    #sample-tooltip {
-        max-width: calc(100vw - 40px);
-        /*line-height: 1.1;*/
-        font-size: 24px;
-    }
-
-
-    #sunburst-val-pct-text {
-        font-size: 40px;
-    }
-
-    #sunburst-static-text {
-        font-size: 32px;
-    }
-
-
-    #sample-complaint-tile {
-        margin-left: 20px;
-
-        width: calc(100vw - 50px);
-        /*margin: auto;*/
-    }
-
-    #desktop-controls, #slider-div, .ui-slider-handle {
-        max-height: 0px;
-        visibility: hidden;
-        position: absolute;
-    }
-
-    #mobile-controls {
-        max-height: unset;
-        visibility: visible;
-        position: relative;
-        font-size: 19px;
-        margin-bottom: 3vh;
-    }
-
-    .viz-tile {
-        padding-top: 150px;
-    }
-
-    #tilechart-tile {
-        padding-top: 60px;
-    }
-
-    .container {
-        width: 95% !important;
-        padding-right: 25px !important;
-    }
-
-    #sample-complaint-wrapper, #tilechart-wrapper, #sunburst-wrapper {
-        padding-left: unset;
-        width: unset;
-    }
-
-    #tilechart-tile {
-        margin-left: 10px;
-        margin-right: 10px;
-
-        padding-left: 20px;
-        padding-right: 10px;
-    }
-
-    #tilechart-wrapper {
-        margin-bottom: 8vh;
-    }
-
-    .sunburst-chart-labels, .sunburst-chart-label-shadows {
-        font-size: 16pt;
-    }
-
-    #sunburst-select-text {
-        font-size: 18pt;
-    }
-
-    #annotation-tooltip {
-        font-size: 14pt;
-    }
-
-    #intro-wrapper {
-        min-height: 50vh;
-    }
-
-    .step.section-change {
-        margin-top: 200vh;
-    }
-
-    h2 {
-        font-size: 26pt;
-    }
-
-     #intro-text-block, #end-text-block {
-         font-size: 16pt;
-     }
-
-     .footer {
-         font-size: 16pt;
-     }
-
-     .tip-text {
-         font-size: 15px;
-     }
-
-     .spacer {
-        height: 0px;
-    }
+#sunburst-select-text{
+  display:none;
+  width: calc(100% - 30px);
+  margin: 0 auto;
+  max-width: 600px;
+  line-height: 2;
+  margin-top:3rem;
 }
+
 
 .container {
 	/*margin-left: 15%;*/
@@ -495,6 +378,7 @@ select.other, span.other {
 #play-button-div {
 	/*width: 55px;*/
 	text-align: center;
+  display: none;
 	/*margin-right: 10px;*/
 }
 
@@ -508,12 +392,12 @@ select.other, span.other {
 
 #sort-feature-select {
 	margin-top: 15px;
-    width: 100%;
+  align-self:center;
 }
 
 #tilechart-legend-area {
-    width: 100%;
-    margin-top: 8px;
+  display: flex;
+  margin-left:10px;
 }
 
 .date-display {
@@ -522,7 +406,6 @@ select.other, span.other {
 }
 
 .date-display-container {
-	margin-top: 15px;
 }
 
 
@@ -530,19 +413,22 @@ select.other, span.other {
 	/*margin-top: 20px;*/
 }
 
-.chosen-container {
-    margin-top: 5px;
+.chosen-container-single {
+  align-self:center;
+  max-width:100px;
 }
 
 .chosen-choices {
 	font-size: 8pt;
-	max-height: 120px;
+	max-height: 71px;
 	overflow-y: auto !important;
 }
 
 .detail-title {
 	background-color: rgba(28, 148, 196, 0.25);
 	border-radius: 3px;
+  display:inline-block;
+  margin:0;
 	/*margin-bottom: 5px;*/
 	/*padding: 1px;*/
 }
@@ -752,4 +638,378 @@ hr {
   font-style: normal;
   font-stretch: normal;
   font-display: swap;
+}
+
+#intro-text-block{
+  max-width: 600px;
+  margin: 0 auto;
+
+}
+
+.logo {
+  width:150px;
+  margin: 0 auto;
+  margin-top: 1rem;
+}
+
+.logo svg{
+  width:100%;
+}
+.col-md-10 {
+  width:100%;
+  padding:0;
+}
+
+
+.sunburst-chart-label-shadows {
+  stroke:rgb(255,255,255,.66);
+  stroke-width:3px;
+  fill:white;
+}
+
+.matrix-image {
+  max-width:300px;
+  margin: 0 auto;
+  display:block;
+}
+
+#tilechart-tile {
+  width: auto;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  height: 100vh;
+}
+
+#desktop-controls{
+  display:flex;
+  flex-wrap:wrap;
+  width:auto;
+}
+
+
+#desktop-controls .col-md-2, .col-md-7, .col-md-3 {
+  float:none;
+  width:auto;
+}
+
+.timeline-wrapper {
+  order:0;
+  flex-grow: 1;
+  width:90%;
+  display: flex;
+  height: 56px;
+  margin-bottom:1rem;
+  justify-content: center;
+}
+
+
+
+.timeline-year-tick-label{
+  font-size:14px;
+  font-weight:100;
+  font-family: 'Atlas Grotesk Web';
+  stroke:none;
+}
+
+#timeline-div{
+  width:auto;
+  margin: 0;
+  flex-grow: 1;
+  margin-bottom: 2rem;
+  margin-right:4rem;
+}
+
+#tilechart-legend-area {
+  width:160px;
+  flex-wrap:wrap;
+  display:none;
+  height: 40px;
+  align-self: center;
+}
+.chosen-container-div .control-title {
+  width:100px;
+}
+.group-by-wrapper, .chosen-container-div{
+  display:flex;
+  order:2;
+}
+.group-by-wrapper{
+  margin-right: 1rem;
+}
+.control-title{
+  align-self:center;
+  font-size: 14px;
+  font-weight: 500;
+  margin-right:10px;
+}
+
+
+
+.legend-row {
+  display:flex;
+}
+
+.legend-rect{
+  width: 8px;
+  height: 8px;
+  align-self:center;
+  margin-right:5px;
+}
+
+.legend-label{
+  margin:0;
+  margin-right:10px;
+  align-self:center;
+  font-size: 12px;
+}
+
+.timeline-title{
+  text-align: left;
+  margin-right: 25px;
+  font-size: 14px;
+  align-self: center;
+  font-weight:500;
+}
+
+#chart-area {
+  display: block;
+}
+
+#chart-area svg {
+}
+#mobile-controls .date-wrapper ,.complaint-wrapper, .group-by-wrapper{
+  display: flex;
+  order:initial;
+}
+
+#mobile-controls .date-wrapper{
+  margin-right:10px;
+  margin-bottom:10px;
+}
+
+#mobile-controls .group-by-wrapper{
+  margin:0;
+  margin-top:10px;
+}
+
+#mobile-start-year-select{
+  margin-right:10px;
+}
+
+#sunburst-area svg {
+  margin:0 auto;
+  display:block;
+  overflow:visible;
+}
+
+.mobile-legend-title{
+  min-width: 120px;
+  text-align:right;
+  font-size:14px;
+}
+
+.subburst-title {
+  position: absolute;
+  width: 100%;
+  transform: translate(0,-100%);
+  top: 0px;
+}
+
+#sunburst-tile {
+  height:100vh;
+  display: flex;
+  flex-direction:column;
+  justify-content: flex-end;
+}
+
+#sunburst-wrapper .viz-area {
+
+}
+
+
+@media (max-width: 1100px) {
+    #sections {
+        width: 100%;
+        z-index: 100000;
+        pointer-events: none;
+    }
+
+    #chart-area {
+      display: block;
+      max-height: calc(100vh - 150px);
+      width:100vw;
+    }
+
+    #chart-area svg {
+      height:100%;
+      width:100vw;
+    }
+
+    .step {
+      margin-top: 100vh;
+	    margin-bottom: 0;
+      z-index: 80;
+      width: calc(100vw - 25px);
+      max-width: 600px;
+      overflow: hidden;
+      margin-left:auto;
+      margin-right:auto;
+      font-size:16px;
+      min-height:0;
+      box-shadow:0px 0px 4px 1px rgba(0,0,0,.12);
+      border-radius: 3px;
+    }
+
+    #sunburst-select-text {
+      width: 95%;
+    }
+
+    .step .body {
+        padding: 5px 20px 15px 20px;
+    }
+
+    .step .title {
+        text-align: center;
+        font-weight: bolder;
+        background-color: rgba(28, 148, 196, 0.25);
+        /*border-radius: 3px;*/
+
+        padding-top: 6px;
+        padding-bottom: 6px;
+    }
+
+    /*#first-annotation {*/
+        /*margin-top: 100vh;*/
+    /*}*/
+
+    #sample-tooltip {
+        max-width: calc(100vw - 40px);
+        /*line-height: 1.1;*/
+        font-size: 1rem;
+    }
+
+
+    #sunburst-val-pct-text {
+        font-size: 40px;
+    }
+
+    #sunburst-static-text {
+        font-size: 32px;
+    }
+
+
+    #sample-complaint-tile {
+      width: calc(100vw - 50px);
+      margin: 0 auto;
+      top:0px !important;
+      margin-top:0px !important;
+    }
+
+    #desktop-controls, #slider-div, .ui-slider-handle {
+        max-height: 0px;
+        visibility: hidden;
+        position: absolute;
+        display:none;
+    }
+
+    #desktop-controls {
+      display: none;
+    }
+
+    #mobile-controls {
+      max-height: unset;
+      visibility: visible;
+      position: relative;
+      display:flex;
+      flex-wrap:wrap;
+      justify-content: flex-start;
+    }
+
+    #tilechart-tile {
+    }
+
+    .container {
+    }
+
+    #sample-complaint-wrapper, #tilechart-wrapper, #sunburst-wrapper {
+        padding-left: unset;
+        width: unset;
+    }
+
+    #tilechart-tile {
+    }
+
+    #tilechart-wrapper {
+        margin-bottom: 8vh;
+    }
+
+    .sunburst-chart-labels, .sunburst-chart-label-shadows {
+    }
+
+    #sunburst-select-text {
+    }
+
+    #annotation-tooltip {
+    }
+
+    #intro-wrapper {
+        min-height: 50vh;
+    }
+
+    .step.section-change {
+        margin-top: 200vh;
+    }
+
+    h2 {
+        font-size: 26pt;
+    }
+
+     #intro-text-block, #end-text-block {
+     }
+
+     .footer {
+         font-size: 16pt;
+     }
+
+     .tip-text {
+         font-size: 15px;
+     }
+
+     .spacer {
+        height: 0px;
+    }
+}
+
+
+@media (max-width: 450px) {
+
+  #sunburst-tile {
+    justify-content: center;
+  }
+
+  #complaint-summary{
+    font-size: 14px;
+    line-height:1.1;
+  }
+  #sample-tooltip{
+    font-size:14px;
+  }
+
+  #tilechart-mobile-legend-area{
+    margin-top: 5px;
+    width:100%;
+    justify-content: center;
+  }
+
+  #tilechart-mobile-legend-area .legend-label{
+    font-size:10px;
+  }
+
+  .sunburst-chart-labels, .sunburst-chart-label-shadows {
+    font-size: 11px;
+  }
+
 }
