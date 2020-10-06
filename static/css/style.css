@@ -792,8 +792,8 @@ hr {
 }
 
 #mobile-controls .group-by-wrapper{
-  margin:0;
-  margin-top:10px;
+  margin: 0;
+  margin-top: 10px;
 }
 
 #mobile-start-year-select{
@@ -935,6 +935,7 @@ hr {
         display: flex;
         flex-wrap: wrap;
         justify-content: flex-start;
+        font-size: 12px;
     }
 
     #tilechart-tile {
@@ -1000,7 +1001,7 @@ hr {
   }
 
   #complaint-summary{
-    font-size: 12px;
+    font-size: 14px;
     line-height:1.1;
   }
   #sample-tooltip{

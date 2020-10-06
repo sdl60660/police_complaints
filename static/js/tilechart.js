@@ -808,7 +808,7 @@ TileChart.prototype.setToolTips = function() {
                 summaryText = calloutSummary(summaryText);
             }
 
-            tipText += "<span class='detail-title'>Complaint Summary</span>: <span class='details' id='complaint-summary'>" + summaryText + "<br></span>";
+            tipText += "<span class='detail-title'>Complaint Summary</span>: <span class='details'>" + summaryText + "<br></span>";
             tipText += "</div>";
 
             return tipText;
