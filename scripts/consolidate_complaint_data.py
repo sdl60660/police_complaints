@@ -115,3 +115,10 @@ for i, complaint in enumerate(out_data):
 
 with open('../static/data/complaint_discipline_viz_data.json', 'w') as f:
     json.dump(out_data, f)
+
+with open('../static/data/complaint_discipline_viz_data.csv', 'w') as f:
+    out_csv = csv.DictWriter(f, fieldnames=list(out_data[0].keys()))
+    out_csv.writeheader()
+    for row in out_data:
+        out_csv.writerow(row)
+

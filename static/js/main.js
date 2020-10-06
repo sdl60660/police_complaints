@@ -1247,7 +1247,7 @@ function main() {
 
     // Begin loading datafiles
     let promises = [
-        d3.json("static/data/complaint_discipline_viz_data.json")
+        d3.csv("static/data/complaint_discipline_viz_data.csv")
         // d3.json("static/data/district_demos.geojson")
     ];
 
