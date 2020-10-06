@@ -165,12 +165,12 @@ p {
 }
 
 .step .body {
-  margin-top: 10px;
+    margin-top: 10px;
 	font-size: 1rem;
 	padding-left: 15px;
-  padding-right: 15px;
-  padding-bottom: 10px;
-  font-family: 'Publico Text Web';
+    padding-right: 15px;
+    padding-bottom: 10px;
+    font-family: 'Publico Text Web';
 }
 
 #scroller-buffer {
@@ -850,18 +850,26 @@ hr {
     }
 
     .step {
-      margin-top: 100vh;
+        margin-top: 100vh;
 	    margin-bottom: 0;
-      z-index: 80;
-      width: calc(100vw - 25px);
-      max-width: 600px;
-      overflow: hidden;
-      margin-left:auto;
-      margin-right:auto;
-      font-size:16px;
-      min-height:0;
-      box-shadow:0px 0px 4px 1px rgba(0,0,0,.12);
-      border-radius: 3px;
+        z-index: 80;
+        width: calc(100vw - 25px);
+        max-width: 600px;
+        overflow: hidden;
+        margin-left: auto;
+        margin-right: auto;
+        font-size: 16px;
+        min-height: 0;
+        box-shadow: 0px 0px 4px 1px rgba(0,0,0,.12);
+        border-radius: 3px;
+    }
+
+    .d3-tip {
+        max-width: 300px;
+    }
+
+    .step.phantom {
+        margin-bottom: 150vh;
     }
 
     #sunburst-select-text {
@@ -917,16 +925,16 @@ hr {
     }
 
     #desktop-controls {
-      display: none;
+        display: none;
     }
 
     #mobile-controls {
-      max-height: unset;
-      visibility: visible;
-      position: relative;
-      display:flex;
-      flex-wrap:wrap;
-      justify-content: flex-start;
+        max-height: unset;
+        visibility: visible;
+        position: relative;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: flex-start;
     }
 
     #tilechart-tile {
@@ -961,7 +969,7 @@ hr {
     }
 
     .step.section-change {
-        margin-top: 200vh;
+        margin-top: 195vh;
     }
 
     h2 {
@@ -972,11 +980,11 @@ hr {
      }
 
      .footer {
-         font-size: 16pt;
+         font-size: 12px;
      }
 
      .tip-text {
-         font-size: 15px;
+         font-size: 12px;
      }
 
      .spacer {
@@ -992,7 +1000,7 @@ hr {
   }
 
   #complaint-summary{
-    font-size: 14px;
+    font-size: 12px;
     line-height:1.1;
   }
   #sample-tooltip{
@@ -1005,7 +1013,7 @@ hr {
     justify-content: center;
   }
 
-  #tilechart-mobile-legend-area .legend-label{
+  #tilechart-mobile-legend-area .legend-label {
     font-size:10px;
   }
 

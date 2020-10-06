@@ -338,12 +338,9 @@ Sunburst.prototype.addLabelShadows = function() {
 
     // Join data to text labels, using the outcome name as a key
     vis.labelShadows = vis.outlineLabelGroup.selectAll("text.sunburst-chart-label-shadows")
-        .data(vis.root.descendants().filter(d => d.depth && (d.y0 + d.y1) / 2 * (d.x1 - d.x0) > 10)
-            , function(d) {
-                return d.data.name;
-            });
+        .data(vis.root.descendants().filter(d => d.depth), d => d.data.name);
 
-    // Remove anylabels that are not present in current filtering
+    // Remove any labels that are not present in current filtering
     // (e.g. if there are no 'guilty findings' with a particular filter set, remove the 'guilty finding' label)
     vis.labelShadows
         .exit()
@@ -402,12 +399,9 @@ Sunburst.prototype.addSunburstLabels = function() {
 
     // Join data to text labels, using the outcome name as a key
     vis.labels = vis.labelGroup.selectAll("text.sunburst-chart-labels")
-        .data(vis.root.descendants().filter(d => d.depth && (d.y0 + d.y1) / 2 * (d.x1 - d.x0) > 10)
-            , function(d) {
-                return d.data.name;
-            });
+        .data(vis.root.descendants().filter(d => d.depth), d => d.data.name);
 
-    // Remove anylabels that are not present in current filtering
+    // Remove any labels that are not present in current filtering
     // (e.g. if there are no 'guilty findings' with a particular filter set, remove the 'guilty finding' label)
     vis.labels
         .exit()
@@ -455,7 +449,7 @@ Sunburst.prototype.addSunburstLabels = function() {
             const x = (d.x0 + d.x1) / 2 * 180 / Math.PI;
             const y = (d.y0 + d.y1) / 2;
             return `translate(${vis.radius - vis.radiusOffset/2}, ${vis.radius}) rotate(${x - 90}) translate(${y},0) rotate(${90 - x}) rotate(${90-x < 180 ? 0 : 180})`;
-        })
+        });
 
     vis.labelGroup.raise();
 };

@@ -680,6 +680,7 @@ function highlightNotSustained() {
         .css("display", "none");
 
     $("#sunburst-static-text")
+        .css("visibility", "visible")
         .css("display", "block");
 
     sunburst.displaySecondLevel = false;
@@ -741,7 +742,8 @@ function showDisciplinaryGroups() {
         .css("display", "block");
 
     $("#sunburst-static-text")
-      .css("display", "none");
+        .css("visibility", "hidden")
+        .css("display", "none");
 
 
     // Make sure the select options are set to all, in case this has been changed (scroll from below or user has enabled controls)
@@ -1204,22 +1206,27 @@ function setActivateFunctions() {
 // Use the boundingRects of annotation tiles that correspond with a given tile to determine the height of the wrapper div
 // Actual visualization tiles are set with position: sticky, so the height of the surrounding wrapper div will determine when they stop moving with the scroll
 function setTileWrapperHeights() {
-
-
+    const vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0)
 
     let sampleComplaintHeight = null;
     if (phoneBrowsing === true) {
-        sampleComplaintHeight = scrollerDivObjects[3].getBoundingClientRect().bottom - scrollerDivObjects[1].getBoundingClientRect().top;
+        sampleComplaintHeight = scrollerDivObjects[3].getBoundingClientRect().bottom - scrollerDivObjects[1].getBoundingClientRect().top - 0.5*vh;
     }
     else {
-        sampleComplaintHeight = scrollerDivObjects[3].getBoundingClientRect().bottom - scrollerDivObjects[1].getBoundingClientRect().top - 850;
+        sampleComplaintHeight = scrollerDivObjects[3].getBoundingClientRect().bottom - scrollerDivObjects[1].getBoundingClientRect().top - 430;
     }
     $("#sample-complaint-wrapper")
         .css("height", sampleComplaintHeight);
 
     // Sunburst annotations run from the second annotation div (first visible) to the ninth (top of ten)
     // There's a little extra finagling at the end to get the margin between the two viz wrappers correct
-    const sunburstWrapperHeight = scrollerDivObjects[8].getBoundingClientRect().bottom - scrollerDivObjects[3].getBoundingClientRect().top;
+    let sunburstWrapperHeight = null;
+    if (phoneBrowsing === true) {
+        sunburstWrapperHeight = scrollerDivObjects[8].getBoundingClientRect().bottom - scrollerDivObjects[3].getBoundingClientRect().top;
+    }
+    else {
+        sunburstWrapperHeight = scrollerDivObjects[8].getBoundingClientRect().bottom - scrollerDivObjects[3].getBoundingClientRect().top - 310;
+    }
     $("#sunburst-wrapper")
         .css("height", sunburstWrapperHeight);
 

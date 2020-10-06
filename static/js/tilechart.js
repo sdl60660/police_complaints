@@ -569,7 +569,7 @@ TileChart.prototype.highlightTile = function(disciplineID) {
                 // On mobile: it's oriented "south", so the fixed position is a little different, unless it's a random tile
                 // or non-standard filters and the tile is on the far left, in which case it'll default back to the "east" orientation
 
-                if (phoneBrowsing === true && d.final_state_index % vis.colWidths[d.end_state] >= 15) {
+                if (phoneBrowsing === true && d.final_state_index % vis.colWidths[d.end_state] >= 30) {
                     highlightTip
                         .css("position", "fixed")
                         .css("top", tileY + tileHeight + 5)
@@ -650,7 +650,7 @@ TileChart.prototype.setToolTips = function() {
     vis.tip = d3.tip()
         .attr('class', 'd3-tip')
         // Offset can be a little complicated due to sticky positioning of the tilechart-tile (only seems to apply on Chrome)
-        .offset(function(d) {
+        .offset(d => {
             // Find offset of the top of the tilechart-wrapper from the top of the page (this will vary based on window size)
             const tileOffset = $("#tilechart-wrapper")[0].getBoundingClientRect().y;
             // Find offset from top of page to tilechart-tile
@@ -715,12 +715,12 @@ TileChart.prototype.setToolTips = function() {
         // and those towards the top-right triggering 'west' tooltips, while the rest trigger 'east' tooltips
         // Because the 'No Sustained Findings' section is so large and often has tiles near the bottom of the screen, any tile
         // below row 62 of the section will trigger a 'north' tooltip as well
-        .direction(function(d) {
+        .direction(d => {
             if (phoneBrowsing === true) {
                 const tileRow = d.final_state_index / (vis.colWidths['No Sustained Findings']);
                 if (d.end_state === "Guilty Finding" ||
                     ((d.end_state === "No Sustained Findings" || d.end_state === "Investigation Pending")
-                        && d.final_state_index % vis.colWidths[d.end_state] < 15)) {
+                        && d.final_state_index % vis.colWidths[d.end_state] < 30)) {
                     return "e";
                 }
                 if (d.end_state === 'No Sustained Findings' && tileRow <= 60) {
