@@ -865,7 +865,9 @@ hr {
     }
 
     .d3-tip {
-        max-width: 300px;
+        /*max-width: 300px;*/
+        width: calc(100vw - 50px);
+        /*left: 30px;*/
     }
 
     .step.phantom {

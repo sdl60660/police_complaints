@@ -182,14 +182,14 @@ TileChart.prototype.initVis = function() {
         let availableWidth = vw - 2*vis.mobileSideMargin;
         vis.blockGroupWidth = Math.round(availableWidth/vis.blockSize);
 
-        const sustainedFindingColScalar = 0.22;
+        vis.sustainedFindingColScalar = 0.22;
 
         // row 1: 0.45*vh
         // row 2: 0.24*vh
 
         const row1 = vis.mobileTopMargin;
         const row2 = row1 + ((staticCounts["No Sustained Findings"]/vis.blockGroupWidth) * vis.blockSize) + 35;
-        const row3 = row2 + ((staticCounts["Sustained Finding"]/(vis.blockGroupWidth*sustainedFindingColScalar)) * vis.blockSize) + 50;
+        const row3 = row2 + ((staticCounts["Sustained Finding"]/(vis.blockGroupWidth*vis.sustainedFindingColScalar)) * vis.blockSize) + 50;
 
         console.log(vis.blockGroupWidth, staticCounts['No Sustained Findings'], vis.blockSize);
 
@@ -211,11 +211,11 @@ TileChart.prototype.initVis = function() {
 
             "No Sustained Findings": Math.round(vis.blockGroupWidth),
 
-            "Sustained Finding": Math.round(sustainedFindingColScalar*vis.blockGroupWidth),
-            "Guilty Finding": Math.round(sustainedFindingColScalar*vis.blockGroupWidth),
-            "Training/Counseling": Math.round(sustainedFindingColScalar*vis.blockGroupWidth),
-            "No Guilty Findings": Math.round(sustainedFindingColScalar*vis.blockGroupWidth),
-            "Discipline Pending": Math.round(sustainedFindingColScalar*vis.blockGroupWidth)
+            "Sustained Finding": Math.round(vis.sustainedFindingColScalar*vis.blockGroupWidth),
+            "Guilty Finding": Math.round(vis.sustainedFindingColScalar*vis.blockGroupWidth),
+            "Training/Counseling": Math.round(vis.sustainedFindingColScalar*vis.blockGroupWidth),
+            "No Guilty Findings": Math.round(vis.sustainedFindingColScalar*vis.blockGroupWidth),
+            "Discipline Pending": Math.round(vis.sustainedFindingColScalar*vis.blockGroupWidth)
         }
 
         // vis.outcomeCoordinates["Training/Counseling"][1] += 40;
@@ -704,18 +704,31 @@ TileChart.prototype.setToolTips = function() {
             }
 
             if (phoneBrowsing === true) {
-                const tileRow = d.final_state_index / (vis.colWidths['No Sustained Findings']);
-                if (d.end_state === "Guilty Finding" ||
-                    ((d.end_state === "No Sustained Findings" || d.end_state === "Investigation Pending")
-                        && d.final_state_index % vis.colWidths[d.end_state] < 15)) {
-                    xOffset += 3;
+                const vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0);
+                const tileX = vis.outcomeCoordinates[d.end_state][0] + vis.trueBlockWidth * (d.final_state_index%vis.colWidths[d.end_state]);
+                const rightEdgeDistance = vw - tileX;
+
+                const tooltipTileWidth = vw - 50;
+
+                if (tileX < tooltipTileWidth/2) {
+                    xOffset += (tooltipTileWidth/2 - tileX) + 3;
                 }
-                else if (d.end_state === 'No Sustained Findings' && tileRow <= 60) {
+                else if (rightEdgeDistance < tooltipTileWidth/2) {
+                    xOffset -= (tooltipTileWidth/2 - rightEdgeDistance) + 3;
+                }
+
+
+                const tileRow = d.final_state_index / (vis.colWidths['No Sustained Findings']);
+                if (d.end_state === 'No Sustained Findings' && tileRow <= 60) {
                     yOffset += vis.blockSize / 2;
                 }
                 else {
                     yOffset -= vis.blockSize / 2;
                 }
+
+                $(".d3-tip::after")
+                    .css("text-align", "unset")
+                    .css("left", "20px");
             }
             // Based on the outcome group, the direction of the tooltip relative to the tile will change, and therefore
             // the offsets will need to change a little too, so that the tooltip is positioned next ot the tile and not on top of it
@@ -752,11 +765,14 @@ TileChart.prototype.setToolTips = function() {
         .direction(d => {
             if (phoneBrowsing === true) {
                 const tileRow = d.final_state_index / (vis.colWidths['No Sustained Findings']);
-                if (d.end_state === "Guilty Finding" ||
-                    ((d.end_state === "No Sustained Findings" || d.end_state === "Investigation Pending")
-                        && d.final_state_index % vis.colWidths[d.end_state] < 30)) {
-                    return "e";
-                }
+                const tileHorizontalEdgeDistance = vis.mobileSideMargin + (d.final_state_index % vis.blockGroupWidth)*vis.blockSize;
+                console.log(tileHorizontalEdgeDistance);
+
+                // if (d.end_state === "Guilty Finding" ||
+                //     ((d.end_state === "No Sustained Findings" || d.end_state === "Investigation Pending")
+                //         && d.final_state_index % vis.colWidths[d.end_state] < 30)) {
+                //     return "e";
+                // }
                 if (d.end_state === 'No Sustained Findings' && tileRow <= 60) {
                     return "s";
                 }
