@@ -18,10 +18,15 @@ TileChart.prototype.initVis = function() {
     vis.height = 800;
     vis.width = 1050;
 
+    const vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0);
+    const vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0);
+
     if (phoneBrowsing === true) {
-        vis.height = 1760;
-        vis.margin.top = 40;
-        vis.width = 1160;
+        vis.height = vh*0.85;
+        vis.width = vw;
+
+        vis.margin.top = 0;
+        vis.margin.left = 0;
     }
 
     // Make svg size flexible based on window dimensions
@@ -110,7 +115,7 @@ TileChart.prototype.initVis = function() {
     // Set the output for the color scale and default/unknown to 'gray'. Domain will be determined based on 'group by' value
     vis.color = d3.scaleOrdinal()
         .range(["#3232FF", "#FF1919", "#FFAC14"])
-        .unknown("gray")
+        .unknown("gray");
 
     // Set the display text above the timeline to reflect current slider values
     vis.startDateText = d3.select("#start-date-display").append("text")
@@ -156,20 +161,49 @@ TileChart.prototype.initVis = function() {
         "Training/Counseling": Math.round(vis.blockGroupWidth),
         "No Guilty Findings": Math.round(vis.blockGroupWidth),
         "Discipline Pending": Math.round(vis.blockGroupWidth)
-    }
+    };
 
     if (phoneBrowsing === true) {
+        const staticCounts = {
+            "No Sustained Findings": officerDisciplineResults.slice().filter(d => d.investigative_findings === "No Sustained Findings").length,
+            "Sustained Finding": officerDisciplineResults.slice().filter(d => d.disciplinary_findings === "Training/Counseling").length,
+            "Investigation Pending": officerDisciplineResults.slice().filter(d => d.investigative_findings === "Investigation Pending").length
+        };
+
+
+        vis.mobileSideMargin = 16;
+        vis.mobileTopMargin = 30;
+
+        vis.blockSize = 3.5;
+        // vis.blockGroupWidth = 94;
+        vis.blockSpacing = 0;
+        vis.trueBlockWidth = (vis.blockSize + vis.blockSpacing);
+
+        let availableWidth = vw - 2*vis.mobileSideMargin;
+        vis.blockGroupWidth = Math.round(availableWidth/vis.blockSize);
+
+        const sustainedFindingColScalar = 0.22;
+
+        // row 1: 0.45*vh
+        // row 2: 0.24*vh
+
+        const row1 = vis.mobileTopMargin;
+        const row2 = row1 + ((staticCounts["No Sustained Findings"]/vis.blockGroupWidth) * vis.blockSize) + 35;
+        const row3 = row2 + ((staticCounts["Sustained Finding"]/(vis.blockGroupWidth*sustainedFindingColScalar)) * vis.blockSize) + 50;
+
+        console.log(vis.blockGroupWidth, staticCounts['No Sustained Findings'], vis.blockSize);
+
         vis.outcomeCoordinates = {
-            "Investigation Pending": [30, 1660],
+            "No Sustained Findings": [vis.mobileSideMargin, row1],
 
-            "No Sustained Findings": [30, 30],
+            "Sustained Finding": [vis.mobileSideMargin, row2],
 
-            "Sustained Finding": [30, 1040],
+            "Guilty Finding": [vis.mobileSideMargin, row2+15],
+            "Training/Counseling": [vis.mobileSideMargin+(availableWidth*0.25), row2+15],
+            "No Guilty Findings": [vis.mobileSideMargin+(availableWidth*0.5), row2+15],
+            "Discipline Pending": [vis.mobileSideMargin+(availableWidth*0.75), row2+15],
 
-            "Guilty Finding": [30, 1080],
-            "Training/Counseling": [250, 1080],
-            "No Guilty Findings": [470, 1080],
-            "Discipline Pending": [700, 1080]
+            "Investigation Pending": [vis.mobileSideMargin, row3+15],
         };
 
         vis.colWidths = {
@@ -177,11 +211,11 @@ TileChart.prototype.initVis = function() {
 
             "No Sustained Findings": Math.round(vis.blockGroupWidth),
 
-            "Sustained Finding": Math.round(0.22*vis.blockGroupWidth),
-            "Guilty Finding": Math.round(0.22*vis.blockGroupWidth),
-            "Training/Counseling": Math.round(0.22*vis.blockGroupWidth),
-            "No Guilty Findings": Math.round(0.22*vis.blockGroupWidth),
-            "Discipline Pending": Math.round(0.25*vis.blockGroupWidth)
+            "Sustained Finding": Math.round(sustainedFindingColScalar*vis.blockGroupWidth),
+            "Guilty Finding": Math.round(sustainedFindingColScalar*vis.blockGroupWidth),
+            "Training/Counseling": Math.round(sustainedFindingColScalar*vis.blockGroupWidth),
+            "No Guilty Findings": Math.round(sustainedFindingColScalar*vis.blockGroupWidth),
+            "Discipline Pending": Math.round(sustainedFindingColScalar*vis.blockGroupWidth)
         }
 
         // vis.outcomeCoordinates["Training/Counseling"][1] += 40;
@@ -209,7 +243,7 @@ TileChart.prototype.initVis = function() {
             }
         })
         .attr("y", function(d) {
-            return vis.outcomeCoordinates[d][1] - 30;
+            return vis.outcomeCoordinates[d][1] - 14;
         })
         .attr("text-anchor", () => phoneBrowsing === true ? "start" : "middle")
         .style("font-size", function(d) {
@@ -217,7 +251,7 @@ TileChart.prototype.initVis = function() {
             // Top-level labels are larger than the second-level (disciplinary) outcomes
             if (['Investigation Pending', 'No Sustained Findings', 'Sustained Finding'].includes(d)) {
                 if (phoneBrowsing === true) {
-                    return "16pt";
+                    return "14px";
                 }
                 else {
                     return "12pt";
@@ -225,7 +259,7 @@ TileChart.prototype.initVis = function() {
             }
             else {
                 if (phoneBrowsing === true) {
-                    return '11pt';
+                    return '9px';
                 }
                 else {
                    return "9pt";
@@ -441,7 +475,7 @@ TileChart.prototype.updateVis = function() {
                     }
                 })
                 .style("stroke", "#f9f9f9")
-                .style("stroke-width", () => phoneBrowsing === true ? "2px" : "1px")
+                .style("stroke-width", () => phoneBrowsing === true ? "1px" : "1px")
                 // Mouseenter/mouseout callback functions will trigger/remove tooltips for given investigation tile
                 .on("mouseenter", d => {
                     // If there's a highlighted tile with a pinned tooltip, we'll be extra cautious about removing that

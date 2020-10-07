@@ -270,10 +270,10 @@ function preprocessDataset(dataset) {
         }
 
         // Set grouping/classifications of prior complaints to turn it into a categorical field
-        if (d.officer_prior_complaints > 1) {
+        if (+d.officer_prior_complaints > 1) {
             d.prior_complaints_group = 'multiple';
         }
-        else if (d.officer_prior_complaints === 1) {
+        else if (+d.officer_prior_complaints === 1) {
             d.prior_complaints_group = 'one';
         }
         else {
