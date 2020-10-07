@@ -1193,11 +1193,11 @@ function setActivateFunctions() {
     activateFunctions[8] = tilechartEntrance;
     activateFunctions[9] = highlightTile;
     activateFunctions[10] = showTilechartByPriorComplaints;
-    activateFunctions[11] = highlightOverduePending;
-    activateFunctions[12] = showComplaintTypes;
+    // activateFunctions[11] = highlightOverduePending;
+    activateFunctions[11] = showComplaintTypes;
 
     // End text functions
-    activateFunctions[13] = hideFinalAnnotationSlide();
+    activateFunctions[12] = hideFinalAnnotationSlide();
 }
 
 
@@ -1327,22 +1327,14 @@ function main() {
                     $(`#mobile-start-year-select option[value="${i}"]`)
                         .attr("disabled", "disabled")
                 }
-
-                // $("option[value='stackoverflow']")
-                //     .attr("disabled", "disabled");
             });
 
-        // $("#mobile-end-year-select")
-        //     .on('change', () => {
-        //
-        //     });
 
 
         displayIntroText();
         if(timeline){
           timeline.updateDimensions();  
         }
-
 
         // If user loads visualization in the middle of the page, run all activate functions that they should have passed
         // already to "catch them up"
