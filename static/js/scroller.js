@@ -79,6 +79,7 @@ function scroller() {
         startPos = top;
       }
       sectionPositions.push(top - startPos);
+      console.log(d3.select(this).node(),top,startPos,top - startPos);
     });
     containerStart = container.node().getBoundingClientRect().top + window.pageYOffset;
   }
@@ -94,15 +95,19 @@ function scroller() {
     var pos = window.pageYOffset - containerStart;
     var sectionIndex = d3.bisect(sectionPositions, pos);
     sectionIndex = Math.min(sections.size() - 1, sectionIndex);
+    console.log(currentIndex,sectionIndex,pos);
 
     if (currentIndex !== sectionIndex) {
+      console.log(sectionPositions);
       // @v4 you now `.call` the dispatch callback
       dispatch.call('active', this, sectionIndex);
       currentIndex = sectionIndex;
     }
 
     var prevIndex = Math.max(sectionIndex - 1, 0);
+
     var prevTop = sectionPositions[prevIndex];
+
     var progress = (pos - prevTop) / (sectionPositions[sectionIndex] - prevTop);
 
     // @v4 you now `.call` the dispatch callback
