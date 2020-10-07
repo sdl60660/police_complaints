@@ -10,6 +10,8 @@ Sunburst.prototype.initVis = function() {
 
     // Dimensions of sunburst. Max width of 850, then scale down based on available window width.
     const vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0);
+    const vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0);
+
     const dimensions = Math.min(vh - 120, Math.min(850, $("#sunburst-area").width()));
 
     vis.margin = {'top': 10, 'bottom': 0, 'left': 0, 'right': 0};
@@ -54,7 +56,13 @@ Sunburst.prototype.initVis = function() {
 
     vis.svg = d3.select(vis.parentElement)
         .append("svg")
-        .attr("viewBox","0 0 "+(vis.width + vis.margin.left + vis.margin.right)+" "+(vis.height + vis.margin.top + vis.margin.bottom))
+        .attr("preserveAspectRatio", function(d){
+          if(vh>vw){
+            return "xMaxYMin meet";
+          }
+          return null;
+        })
+        .attr("viewBox","0 0 "+(vis.width + vis.margin.left + vis.margin.right)*1.05+" "+(vis.height + vis.margin.top + vis.margin.bottom))
         // .attr("width", vis.width + vis.margin.left + vis.margin.right)
         // .attr("height", vis.height + vis.margin.top + vis.margin.bottom);
 

@@ -290,6 +290,7 @@ p {
     font-size: 17px;
     width:100%;
     float:none;
+    margin: 0 auto;
 }
 #sample-tooltip div{
     margin-bottom: .2rem;
@@ -303,7 +304,6 @@ p {
 #sunburst-static-text {
     text-align: center;
     font-size: 26px;
-    margin-top:3rem;
 }
 
 #sunburst-select-text{
@@ -333,6 +333,7 @@ p {
 .sunburst-select {
 	background-color: #fff;
 	border: 1px solid #cdcdcd;
+  font-size:1rem;
 
 	padding-left: 3px;
 	padding-right: 3px;
@@ -679,15 +680,15 @@ hr {
 
 #tilechart-tile {
     height:100vh;
-    margin-left: calc(var(--annotation-width) + 10px);
+    margin-left: calc(var(--annotation-width));
     display: flex;
     flex-direction: column;
-    justify-content: flex-end;
+    justify-content: flex-start;
     position: sticky;
     top: 0;
     left: 0;
     padding:0;
-    width: calc(100% - var(--annotation-width) + 10px);
+    width: calc(100% - var(--annotation-width));
 }
 
 #desktop-controls{
@@ -782,14 +783,36 @@ hr {
 #chart-area {
   display: block;
   width:100%;
+  height:1px;
+  flex-grow:1;
 }
 
 #chart-area svg {
   margin: 0 auto;
   display: block;
   overflow: visible;
+  height:100%;
+  width: 100%;
 }
+
 #mobile-controls .date-wrapper ,.complaint-wrapper, .group-by-wrapper{
+
+}
+
+#desktop-controls > .chosen-container-div{
+  display: flex;
+}
+
+#desktop-controls > .date-wrapper{
+  display: flex;
+}
+
+#desktop-controls > .complaint-wrapper{
+  display: flex;
+}
+
+#desktop-controls > .group-by-wrapper{
+  display: flex;
 }
 
 #mobile-complaint-type-select {
@@ -812,10 +835,20 @@ hr {
   margin-left: 3px;
 }
 
+#sunburst-area{
+  height: 1px;
+  width: 100%;
+  flex-grow:1;
+}
+
 #sunburst-area svg {
   margin:0 auto;
   display:block;
   overflow:visible;
+  height: 100%;
+  width: auto;
+  position: relative;
+  width:100%;
 }
 
 .mobile-legend-title{
@@ -830,10 +863,11 @@ hr {
 }
 
 .subburst-title {
-  position: absolute;
   width: 100%;
-  transform: translate(0,-100%);
-  top: 0px;
+  display:flex;
+  justify-content: flex-end;
+  height: 100px;
+  flex-direction: column;
 }
 
 #sunburst-tile {
@@ -841,7 +875,7 @@ hr {
   margin-left: calc(var(--annotation-width) + 10px);
   display: flex;
   flex-direction: column;
-  justify-content: flex-end;
+  justify-content: center;
   position: sticky;
   top: 0;
   left: 0;
@@ -864,6 +898,9 @@ hr {
 
 
 @media (max-width: 1100px) {
+    #subburst-title {
+      font-size: .9rem;
+    }
     #sunburst-tile, #tilechart-tile {
       width:100%;
       margin: 0 auto;
@@ -1008,6 +1045,7 @@ hr {
     }
 
     #sunburst-select-text {
+      font-size:.9rem;
     }
 
     #annotation-tooltip {
