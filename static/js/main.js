@@ -625,8 +625,6 @@ function highlightComplaintOutcome() {
         })
 }
 
-
-
 // Activate function: triggers on annotation "Investigative Outcomes"
 function showInvestigationGroups() {
     // If on mobile, the sunburst entrance happens here
@@ -1265,7 +1263,7 @@ function main() {
     setWindowFunctions();
     setScrollDispatcher();
     setActivateFunctions();
-    setTileWrapperHeights();
+    // setTileWrapperHeights();
 
     Promise.all(promises).then(function(allData) {
 
@@ -1341,7 +1339,10 @@ function main() {
 
 
         displayIntroText();
-        timeline.updateDimensions();
+        if(timeline){
+          timeline.updateDimensions();  
+        }
+
 
         // If user loads visualization in the middle of the page, run all activate functions that they should have passed
         // already to "catch them up"
