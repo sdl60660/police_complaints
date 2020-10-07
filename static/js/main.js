@@ -448,16 +448,16 @@ function resetTilechartTooltips() {
 // This will run if a user loads/reloads in the middle of the screen. It will run all activate functions that
 // should have run by the given Y Position
 function catchupPagePosition(startYPosition) {
-    $(".step").toArray().forEach( function(step, i) {
-
-        const topMargin = parseInt($(step).css("margin-top"));
-
-        // Run every activate function that should have run by this point on the page
-        if (startYPosition + topMargin > $(step).offset().top) {
-            // console.log(i);
-            activateFunctions[i]();
-        }
-    });
+    // $(".step").toArray().forEach( function(step, i) {
+    //
+    //     const topMargin = parseInt($(step).css("margin-top"));
+    //
+    //     // Run every activate function that should have run by this point on the page
+    //     if (startYPosition + topMargin > $(step).offset().top) {
+    //         // console.log(i);
+    //         activateFunctions[i]();
+    //     }
+    // });
 }
 
 
@@ -513,12 +513,12 @@ function setSelectOptions(optionPairs) {
 // Activate function: triggers on first (phantom) annotation slide at the top of the page
 function displayIntroText() {
     // Show intro tile, fade sunburst tile
-    $("#intro-tile")
-        .css("opacity", 1.0);
-
-    $("#sunburst-tile")
-        .css("opacity", 0.2);
-
+    // $("#intro-tile")
+    //     .css("opacity", 1.0);
+    //
+    // $("#sunburst-tile")
+    //     .css("opacity", 0.2);
+    //
 
     const format = d3.format(",.0f")
 
@@ -606,8 +606,8 @@ function highlightComplaintOutcome() {
     $("#sample-complaint-tile")
         .css("opacity", 1.0);
 
-    $("#sunburst-tile")
-        .css("opacity", 0.2);
+    // $("#sunburst-tile")
+    //     .css("opacity", 0.2);
 
      // Reset fill opacity on all paths to default (0.6)
     $("#sunburst-area path")
@@ -661,6 +661,8 @@ function showInvestigationGroups() {
 // Activate function: triggers on annotation "Discarded Complaints"
 function highlightNotSustained() {
 
+  console.log("running there");
+
     // If on mobile, the sunburst entrance happens here
     if (phoneBrowsing === true && sunburstEntered === false) {
         sunburst = new Sunburst("#sunburst-area");
@@ -702,7 +704,7 @@ function highlightNotSustained() {
         .css("fill-opacity", 0.3);
 
     // Highlight only the "not sustained" section
-    $("#sunburst-area path.No-Sustained-Findings")
+    $("#sunburst-area path.Sustained-Finding")
         .css("fill-opacity", 0.8);
 
 }
@@ -805,6 +807,7 @@ function guiltyBlackComplainant() {
 
 // Activate function: triggers on annotation "Black Complainant/White Officer"
 function guiltyBlackComplainantWhiteOfficer() {
+  console.log("here");
     // Since this is the last sunburst annotation, if user enters from below, show the sunburst and fade the tilechart
     if (scrollDirection === 'up') {
         $("#sunburst-tile")
@@ -886,8 +889,8 @@ function enableUserExamine() {
 // Activate function: triggers on annotation "The Full Picture"
 function tilechartEntrance() {
     // Since this is the first tilechart section, fade the sunburst tile, show the tilechart
-    $("#sunburst-tile")
-        .css("opacity", 0.2);
+    // $("#sunburst-tile")
+    //     .css("opacity", 0.2);
 
     $("#tilechart-tile")
         .css("opacity", 1.0);
@@ -1049,19 +1052,18 @@ function hideFinalAnnotationSlide() {
 // Changes opacity of annotation text, sets scroll direction and makes sure that all activate functions that should trigger,
 // do trigger on a fast scroll (rather than skipping intermediate sections)
 function activate(index) {
-
     // Fade/show corresponding annotation slide
-    if (phoneBrowsing === false) {
-        $("section.step:not(.phantom)")
-            .css("opacity", hiddenOpacity)
-            .css("z-index", 10);
-    }
+    // if (phoneBrowsing === false) {
+    //     $("section.step:not(.phantom)")
+    //         .css("opacity", hiddenOpacity)
+    //         .css("z-index", 10);
+    // }
 
-    if (index-1 > 0) {
-        $("section.step").eq(index-2)
-            .css("opacity", () => phoneBrowsing === true ? 1.0 : 1.0)
-            .css("z-index", 51);
-    }
+    // if (index-1 > 0) {
+    //     $("section.step").eq(index-2)
+    //         .css("opacity", () => phoneBrowsing === true ? 1.0 : 1.0)
+    //         .css("z-index", 51);
+    // }
 
     activeIndex = index;
 
@@ -1075,12 +1077,18 @@ function activate(index) {
     // Make sure that all activateFunctions between the activeIndex and the lastIndex run, in case of a fast scroll
     const sign = (activeIndex - lastIndex) < 0 ? -1 : 1;
     const scrolledSections = d3.range(lastIndex + sign, activeIndex + sign, sign);
-    scrolledSections.forEach(function(i) {
-        if (i-1 >= 0) {
-            console.log(i);
-            activateFunctions[i - 1]();
-        }
-    });
+
+
+    console.log(index);
+
+    activateFunctions[index]();
+
+    // scrolledSections.forEach(function(i) {
+    //     if (i-1 >= 0) {
+    //         console.log(i);
+    //         activateFunctions[i - 1]();
+    //     }
+    // });
 
     lastIndex = activeIndex;
 };
@@ -1088,65 +1096,111 @@ function activate(index) {
 
 function setScrollDispatcher() {
 
-    // Initialize scroll object (from scroller.js)
-    scroll = scroller()
-        .container(d3.select('body'));
+    // // Initialize scroll object (from scroller.js)
+    // scroll = scroller()
+    //     .container(d3.select('body'));
+    //
+    // // Set the div elements that will be used to determine index for activate functions
+    // // If on mobile, the scrollerDiv used to identify the scroll controller sections will be the '.mobile-spacer' divs
+    // // If on desktop, it will be the '.step' divs with the annotation content (on mobile these are all fixed to the top)
+    // if (phoneBrowsing === true) {
+    //     // scrollerDiv = '.mobile-spacer';
+    //     scrollerDiv = '.step';
+    // }
+    // else {
+    //     scrollerDiv = '.step';
+    // }
+    // scroll(d3.selectAll(scrollerDiv));
 
-    // Set the div elements that will be used to determine index for activate functions
-    // If on mobile, the scrollerDiv used to identify the scroll controller sections will be the '.mobile-spacer' divs
-    // If on desktop, it will be the '.step' divs with the annotation content (on mobile these are all fixed to the top)
-    if (phoneBrowsing === true) {
-        // scrollerDiv = '.mobile-spacer';
-        scrollerDiv = '.step';
+    function handleStepEnter(response) {
+      activate(response.index);
+
+      // if (response.index === 13) {
+      //     $("#tilechart-tile")
+      //         .css("opacity", 0.2);
+      // }
+      // // Return opacity to the tilechart if the user scrolls back up
+      // else if (response.index === 13) {
+      //     $("#tilechart-tile")
+      //         .css("opacity", 1.0);
+      // }
+
+      // // On mobile, hide the annotation at the top once the user hits the end text (otherwise this will cover the top of the screen)
+      // if (response.index >= 13 && progress > 2.0 && $("section.step").eq(12).css("opacity") !== "0" && phoneBrowsing === true) {
+      //     hideFinalAnnotationSlide();
+      //     $(".step")
+      //         .css("position", "absolute");
+      // }
+      // // Return the annotation if they scroll back up
+      // else if (index >= 13 && progress < 2.0 && $("section.step").eq(12).css("opacity") === "0" && phoneBrowsing === true) {
+      //     $("section.step").eq(12)
+      //         .css("opacity", 1.0);
+      //     $(".step")
+      //         .css("position", "fixed");
+      //
+      // }
+      //
     }
-    else {
-        scrollerDiv = '.step';
-    }
-    scroll(d3.selectAll(scrollerDiv));
+    const scroller = scrollama();
+
+    scroller
+  		.setup({
+  			// container: '#scroll', // our outermost scrollytelling element
+  			// graphic: '.scroll__graphic', // the graphic
+  			// text: '.scroll__text', // the step container
+  			step: '.step', // the step elements
+  			offset: 0.5, // set the trigger to be 1/2 way down screen
+  			// debug: true, // display the trigger offset for testing
+  		})
+  		.onStepEnter(handleStepEnter)
+  		// .onContainerEnter(handleContainerEnter)
+  		// .onContainerExit(handleContainerExit);
+
+    setActivateFunctions();
 
 
     // When the dispatcher sends an 'active' event run the activate wrapper function
     // It dispatches this even every time it hits a new full index (annotation slide)
-    scroll.on('active', function(index){
-        console.log(index);
-
-        activate(index);
-    });
+    // scroll.on('active', function(index){
+    //     console.log(index);
+    //
+    //     activate(index);
+    // });
 
     // When the dispatcher sends a 'progress event', it'll look for a few unique triggers
     // It sends these any time the user scrolls.
     // The 'index' will the int value of the current annotation index.
     // The 'progress' will be a float that represents how far the user has progressed within that index
     // (e.g. progress will equal 0.45 when the user is 45% through the given index)
-    scroll.on('progress', function(index, progress) {
-        // console.log(index, progress);
-
-        // On the final index, as the end text comes into view and the tilechart starts to scroll out, fade the tilechart
-        if (index === 13 && progress >= 1.5) {
-            $("#tilechart-tile")
-                .css("opacity", 0.2);
-        }
-        // Return opacity to the tilechart if the user scrolls back up
-        else if (index === 13 && progress < 1.5) {
-            $("#tilechart-tile")
-                .css("opacity", 1.0);
-        }
-
-        // On mobile, hide the annotation at the top once the user hits the end text (otherwise this will cover the top of the screen)
-        if (index >= 13 && progress > 2.0 && $("section.step").eq(12).css("opacity") !== "0" && phoneBrowsing === true) {
-            hideFinalAnnotationSlide();
-            $(".step")
-                .css("position", "absolute");
-        }
-        // Return the annotation if they scroll back up
-        else if (index >= 13 && progress < 2.0 && $("section.step").eq(12).css("opacity") === "0" && phoneBrowsing === true) {
-            $("section.step").eq(12)
-                .css("opacity", 1.0);
-            $(".step")
-                .css("position", "fixed");
-
-        }
-    });
+    // scroll.on('progress', function(index, progress) {
+    //     // console.log(index, progress);
+    //
+    //     // On the final index, as the end text comes into view and the tilechart starts to scroll out, fade the tilechart
+    //     if (index === 13 && progress >= 1.5) {
+    //         $("#tilechart-tile")
+    //             .css("opacity", 0.2);
+    //     }
+    //     // Return opacity to the tilechart if the user scrolls back up
+    //     else if (index === 13 && progress < 1.5) {
+    //         $("#tilechart-tile")
+    //             .css("opacity", 1.0);
+    //     }
+    //
+    //     // On mobile, hide the annotation at the top once the user hits the end text (otherwise this will cover the top of the screen)
+    //     if (index >= 13 && progress > 2.0 && $("section.step").eq(12).css("opacity") !== "0" && phoneBrowsing === true) {
+    //         hideFinalAnnotationSlide();
+    //         $(".step")
+    //             .css("position", "absolute");
+    //     }
+    //     // Return the annotation if they scroll back up
+    //     else if (index >= 13 && progress < 2.0 && $("section.step").eq(12).css("opacity") === "0" && phoneBrowsing === true) {
+    //         $("section.step").eq(12)
+    //             .css("opacity", 1.0);
+    //         $(".step")
+    //             .css("position", "fixed");
+    //
+    //     }
+    // });
 
 }
 
@@ -1175,29 +1229,30 @@ function setActivateFunctions() {
     scrollerDivObjects = $(scrollerDiv);
 
     // Intro tile functions
-    activateFunctions[0] = displayIntroText;
+    //activateFunctions[0] = displayIntroText;
 
     // Sample complaint tile functions
-    activateFunctions[1] = highlightComplaintDetails;
-    activateFunctions[2] = highlightComplaintOutcome;
+    activateFunctions[0] = highlightComplaintDetails;
+    activateFunctions[1] = highlightComplaintOutcome;
 
     // Sunburst tile functions
-    activateFunctions[3] = highlightNotSustained;
-    activateFunctions[4] = showDisciplinaryGroups;
-    activateFunctions[5] = guiltyWhiteComplainant;
-    activateFunctions[6] = guiltyBlackComplainant;
-    activateFunctions[7] = guiltyBlackComplainantWhiteOfficer;
+    activateFunctions[2] = highlightNotSustained;
+
+    activateFunctions[3] = showDisciplinaryGroups;
+    activateFunctions[4] = guiltyWhiteComplainant;
+    activateFunctions[5] = guiltyBlackComplainant;
+    activateFunctions[6] = guiltyBlackComplainantWhiteOfficer;
     // Matrix will go here
 
     // Tilechart tile functions
-    activateFunctions[8] = tilechartEntrance;
-    activateFunctions[9] = highlightTile;
-    activateFunctions[10] = showTilechartByPriorComplaints;
+    activateFunctions[7] = tilechartEntrance;
+    activateFunctions[8] = highlightTile;
+    activateFunctions[9] = showTilechartByPriorComplaints;
     // activateFunctions[11] = highlightOverduePending;
-    activateFunctions[11] = showComplaintTypes;
+    activateFunctions[10] = showComplaintTypes;
 
     // End text functions
-    activateFunctions[12] = hideFinalAnnotationSlide();
+    activateFunctions[11] = hideFinalAnnotationSlide();
 }
 
 
@@ -1250,26 +1305,27 @@ function main() {
     ];
 
     // Initialize both main viz tiles to faded
-    $("#sunburst-tile")
-        .css("opacity", 0.2);
+    // $("#sunburst-tile")
+    //     .css("opacity", 0.2);
+    //
+    // $("#tilechart-tile")
+    //     .css("opacity", 0.2);
 
-    $("#tilechart-tile")
-        .css("opacity", 0.2);
 
     determinePhoneBrowsing();
     setAnnotationTooltips();
     setPlayButton();
     setScrollArrow();
     setWindowFunctions();
-    setScrollDispatcher();
-    setActivateFunctions();
+
     // setTileWrapperHeights();
 
     Promise.all(promises).then(function(allData) {
 
+      console.log("data loaded");
+
         officerDisciplineResults = allData[0];
         // districtGeoJSON = allData[1];
-
 
         $(".loadring-container")
             .hide();
@@ -1329,11 +1385,9 @@ function main() {
                 }
             });
 
-
-
         displayIntroText();
         if(timeline){
-          timeline.updateDimensions();  
+          timeline.updateDimensions();
         }
 
         // If user loads visualization in the middle of the page, run all activate functions that they should have passed
@@ -1342,6 +1396,9 @@ function main() {
         if (startingOffset > 5) {
             catchupPagePosition(startingOffset)
         }
+
+        setScrollDispatcher();
+
     });
 }
 

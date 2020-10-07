@@ -37,6 +37,8 @@ strong {
 .tile-wrapper {
     position: relative;
     width:100%;
+    max-width:1500px;
+    margin:0 auto;
 }
 
 #intro-wrapper {
@@ -120,32 +122,52 @@ p {
 	width: var(--annotation-width);
     box-sizing: border-box;
     overflow:auto;
-    margin-top:-100vh;
+    margin-top:-50vh;
 }
 
 .text-column section:last-of-type {
-	margin-bottom:50vh;
+	margin-bottom:100vh;
 }
 
 .step {
 	margin-top: var(--spacer-top);
-	margin-left: 2rem;
-    position: relative;
-	min-height: 320px;
-	border-radius: 15px;
-    background-color: white;
+	margin-left: 1rem;
+  position: relative;
+  background-color: white;
 	overflow: hidden;
-    display:block;
+  display:block;
+  box-shadow: 0px 0px 7px 0px rgba(0,0,0,.12);
+  border-left: 2px solid #000000;
+  width: calc(100% - 2rem);
 }
 
-#last-sunburst-annotation {
-    margin-bottom: 50vh;
+@media (max-width: 1100px) {
+
+  .step {
+      margin-top: 100vh;
+      margin-bottom: 0;
+      z-index: 80;
+      width: calc(100vw - 25px);
+      max-width: 600px;
+      overflow: hidden;
+      margin-left: auto;
+      margin-right: auto;
+      font-size: 16px;
+      min-height: 0;
+      border-radius: 10px;
+      box-shadow: 0px 0px 4px 1px rgba(0,0,0,.12);
+      border: 1px solid #a7a7a7;
+  }
 }
 
 #sunburst-wrapper .text-column section:first-of-type {
     margin-top:0vh;
 }
 
+#end-text-block{
+  width:calc(100% - 20px);
+  margin: 0 auto;
+}
 
 
 .step.phantom {
@@ -692,9 +714,18 @@ hr {
 #desktop-controls{
     display:flex;
     flex-wrap:wrap;
-    width:auto;
+    width:calc(100% - 20px);
+    margin-left: 20px;
 }
 
+.container {
+  padding: 0;
+}
+
+#intro-area {
+  width:calc(100% - 20px);
+  margin:0 auto;
+}
 
 #desktop-controls .col-md-2, .col-md-7, .col-md-3 {
     float:none;
@@ -896,6 +927,8 @@ hr {
 
 
 @media (max-width: 1100px) {
+
+
     #subburst-title {
       font-size: .9rem;
     }
@@ -923,21 +956,6 @@ hr {
     #chart-area svg {
       /*height:100%;*/
       width:100vw;
-    }
-
-    .step {
-        margin-top: 100vh;
-	    margin-bottom: 0;
-        z-index: 80;
-        width: calc(100vw - 25px);
-        max-width: 600px;
-        overflow: hidden;
-        margin-left: auto;
-        margin-right: auto;
-        font-size: 16px;
-        min-height: 0;
-        box-shadow: 0px 0px 4px 1px rgba(0,0,0,.12);
-        border-radius: 3px;
     }
 
     .d3-tip {
