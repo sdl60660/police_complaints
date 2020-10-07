@@ -21,6 +21,8 @@ TileChart.prototype.initVis = function() {
     const vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0);
     const vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0);
 
+    console.log(vh, vw);
+
     if (phoneBrowsing === true) {
         vis.height = vh*0.85;
         vis.width = vw;

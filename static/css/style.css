@@ -886,7 +886,7 @@ hr {
     }
 
     #chart-area svg {
-      height:100%;
+      /*height:100%;*/
       width:100vw;
     }
 
@@ -945,7 +945,7 @@ hr {
 
 
     #sunburst-val-pct-text {
-        font-size: 40px;
+        font-size: 36px;
     }
 
     #sunburst-static-text {
