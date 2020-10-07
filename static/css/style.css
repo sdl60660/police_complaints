@@ -653,6 +653,7 @@ hr {
   width:150px;
   margin: 0 auto;
   margin-top: 1rem;
+  display:block;
 }
 
 .logo svg{
