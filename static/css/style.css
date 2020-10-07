@@ -35,14 +35,11 @@ strong {
 }
 
 .tile-wrapper {
-    height: 600px;
     position: relative;
-    /*left: 30%;*/
-    /*opacity: 0.2;*/
+    width:100%;
 }
 
 #intro-wrapper {
-    /*min-height: 100vh;*/
     z-index: 100;
     height: auto;
 }
@@ -55,11 +52,15 @@ strong {
 #sample-complaint-tile {
     margin-left: 400px;
     margin-bottom: 20px;
-    width: auto;
+    width: calc(100% - 400px);
     display: flex;
     flex-direction: column;
     justify-content: center;
-    /*height: auto;*/
+    height:100vh;
+    position:sticky;
+    top:0;
+    left:0;
+
 }
 
 #sample-complaint-tile :before{
@@ -115,36 +116,40 @@ p {
 	font-size: 14px;
 }
 
-#sections {
-	position: absolute;
-	display: inline-block;
+#sections, .text-column {
 	width: var(--annotation-width);
-	top: 0px;
-	z-index: 50;
+  box-sizing: border-box;
+  overflow:auto;
+  margin-top:-100vh;
+}
+
+.text-column section:last-of-type {
+	margin-bottom:50vh;
 }
 
 .step {
 	margin-top: var(--spacer-top);
 	margin-left: 2rem;
-    position: relative;
+  position: relative;
 	min-height: 320px;
 	border-radius: 15px;
-    background-color: white;
+  background-color: white;
 	overflow: hidden;
-    display:block;
+  display:block;
 }
 
 #last-sunburst-annotation {
   margin-bottom: 50vh;
 }
 
+#sunburst-wrapper .text-column section:first-of-type {
+  margin-top:0vh;
+}
 
 
 
 .step.phantom {
-    /*margin-top: var(--spacer-top);*/
-	/*margin-bottom: var(--spacer-bottom);*/
-	background-color: rgba(0,0,0,0) !important;
+	  background-color: rgba(0,0,0,0) !important;
     opacity: 0.0;
     z-index: -1;
     margin-bottom: 61vh;
@@ -204,7 +209,6 @@ p {
 
 
 #tilechart-wrapper, #sunburst-wrapper {
-    padding-left: calc(var(--annotation-width) + 10px);
 }
 
 #tilechart-wrapper {
@@ -264,7 +268,6 @@ p {
 
 #mobile-controls span{
   align-self:center;
-  margin-right: 10px;
 }
 
 .d3-tip, #annotation-tooltip, #category-tooltip, #sample-tooltip {
@@ -650,6 +653,7 @@ hr {
   width:150px;
   margin: 0 auto;
   margin-top: 1rem;
+  display:block;
 }
 
 .logo svg{
@@ -674,14 +678,16 @@ hr {
 }
 
 #tilechart-tile {
-    width: auto;
-    padding: 0;
-    margin: 0;
+    height:100vh;
+    margin-left: calc(var(--annotation-width) + 10px);
     display: flex;
     flex-direction: column;
-    justify-content: space-around;
-    /*height: 100vh;*/
-    height: auto;
+    justify-content: flex-end;
+    position: sticky;
+    top: 0;
+    left: 0;
+    padding:0;
+    width: calc(100% - var(--annotation-width) + 10px);
 }
 
 #desktop-controls{
@@ -734,8 +740,6 @@ hr {
   width:100px;
 }
 .group-by-wrapper, .chosen-container-div{
-  display:flex;
-  order:2;
 }
 .group-by-wrapper{
   margin-right: 1rem;
@@ -777,27 +781,35 @@ hr {
 
 #chart-area {
   display: block;
+  width:100%;
 }
 
 #chart-area svg {
+  margin: 0 auto;
+  display: block;
+  overflow: visible;
 }
 #mobile-controls .date-wrapper ,.complaint-wrapper, .group-by-wrapper{
-  display: flex;
-  order:initial;
+}
+
+#mobile-complaint-type-select {
+  max-width:100px;
+  width:100px;
 }
 
 #mobile-controls .date-wrapper{
-  margin-right:10px;
-  margin-bottom:10px;
 }
 
 #mobile-controls .group-by-wrapper{
   margin: 0;
-  margin-top: 10px;
 }
 
 #mobile-start-year-select{
-  margin-right:10px;
+  margin-right:3px;
+}
+
+#mobile-end-year-select{
+  margin-left: 3px;
 }
 
 #sunburst-area svg {
@@ -807,9 +819,14 @@ hr {
 }
 
 .mobile-legend-title{
-  min-width: 120px;
-  text-align:right;
-  font-size:14px;
+  width:100%;
+  text-align:left;
+  font-size:12px;
+  display: block;
+}
+
+#mobile-group-by-select{
+  max-width:100px;
 }
 
 .subburst-title {
@@ -821,17 +838,41 @@ hr {
 
 #sunburst-tile {
   height:100vh;
+  margin-left: calc(var(--annotation-width) + 10px);
   display: flex;
-  flex-direction:column;
+  flex-direction: column;
   justify-content: flex-end;
+  position: sticky;
+  top: 0;
+  left: 0;
 }
 
 #sunburst-wrapper .viz-area {
 
 }
 
+.byline{
+  font-family:'Atlas Grotesk Web';
+  font-size:.9rem;
+  text-align:center;
+}
+
+.byline a {
+  color:black;
+  text-decoration:underline;
+}
+
 
 @media (max-width: 1100px) {
+    #sunburst-tile, #tilechart-tile {
+      width:100%;
+      margin: 0 auto;
+    }
+
+    #sunburst-tile {
+      justify-content: center;
+    }
+
     #sections {
         width: 100%;
         z-index: 100000;
@@ -906,7 +947,9 @@ hr {
     }
 
     #sunburst-static-text {
-        font-size: 32px;
+        font-size: 24px;
+        width:calc(100% - 25px);
+        margin: 0 auto;
     }
 
 
@@ -934,11 +977,14 @@ hr {
         position: relative;
         display: flex;
         flex-wrap: wrap;
-        justify-content: flex-start;
+        justify-content: space-around;
         font-size: 12px;
+        padding-top:10px;
+        margin-bottom: 30px;
     }
 
     #tilechart-tile {
+      justify-content: flex-start;
     }
 
     .container {
@@ -971,6 +1017,7 @@ hr {
 
     .step.section-change {
         margin-top: 195vh;
+        margin-top: auto;
     }
 
     h2 {
@@ -991,6 +1038,15 @@ hr {
      .spacer {
         height: 0px;
     }
+    #tilechart-mobile-legend-area{
+      margin: 0 auto;
+      width:100%;
+      justify-content: center;
+      position: absolute;
+      bottom: -25px;
+      left: 0;
+      right: 0;
+    }
 }
 
 
@@ -1008,11 +1064,7 @@ hr {
     font-size:14px;
   }
 
-  #tilechart-mobile-legend-area{
-    margin-top: 5px;
-    width:100%;
-    justify-content: center;
-  }
+
 
   #tilechart-mobile-legend-area .legend-label {
     font-size:10px;
