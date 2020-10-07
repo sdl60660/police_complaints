@@ -579,44 +579,42 @@ TileChart.prototype.highlightTile = function(disciplineID) {
             .attr("box-shadow", "10px 10px")
         // Once the transition is completed, display/pin the corresponding details tooltip
         .on("end", (d) => {
-            if (activeIndex === 10) {
-                vis.tip.show(vis.featuredTile._groups[0][0].__data__, vis.featuredTile.node());
+            vis.tip.show(vis.featuredTile._groups[0][0].__data__, vis.featuredTile.node());
 
-                stickyTooltip = true;
+            stickyTooltip = true;
 
-                let highlightTip = $(".d3-tip");
+            let highlightTip = $(".d3-tip");
 
-                // Get screen coordinates of the corresponding tile
-                let tileY = tileChart.featuredTile.node().getBoundingClientRect().y;
-                let tileX = tileChart.featuredTile.node().getBoundingClientRect().x;
+            // Get screen coordinates of the corresponding tile
+            let tileY = tileChart.featuredTile.node().getBoundingClientRect().y;
+            let tileX = tileChart.featuredTile.node().getBoundingClientRect().x;
 
-                let tileHeight = tileChart.featuredTile.node().getBoundingClientRect().height;
-                let tileWidth = tileChart.featuredTile.node().getBoundingClientRect().width;
+            let tileHeight = tileChart.featuredTile.node().getBoundingClientRect().height;
+            let tileWidth = tileChart.featuredTile.node().getBoundingClientRect().width;
 
-                // Get the height of the tooltip so that it can be centered
-                let tooltipHeight = highlightTip[0].getBoundingClientRect().height;
-                let tooltipWidth = highlightTip[0].getBoundingClientRect().width;
+            // Get the height of the tooltip so that it can be centered
+            let tooltipHeight = highlightTip[0].getBoundingClientRect().height;
+            let tooltipWidth = highlightTip[0].getBoundingClientRect().width;
 
-                // Get the right edge of the corresonding tile
-                let tileRight = tileChart.featuredTile.node().getBoundingClientRect().right;
+            // Get the right edge of the corresonding tile
+            let tileRight = tileChart.featuredTile.node().getBoundingClientRect().right;
 
-                // Fix position of tooltip on screen and set position based on tile positions calculated above
-                // Use the height of the tooltip to make sure it's vertically centered on tile
-                // On mobile: it's oriented "south", so the fixed position is a little different, unless it's a random tile
-                // or non-standard filters and the tile is on the far left, in which case it'll default back to the "east" orientation
+            // Fix position of tooltip on screen and set position based on tile positions calculated above
+            // Use the height of the tooltip to make sure it's vertically centered on tile
+            // On mobile: it's oriented "south", so the fixed position is a little different, unless it's a random tile
+            // or non-standard filters and the tile is on the far left, in which case it'll default back to the "east" orientation
 
-                if (phoneBrowsing === true && d.final_state_index % vis.colWidths[d.end_state] >= 30) {
-                    highlightTip
-                        .css("position", "fixed")
-                        .css("top", tileY + tileHeight + 5)
-                        .css("left", tileX - (tooltipWidth / 2) + (tileWidth / 2));
-                }
-                else {
-                    highlightTip
-                        .css("position", "fixed")
-                        .css("top", tileY + (tileHeight / 2) - (tooltipHeight / 2))
-                        .css("left", tileRight + 3);
-                }
+            if (phoneBrowsing === true && d.final_state_index % vis.colWidths[d.end_state] >= 30) {
+                highlightTip
+                    .css("position", "fixed")
+                    .css("top", tileY + tileHeight + 5)
+                    .css("left", tileX - (tooltipWidth / 2) + (tileWidth / 2));
+            }
+            else {
+                highlightTip
+                    .css("position", "fixed")
+                    .css("top", tileY + (tileHeight / 2) - (tooltipHeight / 2))
+                    .css("left", tileRight + 3);
             }
         });
 };
