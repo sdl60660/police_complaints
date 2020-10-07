@@ -56,13 +56,121 @@
     <div id="annotation-tooltip" style="opacity: 0.0; position:absolute;">Default Text</div>
     <div id="category-tooltip" style="opacity: 0.0; position:absolute;">Default Text</div>
 
-    <!-- Annotations -->
-    <div id="sections">
+    <!-- Bootstrap grid setup -->
 
-        <section class="step phantom">
-            <div class="title"></div>
-            <div class="body"></div>
-        </section>
+    <!-- Load Wheel -->
+    <!-- <div class="loadring-container" style="text-align: center">
+        <div class="lds-ring" style="margin-top: 30vh;"><div></div><div></div><div></div><div></div></div>
+    </div> -->
+
+    <!-- Intro Text Wrapper/Tile -->
+    <div class="tile-wrapper" id="intro-wrapper" style="">
+      <div class="container viz-tile" id="intro-tile">
+          <div class="row">
+              <div class="col-md-1"></div>
+
+              <div class="logo">
+                <svg version="1.1" id="wordmark" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                   viewBox="0 0 192.6 50" style="enable-background:new 0 0 192.6 50;" xml:space="preserve">
+                    <g>
+                      <path class="st0" d="M150.1,9.5c1.5,0,2.8,1.3,2.8,2.8s-1.3,2.8-2.8,2.8s-2.8-1.3-2.8-2.8S148.6,9.5,150.1,9.5z"/>
+                      <path class="st0" d="M147.2,17.3h5.6v18.2h-5.6V17.3z"/>
+                      <path class="st0" d="M77.1,9.5h-1.9h-7v19.3v6.7h5.6v-6.7v-1.4h1.4h1.9c4.9,0,8.9-4,8.9-8.9S82.1,9.5,77.1,9.5z M77.1,21.8h-1.9
+                        h-1.4v-1.4v-3.8v-1.4h1.4h1.9c1.8,0,3.3,1.5,3.3,3.3S79,21.8,77.1,21.8z"/>
+                      <path class="st0" d="M105.7,17.6h-5.6v8.9c0,1.8-1.5,3.3-3.3,3.3s-3.3-1.5-3.3-3.3v-8.9h-5.6v8.9c0,4.9,4,8.9,8.9,8.9
+                        s8.9-4,8.9-8.9V17.6z"/>
+                      <path class="st0" d="M164.1,17.6c-4.9,0-8.9,4-8.9,8.9v8.9h5.6v-8.9c0-1.8,1.5-3.3,3.3-3.3s3.3,1.5,3.3,3.3v8.9h5.6v-8.9
+                        C173,21.6,169,17.6,164.1,17.6z"/>
+                      <path class="st0" d="M119.7,16.2v1.4h-1.4h-1.9c-4.9,0-8.9,4-8.9,8.9s4,8.9,8.9,8.9h1.9h7V16.2V9.5l-5.6,3.3
+                        C119.7,12.8,119.7,16.2,119.7,16.2z M119.8,24.6v3.8v1.4h-1.4h-1.9c-1.8,0-3.3-1.5-3.3-3.3s1.5-3.3,3.3-3.3h1.9h1.4V24.6z"/>
+                      <path class="st0" d="M139.3,16.2v1.4h-1.4H136c-4.9,0-8.9,4-8.9,8.9s4,8.9,8.9,8.9h1.9h7V16.2V9.5l-5.6,3.3V16.2z M139.4,24.6v3.8
+                        v1.4h-1.5H136c-1.8,0-3.3-1.5-3.3-3.3s1.5-3.3,3.3-3.3h1.9h1.4v1.4H139.4z"/>
+                      <path class="st0" d="M183.7,17.6c-4.9,0-8.9,4-8.9,8.9s4,8.9,8.9,8.9h1.9h1.4v1.4v0.9v1.4v1.4c0,1.8-1.5,3.3-3.3,3.3
+                        s-3.3-1.5-3.3-3.3V38l-5.6,3.3c0.4,4.5,4.2,8.1,8.9,8.1c4.9,0,8.9-4,8.9-8.9v-1.4v-2.3V17.6h-7H183.7z M187,23.4v1.4v3.8V30h-1.4
+                        h-1.9c-1.8,0-3.3-1.5-3.3-3.3s1.5-3.3,3.3-3.3h1.9C185.6,23.4,187,23.4,187,23.4z"/>
+                      <path class="st0" d="M28.6,17.6c-1.2,0-2.3,0.2-3.3,0.6V9.5l-5.6,3.3v13.7v2v6.9h5.6v-6.9l0,0v-2c0-1.8,1.5-3.3,3.3-3.3
+                        s3.3,1.5,3.3,3.3v8.9h5.6v-8.9C37.5,21.6,33.5,17.6,28.6,17.6z"/>
+                      <path class="st0" d="M17.8,9.5H0v5.6h6.1v20.3h5.6V15.1h6.1V9.5z"/>
+                      <path class="st0" d="M48.3,30.2c-0.4,0-1.2-0.1-1.8-0.4l5.2-2.1l5.6-2.3l-1-2.3l-0.1-0.2c-0.1-0.3-0.3-0.6-0.5-1
+                        c-0.1-0.1-0.1-0.2-0.2-0.3c0,0,0-0.1-0.1-0.1l-0.1-0.1l-0.1-0.1c-1.6-2.2-4-3.5-6.7-3.7l0,0h-0.6c-4.9,0-8.9,4-8.9,8.9
+                        c0,0.4,0,0.9,0.1,1.4l0,0V28c0,0,0,0,0,0.1c0,0,0,0,0,0.1c0,0.3,0.1,0.5,0.2,0.8v0.1v0.1c0.1,0.3,0.2,0.7,0.4,1v0.1v0.1
+                        c0.1,0.3,0.3,0.5,0.4,0.8c0,0.1,0.1,0.1,0.1,0.2l0,0c0.1,0.2,0.3,0.4,0.4,0.6c0,0,0,0,0,0.1c0,0,0,0.1,0.1,0.1l0.1,0.1
+                        c1.7,2.1,4.4,3.4,7.2,3.4h6.1v-5.2C54.5,30.2,50.6,30.2,48.3,30.2L48.3,30.2z M56.2,22.9L56.2,22.9L56.2,22.9z M44.6,25.7
+                        L44.6,25.7l-0.2,0.1c0.2-1.9,1.8-3.5,3.7-3.5c0.9,0,1.8,0.4,2.4,0.9L46.2,25L44.6,25.7L44.6,25.7z"/>
+                    </g>
+                </svg>
+
+              </div>
+
+              <div class="col-md-10" id="intro-area" style="text-align:left;">
+                  <h1>
+                    Police Complaint Data Shows A Broken Accountability Process
+                  </h1>
+                  <p class="byline">By <a target="_blank" href="/author/sam-learner">Sam Learner</a></p>
+                  <div id="intro-text-block">
+                      <p>
+                          In the current wake of police violence, protestors are demanding a stronger accountability for officer conduct and misuse of force. In many cities, that accountability is partly served by the civilian complaint process, or how citizens can individually report on police behavior.
+                      </p>
+                      <p>
+                          Police complaints by citizens, ranging from physical abuse to unprofessional conduct, rarely result in consequences for officers. Concrete data is rare among departments, but in 2017, the Philadelphia Police Department became one of the few to report on every officer complaint it received. The patterns found in Philadelphia clarify many of the anecdotal observations across departments throughout the country, especially when it comes to racial disparities (e.g., complaints of White officers by Black civilians).
+                      </p>
+                      <p>
+                          This is a real complaint about verbal abuse, one among 10,000+ complaints dating back to 2013.
+                      </p>
+                  </div>
+              </div>
+              <div class="col-md-1"></div>
+          </div>
+      </div>
+    </div>
+
+
+    <div class="tile-wrapper" id="sample-complaint-wrapper" style="">
+      <div class="viz-tile" id="sample-complaint-tile">
+        <div class="col-sm-12 col-12" id='sample-tooltip' style="z-index:-1;">
+              <div class="">
+                <p class='detail-title'>Complaint Summary</p>: <p class='details' id='complaint-summary'>The complainant,
+                SD, 46/B/F, states that she was falsely arrested and verbally abused by Officer H, 19th District. According to the
+                complainant, on 4-26-14, at 11:00 AM, she exited a deli with a can of beer.  When she stopped to talk to a friend,
+                Officer H called her over to the car and asked, "Don't you think it's kind of early to be drinking?" The complainant
+                said she wasn't drinking and the can wasn't open; Officer H disagreed with her.  She informed Officer H that she had
+                just paid a $200.00 fine for an open container of beer in March and showed him a copy of the citation.  He laughed,
+                stating, "I wrote this and I'm going to write you another f**king one." The complainant maintains Officer H incorrectly
+                wrote the can size on the citation as being 16 ounces instead of 24 ounces.</p>
+              </div>
+              <div>
+                <span class='detail-title'>Complaint Type</span>: <span class='details'>Verbal Abuse</span>
+              </div>
+              <div>
+                <span class='detail-title'>Allegations Investigated</span>: <span class='details'>Verbal Abuse</span>
+              </div>
+              <div>
+                <span class='detail-title'>Complaint Date</span>: <span class='details'>5/12/14</span>
+              </div>
+              <div class="">
+                <span class='detail-title'>District</span>: <span class='details'>19<br></span>
+              </div>
+              <div class="">
+                <span class='detail-title'>District Median Income</span>: <span class='details'>$41,071</span>
+              </div>
+              <div class="">
+                <span class='detail-title'>Officer Initials</span>: <span class='details'>MH</span>
+              </div>
+              <div class="">
+                <span class='detail-title persistent'>Officer Demographics</span>: <span class='details'>white male</span><br>
+              </div>
+              <div class="">
+                <span class='detail-title'>Complaint ID</span>: <span class='details'>14-0248</span>
+              </div>
+              <div class="">
+                <span class='detail-title persistent'>Complainant Demographics</span>: <span class='details'>black female, 46</span>
+              </div>
+              <div class="">
+                <span class='detail-title'>Investigation Outcome</span>: <span class='details outcome'>No Sustained Findings</span>
+              </div>
+          </div>
+      </div>
+      <div id="sections" class="text-column">
         <section class="step" id="first-annotation">
             <div class="title">Police Complaint Data</div>
             <div class="body">
@@ -70,6 +178,7 @@
                 the race and gender of the officer and person filing the complaint.
             </div>
         </section>
+
         <section class="step gap-annotation" id="last-sample-annotation">
             <div class="title">Complaint Investigations</div>
             <div class="body">
@@ -85,6 +194,53 @@
                 citizen’s complaint.
             </div>
         </section>
+      </div>
+    </div>
+
+
+
+    <!-- Sunburst Viz Wrapper/Tile -->
+    <div class="tile-wrapper" id="sunburst-wrapper">
+      <div class="viz-tile" id="sunburst-tile">
+        <div class="row">
+            <div class="col-md-10 col-sm-12 viz-area">
+                <div class="row" id="sunburst-area" style="margin-left: auto; margin-right: auto;">
+                  <div class="subburst-title">
+                    <div class="row" id="sunburst-static-text" style="visibility: visible">
+                        Philadelphia Police Complaint Outcomes
+                    </div>
+                    <div class="row" id="sunburst-select-text" style="visibility: hidden">
+                        What happens when
+                        <select class="sunburst-select" id="sunburst-po-race" value="po_race">
+                            <option value="all">all</option>
+                            <option value="white">White</option>
+                            <option value="black">Black</option>
+                            <option value="latino">Latino</option>
+                            <option value="other">other</option>
+                        </select>
+                        officers receive complaints from
+                        <select class="sunburst-select" id="sunburst-complainant-race" value="complainant_race">
+                            <option value="all">all</option>
+                            <option value="white">White</option>
+                            <option value="black">Black</option>
+                            <option value="latino">Latino</option>
+                            <option value="other">other</option>
+                        </select>
+                        complainants, about incidents in
+                        <select class="sunburst-select" id="sunburst-district-income-group" value="district_income_group">
+                            <option value="all">all</option>
+                            <option value="lower">lower</option>
+                            <option value="middle">middle</option>
+                            <option value="higher">higher</option>
+                        </select>
+                        income districts.
+                    </div>
+                  </div>
+                </div>
+            </div>
+        </div>
+    </div>
+      <div id="sections" class="text-column">
         <section class="step section-change">
             <div class="title">Discarded Complaints</div>
             <div class="body">
@@ -151,252 +307,12 @@
                 complainants, but more punitive towards Black officers.
             </div>
         </section>
-
-        <div class="spacer"></div>
-
-        <section class="step section-change">
-            <div class="title">The Full Picture</div>
-            <div class="body">
-                This visual represents each disciplinary investigation as a single square.
-            </div>
-        </section>
-        <section class="step">
-            <div class="title">Stories Behind The Complaints</div>
-            <div class="body">
-                As of 2019, <a target="_blank" href="https://billypenn.com/2019/07/26/after-promising-increased-transparency-philadelphia-is-redacting-police-complaint-records/">
-                Philadelphia began redacting full details of complaints</a> and replacing them with boilerplate 1-2
-                sentence summaries. Full summaries for complaints before July 2018 are provided, courtesy of Philly Declaration's
-                <a target="_blank" href="https://github.com/PhillyDeclaration/Philadelphia-Police-Accountability-Project">Police Accountability Project</a>,
-                which published datasets before the city began redacting summaries.
-            </div>
-        </section>
-        <section class="step">
-            <div class="title">Organizing The Data</div>
-            <div class="body">
-                Here, the complaints have been color-coded based on the number of known prior complaints for the involved
-                officer. Note that this tabulation is based only on the complaints dating back to 2013 that have been
-                provided to the public, so these officers could have any number of additional complaints from 2012 or
-                earlier. Like many other cities, a small group of officers in Philadelphia account for a disproportionate
-                number of complaints. Over a dozen officers, <a href="https://whyy.org/articles/police-misconduct-in-philadelphia-unsealed-records-name-the-citys-most-cited-cops/">recently identified</a>,
-                have been involved in ten or more publicly-disclosed complaints.
-            </div>
-        </section>
-        <section class="step">
-            <div class="title">Overdue Investigations</div>
-            <div class="body">
-                The police complaint system often fails to provide meaningful accountability, even when functioning as
-                intended. But in many cases, it doesn’t even function as intended.
-                <br><br>
-                According to <a target="_blank" href="https://www.phila.gov/phils/Docs/Inventor/graphics/execorders/93-09.htm">Philadelphia Law</a>,
-                investigations must be completed by Internal Affairs within seventy-five days of the complaint filing date.
-                Even when complaints are filtered to only include those that are over two years old,
-                there are still nearly 40 pending investigations (or that were still pending as of the city's
-                <span class="annotated-text">last public update</span>).
-{#                style="background-color: rgba(245, 229, 27, 0.5)"#}
-            </div>
-        </section>
-        <section class="step" id="last-tilechart-annotation">
-            <div class="title">Complaint Classifications</div>
-            <div class="body">
-                The complaints have been filtered to include only "Physical Abuse" complaints, often filed in response
-                to police use of force. As rare as guilty findings are in general, they’re even more rare for these
-                complaints. Just 39 of 2665, or 1.5%, resulted in guilty findings (you can hover over the section labels
-                to confirm). <a href="https://www.bjs.gov/content/pub/pdf/ccpuf.pdf">Prior research</a> involving other
-                departments has found similar patterns.
-                <br><br>
-                Even when these complaints do result in consequences, it is often not for the original accusation. In 53%
-                of cases, physical abuse complaints are re-classified during the investigation process into different,
-                usually less severe, allegations. A quarter of such reclassified physical abuse complaints end up as
-                "Departmental Violations".
-            </div>
-        </section>
-        <section class="step phantom">
-            <div class="title"></div>
-            <div class="body"></div>
-        </section>
-
-    </div>
-
-    <!-- Bootstrap grid setup -->
-
-    <!-- Load Wheel -->
-    <div class="loadring-container" style="text-align: center">
-        <div class="lds-ring" style="margin-top: 30vh;"><div></div><div></div><div></div><div></div></div>
-    </div>
-
-    <!-- Intro Text Wrapper/Tile -->
-    <div class="tile-wrapper" id="intro-wrapper" style="visibility: hidden">
-    <div class="container viz-tile" id="intro-tile">
-
-
-        <div class="row">
-            <div class="col-md-1"></div>
-
-            <div class="logo">
-              <svg version="1.1" id="wordmark" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-                 viewBox="0 0 192.6 50" style="enable-background:new 0 0 192.6 50;" xml:space="preserve">
-                  <g>
-                    <path class="st0" d="M150.1,9.5c1.5,0,2.8,1.3,2.8,2.8s-1.3,2.8-2.8,2.8s-2.8-1.3-2.8-2.8S148.6,9.5,150.1,9.5z"/>
-                    <path class="st0" d="M147.2,17.3h5.6v18.2h-5.6V17.3z"/>
-                    <path class="st0" d="M77.1,9.5h-1.9h-7v19.3v6.7h5.6v-6.7v-1.4h1.4h1.9c4.9,0,8.9-4,8.9-8.9S82.1,9.5,77.1,9.5z M77.1,21.8h-1.9
-                      h-1.4v-1.4v-3.8v-1.4h1.4h1.9c1.8,0,3.3,1.5,3.3,3.3S79,21.8,77.1,21.8z"/>
-                    <path class="st0" d="M105.7,17.6h-5.6v8.9c0,1.8-1.5,3.3-3.3,3.3s-3.3-1.5-3.3-3.3v-8.9h-5.6v8.9c0,4.9,4,8.9,8.9,8.9
-                      s8.9-4,8.9-8.9V17.6z"/>
-                    <path class="st0" d="M164.1,17.6c-4.9,0-8.9,4-8.9,8.9v8.9h5.6v-8.9c0-1.8,1.5-3.3,3.3-3.3s3.3,1.5,3.3,3.3v8.9h5.6v-8.9
-                      C173,21.6,169,17.6,164.1,17.6z"/>
-                    <path class="st0" d="M119.7,16.2v1.4h-1.4h-1.9c-4.9,0-8.9,4-8.9,8.9s4,8.9,8.9,8.9h1.9h7V16.2V9.5l-5.6,3.3
-                      C119.7,12.8,119.7,16.2,119.7,16.2z M119.8,24.6v3.8v1.4h-1.4h-1.9c-1.8,0-3.3-1.5-3.3-3.3s1.5-3.3,3.3-3.3h1.9h1.4V24.6z"/>
-                    <path class="st0" d="M139.3,16.2v1.4h-1.4H136c-4.9,0-8.9,4-8.9,8.9s4,8.9,8.9,8.9h1.9h7V16.2V9.5l-5.6,3.3V16.2z M139.4,24.6v3.8
-                      v1.4h-1.5H136c-1.8,0-3.3-1.5-3.3-3.3s1.5-3.3,3.3-3.3h1.9h1.4v1.4H139.4z"/>
-                    <path class="st0" d="M183.7,17.6c-4.9,0-8.9,4-8.9,8.9s4,8.9,8.9,8.9h1.9h1.4v1.4v0.9v1.4v1.4c0,1.8-1.5,3.3-3.3,3.3
-                      s-3.3-1.5-3.3-3.3V38l-5.6,3.3c0.4,4.5,4.2,8.1,8.9,8.1c4.9,0,8.9-4,8.9-8.9v-1.4v-2.3V17.6h-7H183.7z M187,23.4v1.4v3.8V30h-1.4
-                      h-1.9c-1.8,0-3.3-1.5-3.3-3.3s1.5-3.3,3.3-3.3h1.9C185.6,23.4,187,23.4,187,23.4z"/>
-                    <path class="st0" d="M28.6,17.6c-1.2,0-2.3,0.2-3.3,0.6V9.5l-5.6,3.3v13.7v2v6.9h5.6v-6.9l0,0v-2c0-1.8,1.5-3.3,3.3-3.3
-                      s3.3,1.5,3.3,3.3v8.9h5.6v-8.9C37.5,21.6,33.5,17.6,28.6,17.6z"/>
-                    <path class="st0" d="M17.8,9.5H0v5.6h6.1v20.3h5.6V15.1h6.1V9.5z"/>
-                    <path class="st0" d="M48.3,30.2c-0.4,0-1.2-0.1-1.8-0.4l5.2-2.1l5.6-2.3l-1-2.3l-0.1-0.2c-0.1-0.3-0.3-0.6-0.5-1
-                      c-0.1-0.1-0.1-0.2-0.2-0.3c0,0,0-0.1-0.1-0.1l-0.1-0.1l-0.1-0.1c-1.6-2.2-4-3.5-6.7-3.7l0,0h-0.6c-4.9,0-8.9,4-8.9,8.9
-                      c0,0.4,0,0.9,0.1,1.4l0,0V28c0,0,0,0,0,0.1c0,0,0,0,0,0.1c0,0.3,0.1,0.5,0.2,0.8v0.1v0.1c0.1,0.3,0.2,0.7,0.4,1v0.1v0.1
-                      c0.1,0.3,0.3,0.5,0.4,0.8c0,0.1,0.1,0.1,0.1,0.2l0,0c0.1,0.2,0.3,0.4,0.4,0.6c0,0,0,0,0,0.1c0,0,0,0.1,0.1,0.1l0.1,0.1
-                      c1.7,2.1,4.4,3.4,7.2,3.4h6.1v-5.2C54.5,30.2,50.6,30.2,48.3,30.2L48.3,30.2z M56.2,22.9L56.2,22.9L56.2,22.9z M44.6,25.7
-                      L44.6,25.7l-0.2,0.1c0.2-1.9,1.8-3.5,3.7-3.5c0.9,0,1.8,0.4,2.4,0.9L46.2,25L44.6,25.7L44.6,25.7z"/>
-                  </g>
-              </svg>
-
-            </div>
-
-            <div class="col-md-10" id="intro-area" style="text-align:left;">
-                <h1>
-                  Police Complaint Data Shows A Broken Accountability Process
-                </h1>
-                <div id="intro-text-block">
-                    <p>
-                        In the current wake of police violence, protestors are demanding a stronger accountability for officer conduct and misuse of force. In many cities, that accountability is partly served by the civilian complaint process, or how citizens can individually report on police behavior.
-                    </p>
-                    <p>
-                        Police complaints by citizens, ranging from physical abuse to unprofessional conduct, rarely result in consequences for officers. Concrete data is rare among departments, but in 2017, the Philadelphia Police Department became one of the few to report on every officer complaint it received. The patterns found in Philadelphia clarify many of the anecdotal observations across departments throughout the country, especially when it comes to racial disparities (e.g., complaints of White officers by Black civilians).
-                    </p>
-                    <p>
-                        This is a real complaint about verbal abuse, one among 10,000+ complaints dating back to 2013.
-                    </p>
-                </div>
-            </div>
-            <div class="col-md-1"></div>
-        </div>
-    </div>
-{#        <div class="downArrow bounce">#}
-{#            <img width="40" height="40" alt="" src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/PjwhRE9DVFlQRSBzdmcgIFBVQkxJQyAnLS8vVzNDLy9EVEQgU1ZHIDEuMS8vRU4nICAnaHR0cDovL3d3dy53My5vcmcvR3JhcGhpY3MvU1ZHLzEuMS9EVEQvc3ZnMTEuZHRkJz48c3ZnIGVuYWJsZS1iYWNrZ3JvdW5kPSJuZXcgMCAwIDMyIDMyIiBoZWlnaHQ9IjMycHgiIGlkPSLQodC70L7QuV8xIiB2ZXJzaW9uPSIxLjEiIHZpZXdCb3g9IjAgMCAzMiAzMiIgd2lkdGg9IjMycHgiIHhtbDpzcGFjZT0icHJlc2VydmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiPjxwYXRoIGQ9Ik0yNC4yODUsMTEuMjg0TDE2LDE5LjU3MWwtOC4yODUtOC4yODhjLTAuMzk1LTAuMzk1LTEuMDM0LTAuMzk1LTEuNDI5LDAgIGMtMC4zOTQsMC4zOTUtMC4zOTQsMS4wMzUsMCwxLjQzbDguOTk5LDkuMDAybDAsMGwwLDBjMC4zOTQsMC4zOTUsMS4wMzQsMC4zOTUsMS40MjgsMGw4Ljk5OS05LjAwMiAgYzAuMzk0LTAuMzk1LDAuMzk0LTEuMDM2LDAtMS40MzFDMjUuMzE5LDEwLjg4OSwyNC42NzksMTAuODg5LDI0LjI4NSwxMS4yODR6IiBmaWxsPSIjMTIxMzEzIiBpZD0iRXhwYW5kX01vcmUiLz48Zy8+PGcvPjxnLz48Zy8+PGcvPjxnLz48L3N2Zz4=" />#}
-{#        </div>#}
-    </div>
-
-{#    <div class="tile-wrapper" id="map-wrapper">#}
-{#    <div class="container viz-tile" id="map-tile">#}
-{#        <div class="row">#}
-{#            <div class="col-md-2 col-sm-2"></div>#}
-{#            <div class="col-md-8 col-sm-8 viz-area" id="map-area"></div>#}
-{#            <div class="col-md-2 col-sm-2"></div>#}
-{#        </div>#}
-{#    </div>#}
-{#    </div>#}
-
-
-    <!-- Sample Complaint -->
-    <div class="tile-wrapper" id="sample-complaint-wrapper" style="">
-      <div class="viz-tile" id="sample-complaint-tile">
-        <div class="col-sm-12 col-12" id='sample-tooltip' style="z-index:-1;">
-              <div class="">
-                <p class='detail-title'>Complaint Summary</p>: <p class='details' id='complaint-summary'>The complainant,
-                SD, 46/B/F, states that she was falsely arrested and verbally abused by Officer H, 19th District. According to the
-                complainant, on 4-26-14, at 11:00 AM, she exited a deli with a can of beer.  When she stopped to talk to a friend,
-                Officer H called her over to the car and asked, "Don't you think it's kind of early to be drinking?" The complainant
-                said she wasn't drinking and the can wasn't open; Officer H disagreed with her.  She informed Officer H that she had
-                just paid a $200.00 fine for an open container of beer in March and showed him a copy of the citation.  He laughed,
-                stating, "I wrote this and I'm going to write you another f**king one." The complainant maintains Officer H incorrectly
-                wrote the can size on the citation as being 16 ounces instead of 24 ounces.</p>
-              </div>
-              <div>
-                <span class='detail-title'>Complaint Type</span>: <span class='details'>Verbal Abuse</span>
-              </div>
-              <div>
-                <span class='detail-title'>Allegations Investigated</span>: <span class='details'>Verbal Abuse</span>
-              </div>
-              <div>
-                <span class='detail-title'>Complaint Date</span>: <span class='details'>5/12/14</span>
-              </div>
-              <div class="">
-                <span class='detail-title'>District</span>: <span class='details'>19<br></span>
-              </div>
-              <div class="">
-                <span class='detail-title'>District Median Income</span>: <span class='details'>$41,071</span>
-              </div>
-              <div class="">
-                <span class='detail-title'>Officer Initials</span>: <span class='details'>MH</span>
-              </div>
-              <div class="">
-                <span class='detail-title persistent'>Officer Demographics</span>: <span class='details'>white male</span><br>
-              </div>
-              <div class="">
-                <span class='detail-title'>Complaint ID</span>: <span class='details'>14-0248</span>
-              </div>
-              <div class="">
-                <span class='detail-title persistent'>Complainant Demographics</span>: <span class='details'>black female, 46</span>
-              </div>
-              <div class="">
-                <span class='detail-title'>Investigation Outcome</span>: <span class='details outcome'>No Sustained Findings</span>
-              </div>
-          </div>
       </div>
-    </div>
-
-    <!-- Sunburst Viz Wrapper/Tile -->
-    <div class="tile-wrapper" id="sunburst-wrapper">
-    <div class="viz-tile" id="sunburst-tile">
-        <div class="row">
-            <div class="col-md-10 col-sm-12 viz-area">
-
-
-                <div class="row" id="sunburst-area" style="margin-left: auto; margin-right: auto;">
-                  <div class="subburst-title">
-                    <div class="row" id="sunburst-static-text" style="visibility: visible">
-                        Philadelphia Police Complaint Outcomes
-                    </div>
-                    <div class="row" id="sunburst-select-text" style="visibility: hidden">
-                        What happens when
-                        <select class="sunburst-select" id="sunburst-po-race" value="po_race">
-                            <option value="all">all</option>
-                            <option value="white">White</option>
-                            <option value="black">Black</option>
-                            <option value="latino">Latino</option>
-                            <option value="other">other</option>
-                        </select>
-                        officers receive complaints from
-                        <select class="sunburst-select" id="sunburst-complainant-race" value="complainant_race">
-                            <option value="all">all</option>
-                            <option value="white">White</option>
-                            <option value="black">Black</option>
-                            <option value="latino">Latino</option>
-                            <option value="other">other</option>
-                        </select>
-                        complainants, about incidents in
-                        <select class="sunburst-select" id="sunburst-district-income-group" value="district_income_group">
-                            <option value="all">all</option>
-                            <option value="lower">lower</option>
-                            <option value="middle">middle</option>
-                            <option value="higher">higher</option>
-                        </select>
-                        income districts.
-                    </div>
-                  </div>
-                </div>
-            </div>
-        </div>
-    </div>
     </div>
 
     <!-- Tilechart Viz Wrapper/Tile -->
     <div class="tile-wrapper" id="tilechart-wrapper">
-    <div class="container viz-tile" id="tilechart-tile">
-
+      <div class="container viz-tile" id="tilechart-tile">
         <div class="row viz-area" id="desktop-controls">
             <div class="timeline-wrapper">
               <div class="timeline-title control-title">
@@ -437,27 +353,30 @@
         <div class="row viz-area" id="mobile-controls">
                 <div class="date-wrapper">
                     <span class="mobile-legend-title">Year: </span>
-                    <select data-placeholder="Select Year" tabindex="1" id="mobile-start-year-select">
-                        <option selected value="2013">2013</option>
-                        <option value="2014">2014</option>
-                        <option value="2015">2015</option>
-                        <option value="2016">2016</option>
-                        <option value="2017">2017</option>
-                        <option value="2018">2018</option>
-                        <option value="2019">2019</option>
-                        <option value="2020">2020</option>
-                    </select>
-                    <span> to </span>
-                    <select data-placeholder="Select Year" tabindex="1" id="mobile-end-year-select">
-                        <option value="2013">2013</option>
-                        <option value="2014">2014</option>
-                        <option value="2015">2015</option>
-                        <option value="2016">2016</option>
-                        <option value="2017">2017</option>
-                        <option value="2018">2018</option>
-                        <option value="2019">2019</option>
-                        <option selected value="2020">2020</option>
-                    </select>
+                    <div class="mobile-date-wrapper">
+                      <select data-placeholder="Select Year" tabindex="1" id="mobile-start-year-select">
+                          <option selected value="2013">2013</option>
+                          <option value="2014">2014</option>
+                          <option value="2015">2015</option>
+                          <option value="2016">2016</option>
+                          <option value="2017">2017</option>
+                          <option value="2018">2018</option>
+                          <option value="2019">2019</option>
+                          <option value="2020">2020</option>
+                      </select>
+                      <span> to </span>
+                      <select data-placeholder="Select Year" tabindex="1" id="mobile-end-year-select">
+                          <option value="2013">2013</option>
+                          <option value="2014">2014</option>
+                          <option value="2015">2015</option>
+                          <option value="2016">2016</option>
+                          <option value="2017">2017</option>
+                          <option value="2018">2018</option>
+                          <option value="2019">2019</option>
+                          <option selected value="2020">2020</option>
+                      </select>
+
+                    </div>
                 </div>
                 <div class="complaint-wrapper">
                     <span class="mobile-legend-title">Complaint Type: </span>
@@ -492,7 +411,65 @@
                 <div id="tilechart-mobile-legend-area"></div>
         </div>
         <div class="" id="chart-area" style=""></div>
-    </div>
+      </div>
+      <div id="sections" class="text-column">
+        <section class="step section-change">
+            <div class="title">The Full Picture</div>
+            <div class="body">
+                This visual represents each disciplinary investigation as a single square.
+            </div>
+        </section>
+        <section class="step">
+            <div class="title">Stories Behind The Complaints</div>
+            <div class="body">
+                As of 2019, <a target="_blank" href="https://billypenn.com/2019/07/26/after-promising-increased-transparency-philadelphia-is-redacting-police-complaint-records/">
+                Philadelphia began redacting full details of complaints</a> and replacing them with boilerplate 1-2
+                sentence summaries. Full summaries for complaints before July 2018 are provided, courtesy of Philly Declaration's
+                <a target="_blank" href="https://github.com/PhillyDeclaration/Philadelphia-Police-Accountability-Project">Police Accountability Project</a>,
+                which published datasets before the city began redacting summaries.
+            </div>
+        </section>
+        <section class="step">
+            <div class="title">Organizing The Data</div>
+            <div class="body">
+                Here, the complaints have been color-coded based on the number of known prior complaints for the involved
+                officer. Note that this tabulation is based only on the complaints dating back to 2013 that have been
+                provided to the public, so these officers could have any number of additional complaints from 2012 or
+                earlier. Like many other cities, a small group of officers in Philadelphia account for a disproportionate
+                number of complaints. Over a dozen officers, <a href="https://whyy.org/articles/police-misconduct-in-philadelphia-unsealed-records-name-the-citys-most-cited-cops/">recently identified</a>,
+                have been involved in ten or more publicly-disclosed complaints.
+            </div>
+        </section>
+        <section class="step">
+            <div class="title">Overdue Investigations</div>
+            <div class="body">
+                The police complaint system often fails to provide meaningful accountability, even when functioning as
+                intended. But in many cases, it doesn’t even function as intended.
+                <br><br>
+                According to <a target="_blank" href="https://www.phila.gov/phils/Docs/Inventor/graphics/execorders/93-09.htm">Philadelphia Law</a>,
+                investigations must be completed by Internal Affairs within seventy-five days of the complaint filing date.
+                Even when complaints are filtered to only include those that are over two years old,
+                there are still nearly 40 pending investigations (or that were still pending as of the city's
+                <span class="annotated-text">last public update</span>).
+            </div>
+        </section>
+        <section class="step" id="last-tilechart-annotation">
+            <div class="title">Complaint Classifications</div>
+            <div class="body">
+                The complaints have been filtered to include only "Physical Abuse" complaints, often filed in response
+                to police use of force. As rare as guilty findings are in general, they’re even more rare for these
+                complaints. Just 39 of 2665, or 1.5%, resulted in guilty findings (you can hover over the section labels
+                to confirm). <a href="https://www.bjs.gov/content/pub/pdf/ccpuf.pdf">Prior research</a> involving other
+                departments has found similar patterns.
+                <br><br>
+                Even when these complaints do result in consequences, it is often not for the original accusation. In 53%
+                of cases, physical abuse complaints are re-classified during the investigation process into different,
+                usually less severe, allegations. A quarter of such reclassified physical abuse complaints end up as
+                "Departmental Violations".
+            </div>
+        </section>
+      </div>
+
     </div>
 
     <!-- Conclusion Text  -->
