@@ -1058,7 +1058,7 @@ function activate(index) {
     }
 
     if (index-1 > 0) {
-        $("section.step").eq(index - 1)
+        $("section.step").eq(index-2)
             .css("opacity", () => phoneBrowsing === true ? 1.0 : 1.0)
             .css("z-index", 51);
     }
