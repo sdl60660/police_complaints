@@ -167,14 +167,14 @@ Sunburst.prototype.wrangleData = function() {
         if (i_key === "Sustained Finding" && nest.get("Sustained Finding") !== undefined) {
             subnest = d3.nest()
                 .key(function(d) {return d.disciplinary_findings})
-                .map(nest.get(i_key))
+                .map(nest.get(i_key));
 
             disciplinary_result_counts = [];
             ["Guilty Finding", "Training/Counseling", "No Guilty Findings", "Discipline Pending"].forEach(function(d_key) {
                 if (subnest.get(d_key) !== undefined) {
                     disciplinary_result_counts.push({'name': d_key, 'value': subnest.get(d_key).length})
                 }
-            })
+            });
 
             investigative_result_counts.push({'name': i_key, 'children': disciplinary_result_counts})
         }
@@ -183,7 +183,7 @@ Sunburst.prototype.wrangleData = function() {
                 investigative_result_counts.push({'name': i_key, 'value': nest.get(i_key).length})
             }
         }
-    })
+    });
 
     // Add top-level root element so that data can be properly parsed for sunburst
     vis.data = { 'name': 'investigative_results', 'children': investigative_result_counts };
@@ -191,7 +191,7 @@ Sunburst.prototype.wrangleData = function() {
     vis.root = vis.partition(vis.data);
 
     let subroot = vis.root.children
-        .find(d => typeof d.children !== "undefined" && d.children.length > 0)
+        .find(d => typeof d.children !== "undefined" && d.children.length > 0);
 
     if (typeof subroot !== "undefined") {
         subroot
@@ -396,7 +396,7 @@ Sunburst.prototype.addLabelShadows = function() {
             const x = (d.x0 + d.x1) / 2 * 180 / Math.PI;
             const y = (d.y0 + d.y1) / 2;
             return `translate(${vis.radius - vis.radiusOffset/2}, ${vis.radius}) rotate(${x - 90}) translate(${y},0) rotate(${90 - x}) rotate(${90-x < 180 ? 0 : 180})`;
-        })
+        });
 
     vis.outlineLabelGroup.raise();
 };
@@ -475,7 +475,7 @@ Sunburst.prototype.mouseout = function() {
         .text("");
     vis.selectedValTotals
         .text("");
-}
+};
 
 // Fade all but the current sequence, and display center text
 Sunburst.prototype.mouseover = function(value, element) {
@@ -495,7 +495,7 @@ Sunburst.prototype.mouseover = function(value, element) {
 
     $(element).attr("fill-opacity", 0.8);
     $("." + parentName).attr("fill-opacity", 0.8);
-}
+};
 
 // Outline sections provided as parameter (array) for annotation comparative purposes
 // Remove these on hover
@@ -522,7 +522,7 @@ Sunburst.prototype.createOutlineSections = function(sectionNames) {
             })
             // .lower();
     })
-}
+};
 
 // Remove any outlined sections if the user hovers over them
 Sunburst.prototype.removeOutlineSections = function() {
@@ -530,4 +530,4 @@ Sunburst.prototype.removeOutlineSections = function() {
 
     vis.svg.selectAll(".chart-section-outline").remove();
 
-}
+};
