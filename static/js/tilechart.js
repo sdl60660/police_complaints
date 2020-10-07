@@ -31,8 +31,8 @@ TileChart.prototype.initVis = function() {
 
     // Make svg size flexible based on window dimensions
     vis.svg
-        .attr("preserveAspectRatio", "xMaxYMax meet")
-        .attr("viewBox", `0 0 ${vis.width} ${vis.height}`);
+        //.attr("preserveAspectRatio", "xMaxYMax meet")
+        .attr("viewBox", `0 0 ${vis.width} ${vis.height*.75}`);
 
 
     vis.g = vis.svg.append("g")
