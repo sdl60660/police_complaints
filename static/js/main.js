@@ -530,41 +530,6 @@ function setSelectOptions(optionPairs) {
 
 // Activate function: triggers on first (phantom) annotation slide at the top of the page
 function displayIntroText() {
-    // Show intro tile, fade sunburst tile
-    // $("#intro-tile")
-    //     .css("opacity", 1.0);
-    //
-    // $("#sunburst-tile")
-    //     .css("opacity", 0.2);
-    //
-
-    const format = d3.format(",.0f")
-
-    // Animate complaint count from 0 to total
-    d3.select("#total-complaints")
-        .datum("5296")
-        .transition()
-        .delay(300)
-        .duration(1200)
-        .ease(d3.easeExpInOut)
-        .textTween(function(d) {
-            const i = d3.interpolate(0, d);
-            return function(t) { return format(this._current = i(t)); };
-        })
-        .end();
-
-    // Animate investigation count from 0 to total
-    d3.select("#total-investigations")
-        .datum("11313")
-        .transition()
-        .delay(400)
-        .duration(1300)
-        .textTween(function(d) {
-            const i = d3.interpolate(0, d);
-            return function(t) { return format(this._current = i(t)); };
-        })
-        .end();
-
     // If on Desktop, trigger the sunburst entrance here. On Mobile, it'll trigger when the user scrolls into that tile.
     // if (phoneBrowsing === false && sunburstEntered === false) {
     if (sunburstEntered === false) {
@@ -825,7 +790,6 @@ function guiltyBlackComplainant() {
 
 // Activate function: triggers on annotation "Black Complainant/White Officer"
 function guiltyBlackComplainantWhiteOfficer() {
-  console.log("here");
     // Since this is the last sunburst annotation, if user enters from below, show the sunburst and fade the tilechart
     if (scrollDirection === 'up') {
         $("#sunburst-tile")

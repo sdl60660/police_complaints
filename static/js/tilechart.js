@@ -563,9 +563,6 @@ TileChart.prototype.highlightTile = function(disciplineID) {
     const vis = this;
     const transitionDuration = 600;
 
-    // Use this to clear the pinned tooltip on hover elsewhere (takes place in updateVis() function above)
-    vis.pinnedTooltip = true;
-
     // Find the featuredTile based on the input disciplineID (explicitly chosen in this case)
     vis.featuredTile = vis.g.selectAll("rect.complaint-box").filter(d => d.discipline_id === disciplineID);
 
@@ -582,6 +579,11 @@ TileChart.prototype.highlightTile = function(disciplineID) {
     // Save the initial coordinates for the tile so that it can be properly returned
     vis.highlightTileX = vis.featuredTile.attr("x");
     vis.highlightTileY = vis.featuredTile.attr("y");
+
+    if (activeIndex !== 8) {
+        return;
+    }
+    vis.pinnedTooltip = true;
 
     // Bring the tile to the front and scale its size up, while keeping it centered (this is why the x/y attrs are so complicated)
     vis.featuredTile
