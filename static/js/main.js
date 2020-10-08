@@ -1142,13 +1142,18 @@ function setScrollDispatcher() {
     }
     const scroller = scrollama();
 
+    let tileOffset = 0.5;
+    if (phoneBrowsing === true) {
+        tileOffset = 1.0;
+    }
+
     scroller
   		.setup({
   			// container: '#scroll', // our outermost scrollytelling element
   			// graphic: '.scroll__graphic', // the graphic
   			// text: '.scroll__text', // the step container
   			step: '.step', // the step elements
-  			offset: 0.5, // set the trigger to be 1/2 way down screen
+  			offset: tileOffset, // set the trigger to be 1/2 way down screen
   			// debug: true, // display the trigger offset for testing
   		})
   		.onStepEnter(handleStepEnter);
@@ -1301,16 +1306,10 @@ function main() {
         d3.csv("static/data/complaint_discipline_viz_data.csv")
     ];
 
+    // Load as a separate promise so that all non-tilechart tooltip elements can run, even if the summaries take longer to load
     let summaryPromise = [
         d3.json("static/data/complaint_discipline_summary_data.json")
     ];
-
-    // Initialize both main viz tiles to faded
-    // $("#sunburst-tile")
-    //     .css("opacity", 0.2);
-    //
-    // $("#tilechart-tile")
-    //     .css("opacity", 0.2);
 
     determinePhoneBrowsing();
     setAnnotationTooltips();
