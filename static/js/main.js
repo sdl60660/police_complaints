@@ -1184,7 +1184,7 @@ function setScrollDispatcher() {
   			// graphic: '.scroll__graphic', // the graphic
   			// text: '.scroll__text', // the step container
   			step: '.step', // the step elements
-  			offset: () => phoneBrowsing === true ? 1.0 : 0.5, // set the trigger to be 1/2 way down screen
+  			offset: 0.5, // set the trigger to be 1/2 way down screen
   			// debug: true, // display the trigger offset for testing
   		})
   		.onStepEnter(handleStepEnter);
