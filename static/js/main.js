@@ -698,7 +698,7 @@ function highlightNotSustained() {
         .css("opacity", 1.0);
 
     // Simulate a hover over the 'sustained finding' section
-    artificialHover("No Sustained Findings");
+    artificialHover("Sustained Finding");
 
     // Hide all outcome groups
     $("#sunburst-area path")
@@ -1255,7 +1255,6 @@ function setActivateFunctions() {
 
     // Sunburst tile functions
     activateFunctions[2] = highlightNotSustained;
-
     activateFunctions[3] = showDisciplinaryGroups;
     activateFunctions[4] = guiltyWhiteComplainant;
     activateFunctions[5] = guiltyBlackComplainant;
