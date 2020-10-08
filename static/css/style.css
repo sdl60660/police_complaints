@@ -444,7 +444,10 @@ select.other, span.other {
 
 .chosen-choices {
 	font-size: 8pt;
-	max-height: 71px;
+	height: 71px;
+  min-height: 71px;
+  max-height: 71px;
+
 	overflow-y: auto !important;
 }
 
@@ -814,6 +817,7 @@ hr {
     width:100%;
     height:1px;
     flex-grow:1;
+    transform: translate3d(0,0,0);
 }
 
 #chart-area svg {
@@ -826,6 +830,10 @@ hr {
 
 #mobile-controls .date-wrapper ,.complaint-wrapper, .group-by-wrapper{
 
+}
+
+.sunburst-segment {
+  cursor:pointer;
 }
 
 #desktop-controls > .chosen-container-div{
