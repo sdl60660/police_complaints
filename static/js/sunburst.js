@@ -90,24 +90,24 @@ Sunburst.prototype.initVis = function() {
         .attr("transform", "translate(" + (vis.radius - vis.radiusOffset/2) + "," + vis.radius + ")")
         .attr("id", "sunburst-val-pct-text")
         .attr("text-anchor", "middle")
-        // .style("font-size", "20pt")
         .style("fill-opacity", 0.6)
         .text("");
 
-    // Lebel in the center of the sunburst with count value of the hovered section
+    // Label in the center of the sunburst with count value of the hovered section
     vis.selectedValTotals = vis.g.append("text")
         .attr("transform", "translate(" + (vis.radius - vis.radiusOffset/2) + "," + vis.radius + ")")
+        .attr("id", "sunburst-val-total-text")
         .attr("text-anchor", "middle")
         .attr("dy", 22)
-        .style("font-size", "12px")
         .style("fill-opacity", 0.6)
+        .style("font-size", "14px")
         .text("");
 
     // If the select options change in the text above the sunburst, update the visual
     $('.sunburst-select').on('change', function(e) {
-        $(this).attr("class", `sunburst-select ${$(this).val()}`)
+        $(this).attr("class", `sunburst-select ${$(this).val()}`);
         vis.wrangleData();
-    })
+    });
 
     // Used to prevent labels from the center of the sunburst if they're removed and re-added
     // (in cases where the chart is filtered so that no cases match the outcome)

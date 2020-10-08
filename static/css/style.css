@@ -266,6 +266,10 @@ p {
     font-size: 36px;
 }
 
+#sunburst-val-total-text {
+    font-size: 14px;
+}
+
 .ui-slider {
 	visibility: hidden;
 	padding: 0px;
@@ -972,6 +976,10 @@ hr {
         /*left: 30px;*/
     }
 
+    .d3-tip::after {
+        opacity: 0;
+    }
+
     .step.phantom {
         margin-bottom: 150vh;
     }
@@ -1007,6 +1015,10 @@ hr {
 
     #sunburst-val-pct-text {
         font-size: 36px;
+    }
+
+    #sunburst-val-total-text {
+        font-size: 12px;
     }
 
     #sunburst-static-text {
@@ -1137,5 +1149,9 @@ hr {
   .sunburst-chart-labels, .sunburst-chart-label-shadows {
     font-size: 11px;
   }
+
+  #sunburst-val-total-text {
+        font-size: 11px;
+    }
 
 }

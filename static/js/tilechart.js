@@ -295,15 +295,16 @@ TileChart.prototype.initVis = function() {
         .text(d => d);
 
     // Definte all incident types for initializing the 'Complaint Classification' multi-select
-    vis.incidentTypes = ['Departmental Violations', 'Lack Of Service', 'Physical Abuse',  'Verbal Abuse','Unprofessional Conduct', 'Criminal Allegation', 'Harassment','Civil Rights Complaint','Domestic', 'Falsification', 'Sexual Crime/Misconduct','Drugs']
+    // vis.incidentTypes = ['Departmental Violations', 'Lack Of Service', 'Physical Abuse',  'Verbal Abuse','Unprofessional Conduct', 'Criminal Allegation', 'Harassment','Civil Rights Complaint','Domestic', 'Falsification', 'Sexual Crime/Misconduct','Drugs']
+    vis.incidentTypes = ["Civil Rights Complaint", "Criminal Allegation", "Departmental Violation", "Disciplinary Code Violation", "Domestic", "Drugs", "Falsification", "Harassment", "Investigation OnGoing", "Lack of Service", "Other Misconduct", "Physical Abuse", "Referred to Other Agency", "Sexual Crime/Misconduct", "Unprofessional Conduct", "Verbal Abuse"];
 
     // Outline all Sustained Finding subgroups to make relationship more clear
     if (phoneBrowsing !== true) {
         vis.svg.append("rect")
             .attr("x", vis.col3x + 25)
-            .attr("y", vis.row1y + 80)
+            .attr("y", vis.row1y + 85)
             .attr("width", vis.fullBlockWidth * 1.12)
-            .attr("height", () => phoneBrowsing === true ? 820 + 2 * vis.rowHeightAdjustment : 565 + 2 * vis.rowHeightAdjustment)
+            .attr("height", () => 565 + 2 * vis.rowHeightAdjustment)
             .attr("stroke-width", "1px")
             .attr("stroke", "black")
             .attr("fill", "rgba(255,255,255,0.5)")
@@ -366,7 +367,7 @@ TileChart.prototype.wrangleData = function() {
     if (phoneBrowsing === false) {
         vis.chartData = officerDisciplineResults
             .filter(d => d.date_received >= startRange && d.date_received <= endRange)
-            .filter(d => vis.selectedComplaintTypes.includes(d.general_cap_classification))
+            .filter(d => vis.selectedComplaintTypes.includes(d.allegations_investigated))
             .sort((a, b) => a.date_received - b.date_received);
 
         // Update the counts on the complaint types in the 'Complaint Classification' multi-select with counts based on filtered dataset
@@ -388,7 +389,7 @@ TileChart.prototype.wrangleData = function() {
                     return true;
                 }
                 else {
-                    return d.general_cap_classification === singleSelectedComplaintType;
+                    return d.allegations_investigated === singleSelectedComplaintType;
                 }
             })
             .sort((a, b) => a.date_received - b.date_received);
@@ -489,15 +490,33 @@ TileChart.prototype.updateVis = function() {
 
                         vis.pinnedTooltip = false;
                     }
+                    if (phoneBrowsing === true) {
+                        vis.svg.selectAll("rect.complaint-box").filter(x => x.discipline_id === d.discipline_id).attr("fill", "black");
+                    }
 
                     vis.tip.show(d);
 
+                    tooltipVisible = true;
                     stickyTooltip = false;
                 })
-                .on("mouseout", () => {
+                .on("mouseout", (d) => {
                     $(".d3-tip")
                         .css('opacity', 0)
                         .css('pointer-events', 'none');
+
+                    tooltipVisible = false;
+
+                    if (phoneBrowsing === true) {
+                        vis.svg.selectAll("rect.complaint-box").filter(x => x.discipline_id === d.discipline_id)
+                            .attr("fill", d => {
+                                if (vis.representedAttribute === 'no_group') {
+                                    return outcomeColors(d.end_state);
+                                }
+                                else {
+                                    return vis.color(d[vis.representedAttribute]);
+                                }
+                            });
+                    };
                 })
                 // After initializing in the top center of the visual, tile will transition to correct outcome group and correct position within that outcome group
                 // using the outcomeCoordinates dict and the final_state_index assigned in the wrangleData() function for its offset within that tile group
@@ -587,28 +606,29 @@ TileChart.prototype.highlightTile = function(disciplineID) {
 
             // Get screen coordinates of the corresponding tile
             let tileY = tileChart.featuredTile.node().getBoundingClientRect().y;
-            let tileX = tileChart.featuredTile.node().getBoundingClientRect().x;
+            // let tileX = tileChart.featuredTile.node().getBoundingClientRect().x;
 
             let tileHeight = tileChart.featuredTile.node().getBoundingClientRect().height;
-            let tileWidth = tileChart.featuredTile.node().getBoundingClientRect().width;
+            // let tileWidth = tileChart.featuredTile.node().getBoundingClientRect().width;
 
             // Get the height of the tooltip so that it can be centered
             let tooltipHeight = highlightTip[0].getBoundingClientRect().height;
-            let tooltipWidth = highlightTip[0].getBoundingClientRect().width;
+            // let tooltipWidth = highlightTip[0].getBoundingClientRect().width;
 
             // Get the right edge of the corresonding tile
             let tileRight = tileChart.featuredTile.node().getBoundingClientRect().right;
+
 
             // Fix position of tooltip on screen and set position based on tile positions calculated above
             // Use the height of the tooltip to make sure it's vertically centered on tile
             // On mobile: it's oriented "south", so the fixed position is a little different, unless it's a random tile
             // or non-standard filters and the tile is on the far left, in which case it'll default back to the "east" orientation
 
-            if (phoneBrowsing === true && d.final_state_index % vis.colWidths[d.end_state] >= 30) {
+            if (phoneBrowsing === true) {
                 highlightTip
                     .css("position", "fixed")
-                    .css("top", tileY + tileHeight + 5)
-                    .css("left", tileX - (tooltipWidth / 2) + (tileWidth / 2));
+                    .css("top", tileY + tileHeight + 2)
+                    // .css("left", "25px");
             }
             else {
                 highlightTip
@@ -894,10 +914,10 @@ function calloutSummary(summaryText) {
 TileChart.prototype.setComplaintTypes = function() {
     const vis = this;
 
-    vis.incidentTypes.forEach(function(complaintName) {
+    vis.incidentTypes.forEach((complaintName) => {
         $("select#incident-type-select")
             .append('<option selected id="' + formatSpacedStrings(complaintName) + '" name="' + complaintName + '" value="' + complaintName + '">' + complaintName + '</option><br>');
-    })
+    });
 
     // A change to the multi-select will update the selected complaint types and update the visualization with this filtering
     $(".chosen-select")
@@ -919,7 +939,7 @@ TileChart.prototype.updateComplaintTypes = function() {
 
     // Change labels on complaint types to include counts in parentheses according to number of matching investigations in the current set
     vis.selectedComplaintTypes.forEach(d => {
-        let numInstances = vis.chartData.filter((x) => x.general_cap_classification === d ).length;
+        let numInstances = vis.chartData.filter((x) => x.allegations_investigated === d ).length;
         $(("#incident-type-select option#" + formatSpacedStrings(d))).text((d + ' (' + numInstances + ')'));
     });
     $("#incident-type-select").trigger("chosen:updated");
@@ -953,7 +973,7 @@ TileChart.prototype.updateLegend = function() {
     d3.selectAll(".legend-row").remove()
 
     const rects = vis.legendSVG
-      .style("display",function(d){
+      .style("display", d => {
         if(keys.length > 0){
           return "flex";
         }
@@ -963,8 +983,7 @@ TileChart.prototype.updateLegend = function() {
       .data(keys, d => d)
       .enter()
       .append("div")
-      .attr("class","legend-row")
-      ;
+      .attr("class","legend-row");
 
     rects
       .append("div")

@@ -52,6 +52,7 @@ let activateFunctions = [];
 
 // Used to keep tilechart highlight complaint on screen during scroll
 let stickyTooltip = false;
+let tooltipVisible = false;
 
 // Min width that browser window must be before switching to phoneBrowsing mode (even on Desktop, it will display everything as if on Mobile)
 const phoneBrowsingCutoff = 1100;
@@ -211,9 +212,21 @@ function setAnnotationTooltips() {
            $("#category-tooltip")
                .css("opacity", 0.0);
 
-           if (stickyTooltip === false) {
+           if (stickyTooltip === false && tooltipVisible === true) {
                $(".d3-tip")
                    .css("opacity", 0.0);
+
+               tooltipVisible = false;
+
+               tileChart.svg.selectAll("rect.complaint-box")
+                    .attr("fill", d => {
+                        if (tileChart.representedAttribute === 'no_group') {
+                            return outcomeColors(d.end_state);
+                        }
+                        else {
+                            return tileChart.color(d[tileChart.representedAttribute]);
+                        }
+                    });
            }
         });
     }
@@ -281,9 +294,13 @@ function preprocessDataset(dataset) {
             d.prior_complaints_group = 'none';
         }
 
+        if (d.allegations_investigated === "Referred to Other Agency/C.A.P. Investigation") {
+            d.allegations_investigated = "Referred to Other Agency";
+        }
+
         // Used for matching the syntax of the 'no_group' group by in the tilechart visualization
         d.no_group = 'default';
-    })
+    });
 
     return dataset;
 }
@@ -1167,10 +1184,10 @@ function setScrollDispatcher() {
   			// graphic: '.scroll__graphic', // the graphic
   			// text: '.scroll__text', // the step container
   			step: '.step', // the step elements
-  			offset: 0.5, // set the trigger to be 1/2 way down screen
+  			offset: () => phoneBrowsing === true ? 1.0 : 0.5, // set the trigger to be 1/2 way down screen
   			// debug: true, // display the trigger offset for testing
   		})
-  		.onStepEnter(handleStepEnter)
+  		.onStepEnter(handleStepEnter);
   		// .onContainerEnter(handleContainerEnter)
   		// .onContainerExit(handleContainerExit);
 
@@ -1414,12 +1431,12 @@ function main() {
         setScrollDispatcher();
 
 
-        window.addEventListener('scroll', function(e) {
-
-          if(d3.select(".d3-tip").style("opacity") == 1){
-            d3.select(".d3-tip").style("opacity",0);
-          }
-        });
+        // window.addEventListener('scroll', function(e) {
+        //
+        //   if(d3.select(".d3-tip").style("opacity") == 1){
+        //     d3.select(".d3-tip").style("opacity",0);
+        //   }
+        // });
 
 
     });
