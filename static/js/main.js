@@ -1,7 +1,7 @@
 
 // ======== GLOBALS ======== //
 let officerDisciplineResults;
-let complaintSummaries;
+let complaintSummaries = {};
 let phoneBrowsing = false;
 
 let districtGeoJSON;
@@ -1301,7 +1301,10 @@ function main() {
 
     // Begin loading datafiles
     let promises = [
-        d3.csv("static/data/complaint_discipline_viz_data.csv"),
+        d3.csv("static/data/complaint_discipline_viz_data.csv")
+    ];
+
+    let summaryPromise = [
         d3.json("static/data/complaint_discipline_summary_data.json")
     ];
 
@@ -1316,11 +1319,10 @@ function main() {
     setAnnotationTooltips();
     setWindowFunctions();
 
-    Promise.all(promises).then(function(allData) {
+    Promise.all(promises).then((allData) => {
         console.log("data loaded");
 
         officerDisciplineResults = allData[0];
-        complaintSummaries = allData[1];
 
         $(".loadring-container")
             .hide();
@@ -1396,6 +1398,10 @@ function main() {
         setScrollDispatcher();
 
     });
+
+    Promise.all(summaryPromise).then((allData) => {
+        complaintSummaries = allData[0];
+    })
 }
 
 main();
