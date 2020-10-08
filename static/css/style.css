@@ -130,15 +130,15 @@ p {
 }
 
 .step {
-	margin-top: var(--spacer-top);
-	margin-left: 1rem;
-  position: relative;
-  background-color: white;
-	overflow: hidden;
-  display:block;
-  box-shadow: 0px 0px 7px 0px rgba(0,0,0,.12);
-  border-left: 2px solid #000000;
-  width: calc(100% - 2rem);
+    margin-top: var(--spacer-top);
+    margin-left: 1rem;
+    position: relative;
+    background-color: white;
+    overflow: hidden;
+    display:block;
+    box-shadow: 0px 0px 7px 0px rgba(0,0,0,.12);
+    border-left: 2px solid #000000;
+    width: calc(100% - 2rem);
 }
 
 @media (max-width: 1100px) {
@@ -1092,7 +1092,7 @@ hr {
     }
 
     .step.section-change {
-        margin-top: 350vh;
+        margin-top: 60vh !important;
         /*margin-top: auto;*/
     }
 
