@@ -14,7 +14,7 @@ Sunburst.prototype.initVis = function() {
 
     const dimensions = Math.min(vh - 120, Math.min(850, $("#sunburst-area").width()));
 
-    vis.margin = {'top': 10, 'bottom': 0, 'left': 0, 'right': 0};
+    vis.margin = {'top': 15, 'bottom': 0, 'left': 0, 'right': 0};
     vis.width = dimensions - vis.margin.left - vis.margin.right;
     vis.height = dimensions - vis.margin.top - vis.margin.bottom;
 
