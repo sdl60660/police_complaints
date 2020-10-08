@@ -113,8 +113,17 @@ for i, complaint in enumerate(out_data):
     else:
         out_data[i]['incident_time'] = None
 
+
+summary_data = {x['complaint_id']: {'summary': x['summary'], 'shortened_summary': x['shortened_summary']} for x in out_data}
+for investigation in out_data:
+    del investigation['summary']
+    del investigation['shortened_summary']
+
 with open('../static/data/complaint_discipline_viz_data.json', 'w') as f:
     json.dump(out_data, f)
+
+with open('../static/data/complaint_discipline_summary_data.json', 'w') as f:
+    json.dump(summary_data, f)
 
 with open('../static/data/complaint_discipline_viz_data.csv', 'w') as f:
     out_csv = csv.DictWriter(f, fieldnames=list(out_data[0].keys()))

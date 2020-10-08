@@ -1,6 +1,7 @@
 
 // ======== GLOBALS ======== //
 let officerDisciplineResults;
+let complaintSummaries;
 let phoneBrowsing = false;
 
 let districtGeoJSON;
@@ -1300,8 +1301,8 @@ function main() {
 
     // Begin loading datafiles
     let promises = [
-        d3.csv("static/data/complaint_discipline_viz_data.csv")
-        // d3.json("static/data/district_demos.geojson")
+        d3.csv("static/data/complaint_discipline_viz_data.csv"),
+        d3.json("static/data/complaint_discipline_summary_data.json")
     ];
 
     // Initialize both main viz tiles to faded
@@ -1311,21 +1312,15 @@ function main() {
     // $("#tilechart-tile")
     //     .css("opacity", 0.2);
 
-
     determinePhoneBrowsing();
     setAnnotationTooltips();
-    setPlayButton();
-    setScrollArrow();
     setWindowFunctions();
 
-    // setTileWrapperHeights();
-
     Promise.all(promises).then(function(allData) {
-
-      console.log("data loaded");
+        console.log("data loaded");
 
         officerDisciplineResults = allData[0];
-        // districtGeoJSON = allData[1];
+        complaintSummaries = allData[1];
 
         $(".loadring-container")
             .hide();
@@ -1342,7 +1337,7 @@ function main() {
         initSlider(maxDateOffset);
 
         officerDisciplineResults = preprocessDataset(officerDisciplineResults);
-        officerDisciplineResults =officerDisciplineResults.filter(function(d) {
+        officerDisciplineResults = officerDisciplineResults.filter(function(d) {
              return d.investigative_findings !== "Not Applicable" && !(d.investigative_findings === "Sustained Finding" && d.disciplinary_findings === "Not Applicable");
         });
 
@@ -1386,7 +1381,8 @@ function main() {
             });
 
         displayIntroText();
-        if(timeline){
+
+        if(timeline) {
           timeline.updateDimensions();
         }
 

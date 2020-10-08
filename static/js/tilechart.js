@@ -845,11 +845,14 @@ TileChart.prototype.setToolTips = function() {
                 tipText += "<span class='detail-title'>Allegations Investigated</span>: <span class='details'>" + d.allegations_investigated + "<br></span>";
             }
 
-            if (d.summary) {
-                var summaryText = d.summary;
+            let complaintSummaryData = complaintSummaries[d.complaint_id];
+
+            let summaryText = '';
+            if (complaintSummaryData['summary']) {
+                summaryText = complaintSummaryData['summary'];
             }
-            else if (d.shortened_summary) {
-                var summaryText = d.shortened_summary;
+            else if (complaintSummaryData['shortened_summary']) {
+                summaryText = complaintSummaryData['shortened_summary'];
             }
 
             // This is the designated highlightTile (if available).
