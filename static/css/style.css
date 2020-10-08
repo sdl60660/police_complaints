@@ -223,9 +223,9 @@ p {
     /*margin-right: 100px;*/
 /*}*/
 
-.gap-annotation {
-    margin-bottom: 1000px;
-}
+/*.gap-annotation {*/
+    /*margin-bottom: 1000px;*/
+/*}*/
 
 
 #tilechart-wrapper, #sunburst-wrapper {
@@ -1092,8 +1092,8 @@ hr {
     }
 
     .step.section-change {
-        margin-top: 195vh;
-        margin-top: auto;
+        margin-top: 350vh;
+        /*margin-top: auto;*/
     }
 
     h2 {

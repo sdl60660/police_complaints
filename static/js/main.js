@@ -1107,12 +1107,17 @@ function setScrollDispatcher() {
     function handleStepEnter(response) {
       activate(response.index);
       scrollDirection = response.direction;
-      d3.selectAll(".step").style("opacity",function(d,i){
-        if(i == response.index){
-          return 1;
-        }
-        return .2;
-      })
+
+      if (phoneBrowsing === false) {
+          d3.selectAll(".step").style("opacity", (d, i) => {
+              if (i === response.index) {
+                  return 1;
+              }
+              else {
+                  return .2;
+              }
+          })
+      }
 
       // if (response.index === 13) {
       //     $("#tilechart-tile")
