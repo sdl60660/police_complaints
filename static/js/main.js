@@ -970,6 +970,16 @@ function showTilechartByPriorComplaints() {
         }
     }
 
+    if (phoneBrowsing === true) {
+        $("#mobile-complaint-type-select").val("All");
+        tileChart.wrangleData();
+    }
+    else {
+        $(".chosen-select").chosen().val(tileChart.incidentTypes).trigger("chosen:updated");
+        tileChart.selectedComplaintTypes = tileChart.incidentTypes;
+        updateTilechartDates();
+    }
+
 }
 
 
@@ -1115,6 +1125,13 @@ function setScrollDispatcher() {
 
     function handleStepEnter(response) {
       activate(response.index);
+      scrollDirection = response.direction;
+      d3.selectAll(".step").style("opacity",function(d,i){
+        if(i == response.index){
+          return 1;
+        }
+        return .2;
+      })
 
       // if (response.index === 13) {
       //     $("#tilechart-tile")
@@ -1396,6 +1413,15 @@ function main() {
         }
 
         setScrollDispatcher();
+
+
+        window.addEventListener('scroll', function(e) {
+
+          if(d3.select(".d3-tip").style("opacity") == 1){
+            d3.select(".d3-tip").style("opacity",0);
+          }
+        });
+
 
     });
 

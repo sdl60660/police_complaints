@@ -502,8 +502,8 @@ TileChart.prototype.updateVis = function() {
                 // After initializing in the top center of the visual, tile will transition to correct outcome group and correct position within that outcome group
                 // using the outcomeCoordinates dict and the final_state_index assigned in the wrangleData() function for its offset within that tile group
                 .transition()
-                    .duration(400)
-                    .delay(100)
+                    .duration(0)
+                    .delay(0)
                     .attr("x",  d => vis.outcomeCoordinates[d.end_state][0] + vis.trueBlockWidth * (d.final_state_index%vis.colWidths[d.end_state]))
                     .attr("y", d => vis.outcomeCoordinates[d.end_state][1] + vis.trueBlockWidth * ~~(d.final_state_index/vis.colWidths[d.end_state]))
                     .on("end", function() {
@@ -517,8 +517,8 @@ TileChart.prototype.updateVis = function() {
     // This process was kind of a nightmare to sort out, but this works!
     vis.tilechart
         .transition()
-            .duration(400)
-            .delay(100)
+            .duration(0)
+            .delay(0)
                 .attr("x",  d => vis.outcomeCoordinates[d.end_state][0] + vis.trueBlockWidth * (d.final_state_index%(vis.colWidths[d.end_state])))
                 .attr("y", (d) => vis.outcomeCoordinates[d.end_state][1] + vis.trueBlockWidth * Math.floor(1.0*(d.final_state_index)/vis.colWidths[d.end_state]))
                 .attr("fill", d => {
