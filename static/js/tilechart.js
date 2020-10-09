@@ -219,10 +219,6 @@ TileChart.prototype.initVis = function() {
             "No Guilty Findings": Math.round(vis.sustainedFindingColScalar*vis.blockGroupWidth),
             "Discipline Pending": Math.round(vis.sustainedFindingColScalar*vis.blockGroupWidth)
         }
-
-        // vis.outcomeCoordinates["Training/Counseling"][1] += 40;
-        // vis.outcomeCoordinates["No Guilty Findings"][1] += 160;
-        // vis.outcomeCoordinates["Discipline Pending"][1] += 200;
     }
 
 
@@ -522,7 +518,7 @@ TileChart.prototype.updateVis = function() {
                 // using the outcomeCoordinates dict and the final_state_index assigned in the wrangleData() function for its offset within that tile group
                 .transition()
                     .duration(600)
-                    .delay(0)
+                    // .delay(0)
                     .attr("x",  d => vis.outcomeCoordinates[d.end_state][0] + vis.trueBlockWidth * (d.final_state_index%vis.colWidths[d.end_state]))
                     .attr("y", d => vis.outcomeCoordinates[d.end_state][1] + vis.trueBlockWidth * ~~(d.final_state_index/vis.colWidths[d.end_state]))
                     .on("end", function() {
@@ -537,7 +533,7 @@ TileChart.prototype.updateVis = function() {
     vis.tilechart
         .transition()
             .duration(600)
-            .delay(0)
+            // .delay(0)
                 .attr("x",  d => vis.outcomeCoordinates[d.end_state][0] + vis.trueBlockWidth * (d.final_state_index%(vis.colWidths[d.end_state])))
                 .attr("y", (d) => vis.outcomeCoordinates[d.end_state][1] + vis.trueBlockWidth * Math.floor(1.0*(d.final_state_index)/vis.colWidths[d.end_state]))
                 .attr("fill", d => {

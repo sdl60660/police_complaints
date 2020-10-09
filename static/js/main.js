@@ -1044,18 +1044,6 @@ function hideFinalAnnotationSlide() {
 // Changes opacity of annotation text, sets scroll direction and makes sure that all activate functions that should trigger,
 // do trigger on a fast scroll (rather than skipping intermediate sections)
 function activate(index) {
-    // Fade/show corresponding annotation slide
-    // if (phoneBrowsing === false) {
-    //     $("section.step:not(.phantom)")
-    //         .css("opacity", hiddenOpacity)
-    //         .css("z-index", 10);
-    // }
-
-    // if (index-1 > 0) {
-    //     $("section.step").eq(index-2)
-    //         .css("opacity", () => phoneBrowsing === true ? 1.0 : 1.0)
-    //         .css("z-index", 51);
-    // }
 
     activeIndex = index;
 
@@ -1088,22 +1076,6 @@ function activate(index) {
 
 function setScrollDispatcher() {
 
-    // // Initialize scroll object (from scroller.js)
-    // scroll = scroller()
-    //     .container(d3.select('body'));
-    //
-    // // Set the div elements that will be used to determine index for activate functions
-    // // If on mobile, the scrollerDiv used to identify the scroll controller sections will be the '.mobile-spacer' divs
-    // // If on desktop, it will be the '.step' divs with the annotation content (on mobile these are all fixed to the top)
-    // if (phoneBrowsing === true) {
-    //     // scrollerDiv = '.mobile-spacer';
-    //     scrollerDiv = '.step';
-    // }
-    // else {
-    //     scrollerDiv = '.step';
-    // }
-    // scroll(d3.selectAll(scrollerDiv));
-
     function handleStepEnter(response) {
       activate(response.index);
       scrollDirection = response.direction;
@@ -1118,32 +1090,6 @@ function setScrollDispatcher() {
               }
           })
       }
-
-      // if (response.index === 13) {
-      //     $("#tilechart-tile")
-      //         .css("opacity", 0.2);
-      // }
-      // // Return opacity to the tilechart if the user scrolls back up
-      // else if (response.index === 13) {
-      //     $("#tilechart-tile")
-      //         .css("opacity", 1.0);
-      // }
-
-      // // On mobile, hide the annotation at the top once the user hits the end text (otherwise this will cover the top of the screen)
-      // if (response.index >= 13 && progress > 2.0 && $("section.step").eq(12).css("opacity") !== "0" && phoneBrowsing === true) {
-      //     hideFinalAnnotationSlide();
-      //     $(".step")
-      //         .css("position", "absolute");
-      // }
-      // // Return the annotation if they scroll back up
-      // else if (index >= 13 && progress < 2.0 && $("section.step").eq(12).css("opacity") === "0" && phoneBrowsing === true) {
-      //     $("section.step").eq(12)
-      //         .css("opacity", 1.0);
-      //     $(".step")
-      //         .css("position", "fixed");
-      //
-      // }
-      //
     }
     const scroller = scrollama();
 
@@ -1166,51 +1112,6 @@ function setScrollDispatcher() {
   		// .onContainerExit(handleContainerExit);
 
     setActivateFunctions();
-
-
-    // When the dispatcher sends an 'active' event run the activate wrapper function
-    // It dispatches this even every time it hits a new full index (annotation slide)
-    // scroll.on('active', function(index){
-    //     console.log(index);
-    //
-    //     activate(index);
-    // });
-
-    // When the dispatcher sends a 'progress event', it'll look for a few unique triggers
-    // It sends these any time the user scrolls.
-    // The 'index' will the int value of the current annotation index.
-    // The 'progress' will be a float that represents how far the user has progressed within that index
-    // (e.g. progress will equal 0.45 when the user is 45% through the given index)
-    // scroll.on('progress', function(index, progress) {
-    //     // console.log(index, progress);
-    //
-    //     // On the final index, as the end text comes into view and the tilechart starts to scroll out, fade the tilechart
-    //     if (index === 13 && progress >= 1.5) {
-    //         $("#tilechart-tile")
-    //             .css("opacity", 0.2);
-    //     }
-    //     // Return opacity to the tilechart if the user scrolls back up
-    //     else if (index === 13 && progress < 1.5) {
-    //         $("#tilechart-tile")
-    //             .css("opacity", 1.0);
-    //     }
-    //
-    //     // On mobile, hide the annotation at the top once the user hits the end text (otherwise this will cover the top of the screen)
-    //     if (index >= 13 && progress > 2.0 && $("section.step").eq(12).css("opacity") !== "0" && phoneBrowsing === true) {
-    //         hideFinalAnnotationSlide();
-    //         $(".step")
-    //             .css("position", "absolute");
-    //     }
-    //     // Return the annotation if they scroll back up
-    //     else if (index >= 13 && progress < 2.0 && $("section.step").eq(12).css("opacity") === "0" && phoneBrowsing === true) {
-    //         $("section.step").eq(12)
-    //             .css("opacity", 1.0);
-    //         $(".step")
-    //             .css("position", "fixed");
-    //
-    //     }
-    // });
-
 }
 
 
