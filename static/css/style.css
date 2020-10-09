@@ -66,7 +66,7 @@ strong {
 }
 
 #sample-complaint-tile :before{
-  display:none;
+    display:none;
 }
 
 
@@ -82,7 +82,7 @@ strong {
 }
 
 p {
-  margin-bottom: 1.5rem;
+    margin-bottom: 1.5rem;
 }
 
 #intro-tile h1{
@@ -143,21 +143,21 @@ p {
 
 @media (max-width: 1100px) {
 
-  .step {
-      margin-top: 100vh;
-      margin-bottom: 0;
-      z-index: 80;
-      width: calc(100vw - 25px);
-      max-width: 600px;
-      overflow: hidden;
-      margin-left: auto;
-      margin-right: auto;
-      font-size: 16px;
-      min-height: 0;
-      border-radius: 10px;
-      box-shadow: 0px 0px 4px 1px rgba(0,0,0,.12);
-      border: 1px solid #a7a7a7;
-  }
+    .step {
+        margin-top: 100vh;
+        margin-bottom: 0;
+        z-index: 80;
+        width: calc(100vw - 25px);
+        max-width: 600px;
+        overflow: hidden;
+        margin-left: auto;
+        margin-right: auto;
+        font-size: 16px;
+        min-height: 0;
+        border-radius: 10px;
+        box-shadow: 0px 0px 4px 1px rgba(0,0,0,.12);
+        border: 1px solid #a7a7a7;
+    }
 }
 
 #sunburst-wrapper .text-column section:first-of-type {
@@ -165,8 +165,8 @@ p {
 }
 
 #end-text-block{
-  width:calc(100% - 20px);
-  margin: 0 auto;
+    width:calc(100% - 20px);
+    margin: 0 auto;
 }
 
 
@@ -449,8 +449,8 @@ select.other, span.other {
 .chosen-choices {
 	font-size: 8pt;
 	height: 71px;
-  min-height: 71px;
-  max-height: 71px;
+    min-height: 71px;
+    max-height: 71px;
 
 	overflow-y: auto !important;
 }
@@ -837,89 +837,89 @@ hr {
 }
 
 .sunburst-segment {
-  cursor:pointer;
+    cursor:pointer;
 }
 
 #desktop-controls > .chosen-container-div{
-  display: flex;
+    display: flex;
 }
 
 #desktop-controls > .date-wrapper{
-  display: flex;
+    display: flex;
 }
 
 #desktop-controls > .complaint-wrapper{
-  display: flex;
+    display: flex;
 }
 
 #desktop-controls > .group-by-wrapper{
-  display: flex;
+    display: flex;
 }
 
 #mobile-complaint-type-select {
-  max-width:100px;
-  width:100px;
+    max-width:100px;
+    width:100px;
 }
 
 #mobile-controls .date-wrapper{
 }
 
 #mobile-controls .group-by-wrapper{
-  margin: 0;
+    margin: 0;
 }
 
 #mobile-start-year-select{
-  margin-right:3px;
+    margin-right:3px;
 }
 
 #mobile-end-year-select{
-  margin-left: 3px;
+    margin-left: 3px;
 }
 
 #sunburst-area{
-  height: 1px;
-  width: 100%;
-  flex-grow:1;
+    height: 1px;
+    width: 100%;
+    flex-grow: 1;
 }
 
 #sunburst-area svg {
-  margin:0 auto;
-  display:block;
-  overflow:visible;
-  height: 100%;
-  width: auto;
-  position: relative;
-  width:100%;
+    margin:0 auto;
+    display:block;
+    overflow:visible;
+    height: 100%;
+    width: auto;
+    position: relative;
+    width:100%;
 }
 
 .mobile-legend-title{
-  width:100%;
-  text-align:left;
-  font-size:12px;
-  display: block;
+    width:100%;
+    text-align:left;
+    font-size:12px;
+    display: block;
 }
 
 #mobile-group-by-select{
-  max-width:100px;
+    max-width:100px;
 }
 
 .sunburst-title {
-  width: 100%;
-  display:flex;
-  justify-content: flex-end;
-  height: 100px;
-  flex-direction: column;
+    width: 100%;
+    display:flex;
+    justify-content: flex-end;
+    height: 100px;
+    flex-direction: column;
 }
 
 #sunburst-tile {
-  height:100vh;
-  margin-left: calc(var(--annotation-width) + 10px);
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  position: sticky;
-  top: 0;
-  left: 0;
+    height:100vh;
+    margin-left: calc(var(--annotation-width) + 10px);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: sticky;
+    top: 0;
+    left: 0;
 }
 
 #sunburst-wrapper .viz-area {
@@ -927,14 +927,14 @@ hr {
 }
 
 .byline{
-  font-family:'Atlas Grotesk Web';
-  font-size:.9rem;
-  text-align:center;
+    font-family:'Atlas Grotesk Web';
+    font-size:.9rem;
+    text-align:center;
 }
 
 .byline a {
-  color:black;
-  text-decoration:underline;
+    color:black;
+    text-decoration:underline;
 }
 
 
@@ -942,15 +942,15 @@ hr {
 
 
     #subburst-title {
-      font-size: .9rem;
+        font-size: .9rem;
     }
     #sunburst-tile, #tilechart-tile {
-      width:100%;
-      margin: 0 auto;
+        width:100%;
+        margin: 0 auto;
     }
 
     #sunburst-tile {
-      justify-content: center;
+        justify-content: center;
     }
 
     #sections {
@@ -960,14 +960,14 @@ hr {
     }
 
     #chart-area {
-      display: block;
-      max-height: calc(100vh - 150px);
-      width:100vw;
+        display: block;
+        max-height: calc(100vh - 150px);
+        width:100vw;
     }
 
     #chart-area svg {
-      /*height:100%;*/
-      width:100vw;
+        /*height:100%;*/
+        width:100vw;
     }
 
     .d3-tip {
@@ -985,7 +985,7 @@ hr {
     }
 
     #sunburst-select-text {
-      width: 95%;
+        width: 95%;
     }
 
     .step .body {
@@ -1029,10 +1029,10 @@ hr {
 
 
     #sample-complaint-tile {
-      width: calc(100vw - 50px);
-      margin: 0 auto;
-      top:0px !important;
-      margin-top:0px !important;
+        width: calc(100vw - 50px);
+        margin: 0 auto;
+        top:0px !important;
+        margin-top:0px !important;
     }
 
     #desktop-controls, #slider-div, .ui-slider-handle {
@@ -1059,7 +1059,7 @@ hr {
     }
 
     #tilechart-tile {
-      justify-content: flex-start;
+        justify-content: flex-start;
     }
 
     .container {
@@ -1078,10 +1078,11 @@ hr {
     }
 
     .sunburst-chart-labels, .sunburst-chart-label-shadows {
+
     }
 
     #sunburst-select-text {
-      font-size:.9rem;
+        font-size:.9rem;
     }
 
     #annotation-tooltip {
@@ -1128,30 +1129,28 @@ hr {
 
 @media (max-width: 450px) {
 
-  #sunburst-tile {
-    justify-content: center;
-  }
+    #sunburst-tile {
+        justify-content: center;
+    }
 
-  #complaint-summary{
-    font-size: 14px;
-    line-height:1.1;
-  }
-  #sample-tooltip{
-    font-size:14px;
-  }
+    #complaint-summary {
+        font-size: 14px;
+        line-height: 1.1;
+    }
 
+    #sample-tooltip {
+        font-size: 14px;
+    }
 
+    #tilechart-mobile-legend-area .legend-label {
+        font-size: 10px;
+    }
 
-  #tilechart-mobile-legend-area .legend-label {
-    font-size:10px;
-  }
-
-  .sunburst-chart-labels, .sunburst-chart-label-shadows {
-    font-size: 11px;
-  }
-
-  #sunburst-val-total-text {
+    .sunburst-chart-labels, .sunburst-chart-label-shadows {
         font-size: 11px;
     }
 
+    #sunburst-val-total-text {
+        font-size: 11px;
+    }
 }
