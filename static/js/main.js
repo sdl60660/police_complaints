@@ -733,19 +733,26 @@ function showDisciplinaryGroups() {
     setSelectOptions([["sunburst-complainant-race", "all"], ["sunburst-po-race", "all"]]);
 
     // Simulate a hover over the 'sustained finding' section
-    artificialHover("Sustained Finding");
+    // artificialHover("Sustained Finding");
 
     // Highlight all child (disciplinary outcome) sections
-    $("#sunburst-area path.child")
-        .css("fill-opacity", 0.8);
+    // $("#sunburst-area path.child")
+    //     .css("fill-opacity", 0.8);
 
     // Hide all the parent (investigative outcome) sections
-    $("#sunburst-area path.parent")
+    // $("#sunburst-area path.parent")
+    //     .css("fill-opacity", 0.3);
+
+    // Hide all the parent (investigative outcome) sections
+    $("#sunburst-area path")
         .css("fill-opacity", 0.3);
 
     // Highlight the 'Sustained Finding' parent section, specifically
-    $("#sunburst-area path.Sustained-Finding")
+    $("#sunburst-area path.Guilty-Finding")
         .css("fill-opacity", 0.8);
+
+    // Simulate a hover over the 'sustained finding' section
+    artificialHover("Guilty Finding");
 
 }
 
