@@ -252,6 +252,7 @@ p {
 }
 
 #sort_feature_select_chosen {
+    min-width: 160px;
 }
 
 #end-text-block {
@@ -420,7 +421,7 @@ select.other, span.other {
 
 #sort-feature-select {
 	margin-top: 15px;
-    align-self:center;
+    align-self: center;
 }
 
 #tilechart-legend-area {
@@ -767,20 +768,24 @@ hr {
 }
 
 #tilechart-legend-area {
-    width:160px;
-    flex-wrap:wrap;
-    display:none;
-    height: 40px;
+    width: 110px;
+    flex-wrap: wrap;
+    display: none;
+    height: 60px;
     align-self: center;
 }
 .chosen-container-div .control-title {
     width:100px;
 }
+
 .group-by-wrapper, .chosen-container-div{
 }
-.group-by-wrapper{
+
+.group-by-wrapper {
     margin-right: 1rem;
+    min-width: 355px;
 }
+
 .control-title{
     align-self:center;
     font-size: 14px;
@@ -940,10 +945,10 @@ hr {
 
 @media (max-width: 1100px) {
 
-
     #subburst-title {
         font-size: .9rem;
     }
+
     #sunburst-tile, #tilechart-tile {
         width:100%;
         margin: 0 auto;
@@ -1044,6 +1049,10 @@ hr {
 
     #desktop-controls {
         display: none;
+    }
+
+    .group-by-wrapper {
+        min-width: unset;
     }
 
     #mobile-controls {

@@ -975,20 +975,21 @@ TileChart.prototype.updateLegend = function() {
     d3.selectAll(".legend-row").remove()
 
     const rects = vis.legendSVG
-      .style("display", d => {
-        if(keys.length > 0){
-          return "flex";
-        }
-        return null;
-      })
-      .selectAll(".legend-rect")
-      .data(keys, d => d)
-      .enter()
-      .append("div")
-      .attr("class","legend-row");
+        .style("display", d => {
+            if(keys.length > 0) {
+                return "flex";
+            }
+            return null;
+        })
+        .selectAll(".legend-rect")
+        .data(keys, d => d)
+        .enter()
+        .append("div")
+        .style("min-width", "80px")
+        .attr("class", "legend-row");
 
     rects
-      .append("div")
+        .append("div")
         // .attr("x", (d,i) => phoneBrowsing === true ? leftMargin + i*(horizontalSpacing) : leftMargin)
         // .attr("y", (d,i) => phoneBrowsing === true ? topMargin : topMargin + i*(size+verticalSpacing) )
         .attr("class", "legend-rect")
@@ -996,7 +997,7 @@ TileChart.prototype.updateLegend = function() {
         .style("background-color", d => vis.color(d));
 
     rects
-      .append("p")
+        .append("p")
         // .attr("x", (d,i) => phoneBrowsing === true ? leftMargin + size*1.2 + 3 + (i*horizontalSpacing) : leftMargin + size*1.2 + 3)
         // .attr("y", (d,i) => phoneBrowsing === true ? topMargin + (size/2) : topMargin + i*(size+verticalSpacing) + (size/2) )
         .style("color", d => vis.color(d))

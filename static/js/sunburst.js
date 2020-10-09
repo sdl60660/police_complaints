@@ -100,7 +100,7 @@ Sunburst.prototype.initVis = function() {
         .attr("text-anchor", "middle")
         .attr("dy", 22)
         .style("fill-opacity", 0.6)
-        .style("font-size", "14px")
+        .style("font-size", () => phoneBrowsing === true ? "10px" : "12px")
         .text("");
 
     // If the select options change in the text above the sunburst, update the visual
